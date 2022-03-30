@@ -1,2 +1,1 @@
-La suma de 2 mes 2 es peix. // fes una suma abaix
-Peix es 4 Guru
+hola
