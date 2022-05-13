@@ -4,8 +4,6 @@
  */
 package cat.boscdelacoma.model.business.entities;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Victo
@@ -13,5 +11,4 @@ import java.util.ArrayList;
 public class Treballador {
     private String nom, cognom, edat, dni, password, rol;
     private int guardiesFetes;
-    private ArrayList<Categoria> categoria;
 }
