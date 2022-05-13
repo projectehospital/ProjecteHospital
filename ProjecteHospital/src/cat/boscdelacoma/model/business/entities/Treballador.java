@@ -13,9 +13,10 @@ import java.util.ArrayList;
 public class Treballador {
     private String nom, cognom, edat, dni, password, rol;
     private int nGuardies;
+    private Categoria categoria;
     private ArrayList<Guardia> guardiesFetes;
 
-    public Treballador(String nom, String cognom, String edat, String dni, String password) {
+    public Treballador(String nom, String cognom, String edat, String dni, String password, Categoria categoria) {
         this.nom = nom;
         this.cognom = cognom;
         this.edat = edat;
@@ -85,5 +86,13 @@ public class Treballador {
 
     public void setGuardiesFetes(ArrayList<Guardia> guardiesFetes) {
         this.guardiesFetes = guardiesFetes;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }
