@@ -9,17 +9,24 @@ package cat.boscdelacoma.model.business.entities;
  * @author Victo
  */
 public class Unitat {
-    private String nomUnitat;
+    
+    private String tipusUnitat;
 
-    public Unitat(String nomUnitat) {
-        this.nomUnitat = nomUnitat;
+    public Unitat(String tipusUnitat) {
+        this.tipusUnitat = tipusUnitat;
+    }
+    
+    /**
+     * @return the tipusUnitat
+     */
+    public String getTipusUnitat() {
+        return tipusUnitat;
     }
 
-    public String getNomUnitat() {
-        return nomUnitat;
-    }
-
-    public void setNomUnitat(String nomUnitat) {
-        this.nomUnitat = nomUnitat;
+    /**
+     * @param tipusUnitat the tipusUnitat to set
+     */
+    public void setTipusUnitat(String tipusUnitat) {
+        this.tipusUnitat = tipusUnitat;
     }
 }

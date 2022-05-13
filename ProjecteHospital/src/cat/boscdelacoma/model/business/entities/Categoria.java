@@ -4,14 +4,32 @@
  */
 package cat.boscdelacoma.model.business.entities;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Victo
  */
 class Categoria {
     private String tipusCategoria;
-    private ArrayList<Treballador> treballador;
+    private String descripcio;
+
+    public Categoria(String tipusCategoria) {
+        this.tipusCategoria = tipusCategoria;
+    }
+
+    public String getTipusCategoria() {
+        return tipusCategoria;
+    }
+
+    public void setTipusCategoria(String tipusCategoria) {
+        this.tipusCategoria = tipusCategoria;
+    }
+
+    public String getDescripcio() {
+        return descripcio;
+    }
+
+    public void setDescripcio(String descripcio) {
+        this.descripcio = descripcio;
+    }
     
 }

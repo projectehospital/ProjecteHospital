@@ -15,14 +15,13 @@ public class Guardia {
     
     private LocalDate dia;
     private short placesDisponibles;
-    private ArrayList<Treballador> treballador;
-    private ArrayList<Torn> torn;
-    private ArrayList<Unitat> unitat;
+    private ArrayList<Treballador> treballadors;
+    private Torn torn;
+    private Unitat unitat;
 
-    public Guardia(LocalDate dia, short placesDisponibles, ArrayList<Treballador> treballador, ArrayList<Torn> torn, ArrayList<Unitat> unitat) {
+    public Guardia(LocalDate dia, short placesDisponibles, Torn torn, Unitat unitat) {
         this.dia = dia;
         this.placesDisponibles = placesDisponibles;
-        this.treballador = treballador;
         this.torn = torn;
         this.unitat = unitat;
     }
@@ -34,42 +33,36 @@ public class Guardia {
     public void setDia(LocalDate dia) {
         this.dia = dia;
     }
-    
-    /**
-     * @return the placesDisponibles
-     */
+
     public short getPlacesDisponibles() {
         return placesDisponibles;
     }
 
-    /**
-     * @param placesDisponibles the placesDisponibles to set
-     */
     public void setPlacesDisponibles(short placesDisponibles) {
         this.placesDisponibles = placesDisponibles;
     }
 
-    public ArrayList<Treballador> getTreballador() {
-        return treballador;
+    public ArrayList<Treballador> getTreballadors() {
+        return treballadors;
     }
 
-    public void setTreballador(ArrayList<Treballador> treballador) {
-        this.treballador = treballador;
+    public void setTreballadors(ArrayList<Treballador> treballadors) {
+        this.treballadors = treballadors;
     }
 
-    public ArrayList<Torn> getTorn() {
+    public Torn getTorn() {
         return torn;
     }
 
-    public void setTorn(ArrayList<Torn> torn) {
+    public void setTorn(Torn torn) {
         this.torn = torn;
     }
 
-    public ArrayList<Unitat> getUnitat() {
+    public Unitat getUnitat() {
         return unitat;
     }
 
-    public void setUnitat(ArrayList<Unitat> unitat) {
+    public void setUnitat(Unitat unitat) {
         this.unitat = unitat;
     }
 }
