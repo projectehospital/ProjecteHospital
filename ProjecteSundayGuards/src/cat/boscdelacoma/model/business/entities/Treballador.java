@@ -11,20 +11,18 @@ import java.util.ArrayList;
  * @author Victo
  */
 public class Treballador {
-    private String nom, dni, password, rol;
-    private int edat, nGuardies;
+    private String nom, cognom, edat, dni, password, rol;
+    private int nGuardies;
     private Categoria categoria;
     private ArrayList<ReservesGuardia> guardiesFetes;
 
-    public Treballador(String nom, String dni, String password, int edat, Categoria categoria) {
+    public Treballador(String nom, String cognom, String edat, String dni, String password, Categoria categoria) {
         this.nom = nom;
+        this.cognom = cognom;
+        this.edat = edat;
         this.dni = dni;
         this.password = password;
-        this.edat = edat;
-        this.categoria = categoria;
     }
-
-   
 
     public String getNom() {
         return nom;
@@ -34,11 +32,19 @@ public class Treballador {
         this.nom = nom;
     }
 
-    public int getEdat() {
+    public String getCognom() {
+        return cognom;
+    }
+
+    public void setCognom(String cognom) {
+        this.cognom = cognom;
+    }
+
+    public String getEdat() {
         return edat;
     }
 
-    public void setEdat(int edat) {
+    public void setEdat(String edat) {
         this.edat = edat;
     }
 

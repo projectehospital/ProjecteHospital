@@ -9,7 +9,5 @@ package cat.boscdelacoma.view.console;
  * @author Victo
  */
 public class Menu {
-    public static void Main(String[] args) {
-        System.out.println("");
-    }
+    
 }
