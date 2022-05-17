@@ -14,11 +14,11 @@ import javafx.stage.Stage;
  *
  * @author Victo
  */
-public class ProjecteSundayGuards extends Application {
+public class SundayGuards extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("SundayGuards.fxml"));
         
         Scene scene = new Scene(root);
         

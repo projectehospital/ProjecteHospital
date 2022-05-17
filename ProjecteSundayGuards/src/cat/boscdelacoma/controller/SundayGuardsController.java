@@ -15,7 +15,7 @@ import javafx.scene.control.Label;
  *
  * @author Victo
  */
-public class FXMLSundayGuardsController implements Initializable {
+public class SundayGuardsController implements Initializable {
     
     @FXML
     private Label label;

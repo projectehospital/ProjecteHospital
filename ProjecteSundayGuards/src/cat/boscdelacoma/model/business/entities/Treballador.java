@@ -11,17 +11,17 @@ import java.util.ArrayList;
  * @author Victo
  */
 public class Treballador {
-    private String nom, cognom, edat, dni, password, rol;
-    private int nGuardies;
+    private String nom, dni, password, rol;
+    private int edat, guardiesPendents;
     private Categoria categoria;
     private ArrayList<ReservesGuardia> guardiesFetes;
 
-    public Treballador(String nom, String cognom, String edat, String dni, String password, Categoria categoria) {
+    public Treballador(String nom, String dni, String password, int edat, Categoria categoria) {
         this.nom = nom;
-        this.cognom = cognom;
-        this.edat = edat;
         this.dni = dni;
         this.password = password;
+        this.edat = edat;
+        this.categoria = categoria;
     }
 
     public String getNom() {
@@ -30,22 +30,6 @@ public class Treballador {
 
     public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public String getCognom() {
-        return cognom;
-    }
-
-    public void setCognom(String cognom) {
-        this.cognom = cognom;
-    }
-
-    public String getEdat() {
-        return edat;
-    }
-
-    public void setEdat(String edat) {
-        this.edat = edat;
     }
 
     public String getDni() {
@@ -72,20 +56,20 @@ public class Treballador {
         this.rol = rol;
     }
 
-    public int getnGuardies() {
-        return nGuardies;
+    public int getEdat() {
+        return edat;
     }
 
-    public void setnGuardies(int nGuardies) {
-        this.nGuardies = nGuardies;
+    public void setEdat(int edat) {
+        this.edat = edat;
     }
 
-    public ArrayList<ReservesGuardia> getGuardiesFetes() {
-        return guardiesFetes;
+    public int getGuardiesPendents() {
+        return guardiesPendents;
     }
 
-    public void setGuardiesFetes(ArrayList<ReservesGuardia> guardiesFetes) {
-        this.guardiesFetes = guardiesFetes;
+    public void setGuardiesPendents(int guardiesPendents) {
+        this.guardiesPendents = guardiesPendents;
     }
 
     public Categoria getCategoria() {
@@ -95,4 +79,16 @@ public class Treballador {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
+
+    public ArrayList<ReservesGuardia> getGuardiesFetes() {
+        return guardiesFetes;
+    }
+
+    public void setGuardiesFetes(ArrayList<ReservesGuardia> guardiesFetes) {
+        this.guardiesFetes = guardiesFetes;
+    }
+    
+    public int obtenirGuardiesFetes(ArrayList<ReservesGuardia> guardiesFetes){
+        return guardiesFetes.size();
+    }    
 }
