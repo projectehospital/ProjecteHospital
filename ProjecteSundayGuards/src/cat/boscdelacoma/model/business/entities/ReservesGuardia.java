@@ -11,19 +11,21 @@ import java.util.ArrayList;
  *
  * @author Victo
  */
-public class Guardia {
+public class ReservesGuardia {
     
     private LocalDate dia;
     private short placesDisponibles;
     private ArrayList<Treballador> treballadors;
     private Torn torn;
     private Unitat unitat;
-
-    public Guardia(LocalDate dia, short placesDisponibles, Torn torn, Unitat unitat) {
+    private Categoria categroia;
+    
+    public ReservesGuardia(LocalDate dia, short placesDisponibles, Torn torn, Unitat unitat, Categoria categroia) {
         this.dia = dia;
         this.placesDisponibles = placesDisponibles;
         this.torn = torn;
         this.unitat = unitat;
+        this.categroia = categroia;
     }
 
     public LocalDate getDia() {
@@ -64,5 +66,13 @@ public class Guardia {
 
     public void setUnitat(Unitat unitat) {
         this.unitat = unitat;
+    }
+
+    public Categoria getCategroia() {
+        return categroia;
+    }
+
+    public void setCategroia(Categoria categroia) {
+        this.categroia = categroia;
     }
 }
