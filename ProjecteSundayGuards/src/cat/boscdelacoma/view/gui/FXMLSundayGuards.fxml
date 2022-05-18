@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="cat.boscdelacoma.SundayGuardsController">
+<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="cat.boscdelacoma.controller.SundayGuardsController">
    <children>
       <ButtonBar layoutX="94.0" layoutY="146.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
