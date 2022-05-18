@@ -14,7 +14,7 @@ public class Treballador {
     private String nom, dni, password, rol;
     private int edat, guardiesPendents;
     private Categoria categoria;
-    private ArrayList<ReservesGuardia> guardiesFetes;
+    private ArrayList<Guardia> guardiesFetes;
 
     public Treballador(String nom, String dni, String password, int edat, Categoria categoria) {
         this.nom = nom;
@@ -80,15 +80,15 @@ public class Treballador {
         this.categoria = categoria;
     }
 
-    public ArrayList<ReservesGuardia> getGuardiesFetes() {
+    public ArrayList<Guardia> getGuardiesFetes() {
         return guardiesFetes;
     }
 
-    public void setGuardiesFetes(ArrayList<ReservesGuardia> guardiesFetes) {
+    public void setGuardiesFetes(ArrayList<Guardia> guardiesFetes) {
         this.guardiesFetes = guardiesFetes;
     }
     
-    public int obtenirGuardiesFetes(ArrayList<ReservesGuardia> guardiesFetes){
+    public int obtenirGuardiesFetes(ArrayList<Guardia> guardiesFetes){
         return guardiesFetes.size();
     }    
 }

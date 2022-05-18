@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author Victo
  */
-public class ReservesGuardia {
+public class Guardia {
     
     private LocalDate dia;
     private short placesDisponibles;
@@ -20,7 +20,7 @@ public class ReservesGuardia {
     private Unitat unitat;
     private Categoria categroia;
     
-    public ReservesGuardia(LocalDate dia, short placesDisponibles, Torn torn, Unitat unitat, Categoria categroia) {
+    public Guardia(LocalDate dia, short placesDisponibles, Torn torn, Unitat unitat, Categoria categroia) {
         this.dia = dia;
         this.placesDisponibles = placesDisponibles;
         this.torn = torn;

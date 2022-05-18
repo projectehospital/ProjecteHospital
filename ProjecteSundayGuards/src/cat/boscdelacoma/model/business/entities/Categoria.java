@@ -8,7 +8,7 @@ package cat.boscdelacoma.model.business.entities;
  *
  * @author Victo
  */
-class Categoria {
+public class Categoria {
     private String tipusCategoria;
     private String descripcio;
 
