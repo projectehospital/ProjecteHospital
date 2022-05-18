@@ -88,6 +88,14 @@ public class Treballador {
         this.guardiesFetes = guardiesFetes;
     }
     
+    public void afegirGurardia(ReservesGuardia g){
+        guardiesFetes.add(g);
+    }
+    
+    public void eliminarGuardia(ReservesGuardia g){
+        guardiesFetes.remove(g);
+    }
+    
     public int obtenirGuardiesFetes(ArrayList<ReservesGuardia> guardiesFetes){
         return guardiesFetes.size();
     }    

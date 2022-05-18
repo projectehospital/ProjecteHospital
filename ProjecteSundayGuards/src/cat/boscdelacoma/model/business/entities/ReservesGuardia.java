@@ -19,7 +19,7 @@ public class ReservesGuardia {
     private Torn torn;
     private Unitat unitat;
     private Categoria categroia;
-    
+
     public ReservesGuardia(LocalDate dia, short placesDisponibles, Torn torn, Unitat unitat, Categoria categroia) {
         this.dia = dia;
         this.placesDisponibles = placesDisponibles;
@@ -28,6 +28,13 @@ public class ReservesGuardia {
         this.categroia = categroia;
     }
 
+    public ReservesGuardia(LocalDate dia, Torn torn, Unitat unitat, Categoria categroia) {
+        this.dia = dia;
+        this.torn = torn;
+        this.unitat = unitat;
+        this.categroia = categroia;
+    }
+    
     public LocalDate getDia() {
         return dia;
     }
@@ -50,6 +57,14 @@ public class ReservesGuardia {
 
     public void setTreballadors(ArrayList<Treballador> treballadors) {
         this.treballadors = treballadors;
+    }
+    
+    public void inscriureTreballador(Treballador t){
+        treballadors.add(t);
+    }
+    
+    public void eliminarTreballador(Treballador t){
+        treballadors.remove(t);
     }
 
     public Torn getTorn() {
