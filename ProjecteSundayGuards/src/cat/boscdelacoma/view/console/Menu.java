@@ -33,6 +33,10 @@ public class Menu {
         int mes = entrada.nextInt();
         LocalDate d = LocalDate.now();
         
+        String capcelera = "%n%-25s%-20s%-20s%s%n";
+        String cos = "%-25s%-20s%.2fâ‚¬%20.2fâ‚¬%n";
+
+        System.out.printf(capcelera, "DIA", "UNITAT", "PR", "TOTAL");
         while(mes == d.getMonthValue()){
             
         }
