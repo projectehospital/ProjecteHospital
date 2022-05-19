@@ -4,6 +4,7 @@
  */
 package cat.boscdelacoma.view.console;
 
+import cat.boscdelacoma.model.business.entities.Guardia;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -13,7 +14,7 @@ import java.util.Scanner;
  */
 public class Menu {
     static Scanner entrada;
-    public static void MenuInicial(){
+    public static void MenuInicial(Guardia g){
         System.out.println("Tria el número del mes vols reservar una guàrdia:");
         System.out.println("1. Gener");
         System.out.println("2. Febrer");
@@ -30,10 +31,10 @@ public class Menu {
         
         entrada = new Scanner(System.in);
         int mes = entrada.nextInt();
-        LocalDate d = new LocalDate();
+        LocalDate d = LocalDate.now();
         
         while(mes == d.getMonthValue()){
-        
+            
         }
 //        switch(mes){
 //            case 1:
@@ -77,4 +78,3 @@ public class Menu {
 //                break;
         }
     }
-}
