@@ -11,8 +11,9 @@ import java.util.ArrayList;
  * @author Victo
  */
 public class Treballador {
-    private String nom, dni, password, rol;
+    private String nom, dni, password;
     private int edat, guardiesPendents;
+    private Rol rol;
     private Categoria categoria;
     private ArrayList<ReservesGuardia> guardiesFetes;
 
@@ -48,11 +49,11 @@ public class Treballador {
         this.password = password;
     }
 
-    public String getRol() {
+    public Rol getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(Rol rol) {
         this.rol = rol;
     }
 
