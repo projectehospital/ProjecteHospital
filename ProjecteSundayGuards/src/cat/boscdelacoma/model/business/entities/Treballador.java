@@ -11,10 +11,14 @@ import java.util.ArrayList;
  * @author Victo
  */
 public class Treballador {
-    private String nom, dni, password, rol;
+    private String nom, dni, password;
+    private Rol rol;
     private int edat, guardiesPendents;
     private Categoria categoria;
     private ArrayList<Guardia> guardiesFetes;
+
+    public Treballador() {
+    }
 
     public Treballador(String nom, String dni, String password, int edat, Categoria categoria) {
         this.nom = nom;
@@ -48,11 +52,11 @@ public class Treballador {
         this.password = password;
     }
 
-    public String getRol() {
+    public Rol getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(Rol rol) {
         this.rol = rol;
     }
 

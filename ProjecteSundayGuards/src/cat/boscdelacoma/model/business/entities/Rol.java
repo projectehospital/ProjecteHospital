@@ -8,20 +8,22 @@ package cat.boscdelacoma.model.business.entities;
  *
  * @author Victo
  */
-public class Torn {
-
+public class Rol {
+    private String rol;
     
-    private String tipusTorn;
-    
-    public Torn(String tipusTorn) {
-        this.tipusTorn = tipusTorn;
+    public Rol() {
+        
     }
 
-    public String getTipusTorn() {
-        return tipusTorn;
+    public Rol(String rol) {
+        this.rol = rol;
     }
 
-    public void setTipusTorn(String tipusTorn) {
-        this.tipusTorn = tipusTorn;
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 }
