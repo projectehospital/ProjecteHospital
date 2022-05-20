@@ -1,0 +1,80 @@
+
+create table unitat (
+	
+		tipus_unitat 	varchar(50) 	PRIMARY KEY
+
+);
+
+create table categoria (
+	
+		tipus_categoria  varchar(50)  	PRIMARY KEY
+	
+);
+
+create table torn (
+
+		tipus_torn		varchar(50)   PRIMARY KEY
+    
+);
+
+create table rol (
+	
+		tipus_rol 		varchar(50) PRIMARY KEY
+
+);
+
+create table plantilla_guardia( 
+		
+		id 		varchar(10)  	PRIMARY KEY,
+        tipus_unitat 	varchar(50),
+        tipus_categoria	varchar(50) ,
+		tipus_torn		varchar(50) ,
+        places			smallint,
+        foreign key (tipus_unitat) references unitat(tipus_unitat),
+        foreign key (tipus_categoria) references categoria(tipus_categoria),
+        foreign key (tipus_torn) references torn(tipus_torn)
+);
+
+create table treballador (
+
+		DNI 	varchar(10)			PRIMARY KEY,
+		nom 	varchar(10)			not null,
+        data_Naixement date 		not null,
+        passwd 	varchar(10)			not null,
+        guardies_fetes   smallint 	,
+        guardies_previstes smallint ,
+        tipus_contracte varchar(50),
+        tipus_categoria  varchar(50), 
+		tipus_rol		varchar(50) ,
+        foreign key (tipus_categoria) references categoria(tipus_categoria),
+        foreign key (tipus_rol) references rol(tipus_rol)
+        
+);
+
+create table guardia (
+
+		id 		varchar(10) 		PRIMARY KEY,
+        dia 	date				not null,
+        tipus_unitat 	varchar(10) ,
+        tipus_torn		varchar(10) ,
+        tipus_categoria 	varchar(10),
+        places_disponibles  smallint ,
+
+        
+        foreign key(tipus_unitat) references unitat(tipus_unitat),
+        foreign key (tipus_torn)  references torn(tipus_torn),
+        foreign key (tipus_categoria) references categoria(tipus_categoria)
+);
+
+create table guardies_treballador (
+	
+		dni_treballador		varchar(10) ,
+        id_guardia			varchar(10),
+    
+		foreign key (dni_treballador) references treballador(DNI),
+        foreign key (id_guardia) references guardia(id),
+        
+        primary key ( dni_treballador , id_guardia )
+
+);
+
