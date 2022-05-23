@@ -26,6 +26,8 @@ public class SundayGuardsController implements Initializable {
     private TextField inputPassword;
     @FXML
     private Button btnAccedir;
+    @FXML
+    private Button btnCancelar;
 
     /**
      * Initializes the controller class.
@@ -37,6 +39,10 @@ public class SundayGuardsController implements Initializable {
 
     @FXML
     private void btnAccioAccedir(ActionEvent event) {
+    }
+
+    @FXML
+    private void btnAccioCancelar(ActionEvent event) {
     }
 
     
