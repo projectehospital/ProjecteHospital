@@ -12,6 +12,9 @@ public class Torn {
 
     
     private String tipusTorn;
+
+    public Torn() {
+    }
     
     public Torn(String tipusTorn) {
         this.tipusTorn = tipusTorn;
