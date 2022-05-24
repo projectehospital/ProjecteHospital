@@ -61,12 +61,7 @@ public class Menu {
     }
 
     private static void menuUsuari() {
-        //String perquè els mesos quedin alineats
-        String mesos = "%n%-25s%-25s%-25s%-25s%n";
-        System.out.printf(mesos, "1. Gener", "2. Febrer", "3. Març");
-        System.out.printf(mesos, "4. Abril", "5. Maig", "6. Juny");
-        System.out.printf(mesos, "7. Juliol", "8. Agost", "9. Setembre");
-        System.out.printf(mesos, "10. Octubre", "11. Novembre", "12. Desembre");
+        mostrarMesos();
         System.out.println("Tria el número del mes vols reservar una guàrdia: \n");
 
         //Entrem el mes al qual vol reservar guàrdia el treballador
@@ -99,7 +94,7 @@ public class Menu {
             case 0:
                 break;
             case 1:
-                System.out.println("Dia de la guàrida: (dd/mm/aaaa)");
+                System.out.println("Dia de la guàrida (dd/mm/aaaa):");
                 String dia = entrada.nextLine();
                 //Convertim la data de String a LocalDate
                 LocalDate data = LocalDate.parse(dia);
@@ -117,7 +112,35 @@ public class Menu {
                 Guardia g = new Guardia(data, places, torn, unitat, categoria);
                 break;
             case 2:
-
+                mostrarMesos();
+                System.out.println("A quin mes vols eliminar una guàrdia? (Escriu el número)");
+                short mes = entrada.nextShort();
+                switch (mes) {
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        break;
+                    case 8:
+                        break;
+                    case 9:
+                        break;
+                    case 10:
+                        break;
+                    case 11:
+                        break;
+                    case 12:
+                        break;
+                }
                 break;
             //Si l'usuari tria un número diferent a 1 ó 2 se li notificarà i es tornarà a cridar el mètode
             default:
@@ -196,5 +219,14 @@ public class Menu {
                 System.out.println("Tria Infermer/a(1) o TCAI(2)");
                 triarCategoriaAdmin(categoria);
         }
+    }
+
+    private static void mostrarMesos() {
+        //String perquè els mesos quedin alineats
+        String mesos = "%n%-25s%-25s%-25s%-25s%n";
+        System.out.printf(mesos, "1. Gener", "2. Febrer", "3. Març");
+        System.out.printf(mesos, "4. Abril", "5. Maig", "6. Juny");
+        System.out.printf(mesos, "7. Juliol", "8. Agost", "9. Setembre");
+        System.out.printf(mesos, "10. Octubre", "11. Novembre", "12. Desembre");
     }
 }
