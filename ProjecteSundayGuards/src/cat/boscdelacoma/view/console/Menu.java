@@ -99,7 +99,7 @@ public class Menu {
             case 0:
                 break;
             case 1:
-                System.out.println("Dia de la guàrida:");
+                System.out.println("Dia de la guàrida: (dd/mm/aaaa)");
                 String dia = entrada.nextLine();
                 //Convertim la data de String a LocalDate
                 LocalDate data = LocalDate.parse(dia);
