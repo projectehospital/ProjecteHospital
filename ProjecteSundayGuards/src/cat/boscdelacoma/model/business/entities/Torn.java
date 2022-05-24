@@ -17,6 +17,10 @@ public class Torn {
         this.tipusTorn = tipusTorn;
     }
 
+    public Torn() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getTipusTorn() {
         return tipusTorn;
     }

@@ -17,7 +17,7 @@ import java.util.Properties;
  * @author Victo
  */
 public class MYSQLConnection {
-    private final String FILE_CONFIG = "resources/config.properties";
+    private final String FILE_CONFIG = "resources/config_1.properties";
     
     private static MYSQLConnection instance;
     private Connection connection;
