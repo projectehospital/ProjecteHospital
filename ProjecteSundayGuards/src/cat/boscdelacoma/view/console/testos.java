@@ -32,9 +32,20 @@ public class testos {
             List llistaTorns = new ArrayList<Torn>();
 
             llistaTorns = torns.getAll();
+<<<<<<< Updated upstream
 
             System.out.println(llistaTorns.toString());
 
+=======
+            
+            for (int i = 0; i < llistaTorns.size(); i++) {
+                
+                    Torn torn = new Torn("");
+                    torn = (Torn)llistaTorns.get(i);
+                    System.out.println(torn.getTipusTorn());
+            }
+            
+>>>>>>> Stashed changes
         } catch (DAOException ex) {
             System.out.println("error:" + ex);
         }
