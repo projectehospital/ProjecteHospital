@@ -29,11 +29,13 @@ public class JDBCGuardiaDAO {
     public List<Guardia> getAll() throws DAOException {
         try {
             Statement query = MYSQLConnection.getInstance().getConnection().createStatement();
-            ResultSet resultat = query.executeQuery("select * from hospitalProva.guardia");
+            ResultSet resultat = query.executeQuery("select * from guardia");
             List<Guardia> list = new ArrayList<>();
-            JDBCGuardiaDAO guardia = new JDBCGuardiaDAO();
+            Torn t = new Torn();
+            Categoria c = new Categoria();
+            Unitat u = new Unitat();
             while (resultat.next()) {
-                list.add(guardia.get(resultat.getLong("id")));
+                list.add(new Guardia(resultat.getLong("id"), convertToLocalDateViaInstant(resultat.getDate("dia")), resultat.getString("tipus_unitat")));
             }
             return list;
         } catch (SQLException ex) {
@@ -132,11 +134,11 @@ public class JDBCGuardiaDAO {
 
     public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
         return dateToConvert.toInstant()
-                .atZone(ZoneId.systemDefault()  )
+                .atZone(ZoneId.systemDefault())
                 .toLocalDate();
     }
-    
+
     public Date convertToDateViaSqlDate(LocalDate dateToConvert) {
-    return java.sql.Date.valueOf(dateToConvert);
-}
+        return java.sql.Date.valueOf(dateToConvert);
+    }
 }
