@@ -15,6 +15,9 @@ public class Unitat {
     public Unitat(String tipusUnitat) {
         this.tipusUnitat = tipusUnitat;
     }
+
+    public Unitat() {
+    }
     
     /**
      * @return the tipusUnitat

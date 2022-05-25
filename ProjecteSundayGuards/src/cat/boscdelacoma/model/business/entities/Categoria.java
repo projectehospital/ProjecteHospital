@@ -16,6 +16,9 @@ public class Categoria {
         this.tipusCategoria = tipusCategoria;
     }
 
+    public Categoria() {
+    }
+
     public String getTipusCategoria() {
         return tipusCategoria;
     }

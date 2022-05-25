@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.sql.Statement;
 import java.sql.ResultSet;
-import java.sql.Connection;
 import java.util.ArrayList;
 
 /**
@@ -22,72 +21,69 @@ import java.util.ArrayList;
 public class JDBCTornDAO implements TornDAO {
 
     @Override
-    public Torn get(long id) throws DAOException {
+    public List<Torn> getAll() throws DAOException {
         try {
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("SELECT * from hospitalProva.torn where tipus_torn=?");
-            query.setLong(1, id);
-            ResultSet resultat = query.executeQuery();
-            
-            if (resultat.next()) {
-                Torn t = new Torn(resultat.getString("modalitat"));
-                t.setTipusTorn(resultat.getString("tipus_torn"));
-                return t;
-            }else{
-                return null;
+            Statement query = MYSQLConnection.getInstance().getConnection().createStatement();
+            ResultSet resultat = query.executeQuery("select * from hospitalProva.torn");
+            List<Torn> list = new ArrayList<>();
+            JDBCTornDAO torn = new JDBCTornDAO();
+            while (resultat.next()) {
+                list.add(torn.get(resultat.getLong("id")));
             }
+            return list;
         } catch (SQLException ex) {
             throw new DAOException();
         }
+
     }
 
     @Override
-    public List<Torn> getAll() throws DAOException {
-
+    public Torn get(long id) throws DAOException {
         try {
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from hospitalProva.torn where id=?");
+            query.setLong(1, id);
+            ResultSet resultat = query.executeQuery();
 
-            Statement consulta = MYSQLConnection.getInstance().getConnection().createStatement();
-            ResultSet resultat = consulta.executeQuery("select * from torn");
-            var torns = new ArrayList<Torn>();
-            JDBCTornDAO torn = new JDBCTornDAO();
-            while (resultat.next()) {
-
-                torns.add(new Torn(resultat.getString("tipus_torn")));
+            if (resultat.next()) {
+                Torn t = new Torn();
+                t.setTipusTorn(resultat.getString("tipus_torn"));
+                t.setId(resultat.getLong("id"));
+                return t;
+            } else {
+                return null;
             }
-            return torns;
+
         } catch (SQLException ex) {
-
             throw new DAOException();
-
         }
-
     }
-
 
     @Override
     public void add(Torn t) throws DAOException {
+
         try {
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("INSERT INTO provaHospital.torn(tipus_torn) VALUES('Dia')", Statement.RETURN_GENERATED_KEYS);
+
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("insert into hospitalProva.torn(tipus_torn) VALUES(?)", Statement.RETURN_GENERATED_KEYS);
 
             query.setString(1, t.getTipusTorn());
             query.executeUpdate();
-            ResultSet res = query.getGeneratedKeys();
-            if (res.next()) {
-                t.setTipusTorn(res.getString(1));
+            ResultSet rst = query.getGeneratedKeys();
+            if (rst.next()) {
+                t.setId(rst.getLong(1));
             }
 
         } catch (SQLException ex) {
             throw new DAOException();
         }
-
     }
 
-  @Override
+    @Override
     public void update(Torn t) throws DAOException {
         try {
 
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("UPDATE hospitalProva.TORN SET tipus_torn=? WHERE ID=?");
-            query.setString(1, t.getModalitat());
-            query.setLong(2, t.getID());
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("update hospitalProva.torn set tipus_torn=? where id=?");
+            query.setString(1, t.getTipusTorn());
+            query.setLong(2, t.getId());
             query.executeUpdate();
 
         } catch (SQLException ex) {
@@ -101,8 +97,8 @@ public class JDBCTornDAO implements TornDAO {
     public void delete(Torn t) throws DAOException {
         try {
 
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("DELETE FROM hospiolot.TORNS WHERE ID=?");
-            query.setLong(1, t.getID());
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("delete from hospitalProva.torn where id=?");
+            query.setLong(1, t.getId());
             query.executeUpdate();
 
         } catch (SQLException ex) {
@@ -110,21 +106,4 @@ public class JDBCTornDAO implements TornDAO {
 
         }
     }
-   
-        public Torn searchByName(String name) throws DAOException {
-        try {
-
-            PreparedStatement query = Connection.getInstance().getConnection().prepareStatement("SELECT id FROM hospiolot.torns WHERE modalitat=?");
-            query.setString(1, name);
-            ResultSet result = query.executeQuery();
-            if (result.next()) {
-                return get(result.getLong("id"));
-            } else {
-                return null;
-            }
-        } catch (SQLException ex) {
-            throw new DAOException();
-
-        }
-
 }

@@ -20,24 +20,11 @@ import java.util.logging.Logger;
 public class testos {
 
     public static void main(String[] args) throws DAOException {
-        try {
-            MYSQLConnection con = MYSQLConnection.getInstance();
-            System.out.println(con.getConnection());
+        MYSQLConnection con = MYSQLConnection.getInstance();
+        System.out.println(con.getConnection());
 
-            JDBCTornDAO torns = new JDBCTornDAO();
-            Torn t = new Torn();
-            t.setTipusTorn("Nit");
-            torns.add(t);
-
-            List llistaTorns = new ArrayList<Torn>();
-
-            llistaTorns = torns.getAll();
-
-            System.out.println(llistaTorns.toString());
-
-        } catch (DAOException ex) {
-            System.out.println("error:" + ex);
-        }
+        JDBCTornDAO torns = new JDBCTornDAO();
+        Torn t = new Torn();
 
     }
 

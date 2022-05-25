@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class Guardia {
     
+    private long id;
     private LocalDate dia;
     private short placesDisponibles;
     private ArrayList<Treballador> treballadors;
@@ -20,12 +21,24 @@ public class Guardia {
     private Unitat unitat;
     private Categoria categroia;
     
-    public Guardia(LocalDate dia, short placesDisponibles, Torn torn, Unitat unitat, Categoria categroia) {
+    public Guardia(long id, LocalDate dia, short placesDisponibles, Torn torn, Unitat unitat, Categoria categroia) {
+        this.id = id;
         this.dia = dia;
         this.placesDisponibles = placesDisponibles;
         this.torn = torn;
         this.unitat = unitat;
         this.categroia = categroia;
+    }
+
+    public Guardia() {
+    }
+    
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public LocalDate getDia() {
