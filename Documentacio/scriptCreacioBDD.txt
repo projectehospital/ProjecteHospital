@@ -1,31 +1,31 @@
 
 create table unitat (
-	
-		tipus_unitat 	varchar(50) 	PRIMARY KEY
-
+		id			int 	primary key  auto_increment,
+		tipus_unitat 	varchar(50) 	,
+		unique(tipus_unitat)
 );
-
+alter table unitat auto_increment = 1;
 create table categoria (
-	
-		tipus_categoria  varchar(50)  	PRIMARY KEY
-	
+		id			int 	primary key  auto_increment ,
+		tipus_categoria  varchar(50)  	,
+		unique(tipus_categoria)
 );
-
+alter table categoria auto_increment = 1;
 create table torn (
-
-		tipus_torn		varchar(50)   PRIMARY KEY
-    
+		id			int 	primary key  auto_increment,
+		tipus_torn		varchar(50)   ,
+		unique(tipus_torn)
 );
-
+alter table torn auto_increment = 1;
 create table rol (
-	
-		tipus_rol 		varchar(50) PRIMARY KEY
-
+		id			int 	primary key  auto_increment ,
+		tipus_rol 		varchar(50) ,
+		unique(tipus_rol)
 );
-
+alter table rol auto_increment = 1;
 create table plantilla_guardia( 
 		
-		id 		varchar(10)  	PRIMARY KEY,
+		id 		int  	PRIMARY KEY  auto_increment,
         tipus_unitat 	varchar(50),
         tipus_categoria	varchar(50) ,
 		tipus_torn		varchar(50) ,
@@ -34,10 +34,10 @@ create table plantilla_guardia(
         foreign key (tipus_categoria) references categoria(tipus_categoria),
         foreign key (tipus_torn) references torn(tipus_torn)
 );
-
+alter table plantilla_guardia auto_increment = 1;
 create table treballador (
-
-		DNI 	varchar(10)			PRIMARY KEY,
+		id			int 	primary key   auto_increment,
+		DNI 	varchar(10)			,
 		nom 	varchar(10)			not null,
         data_Naixement date 		not null,
         passwd 	varchar(10)			not null,
@@ -47,13 +47,15 @@ create table treballador (
         tipus_categoria  varchar(50), 
 		tipus_rol		varchar(50) ,
         foreign key (tipus_categoria) references categoria(tipus_categoria),
-        foreign key (tipus_rol) references rol(tipus_rol)
+        foreign key (tipus_rol) references rol(tipus_rol),
+        unique(DNI)
         
 );
+alter table treballador auto_increment = 1;
 
 create table guardia (
 
-		id 		varchar(10) 		PRIMARY KEY,
+		id 		int		PRIMARY KEY auto_increment,
         dia 	date				not null,
         tipus_unitat 	varchar(10) ,
         tipus_torn		varchar(10) ,
@@ -65,16 +67,17 @@ create table guardia (
         foreign key (tipus_torn)  references torn(tipus_torn),
         foreign key (tipus_categoria) references categoria(tipus_categoria)
 );
-
+alter table guardia auto_increment = 1;
 create table guardies_treballador (
-	
-		dni_treballador		varchar(10) ,
-        id_guardia			varchar(10),
+		id			int 	auto_increment,
+		id_treballador		int,
+        id_guardia			int,
     
-		foreign key (dni_treballador) references treballador(DNI),
+		foreign key (id_treballador) references treballador(id),
         foreign key (id_guardia) references guardia(id),
-        
-        primary key ( dni_treballador , id_guardia )
+        unique(id) ,
+        primary key ( id_treballador , id_guardia  )
 
 );
+alter table guardies_treballador auto_increment = 1;
 
