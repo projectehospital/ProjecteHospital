@@ -12,10 +12,13 @@ import java.util.ArrayList;
  */
 public class Treballador {
     private String nom, dni, password;
-    private int edat, guardiesPendents;
     private Rol rol;
+    private int edat, guardiesPendents;
     private Categoria categoria;
     private ArrayList<Guardia> guardiesFetes;
+
+    public Treballador() {
+    }
 
     public Treballador(String nom, String dni, String password, int edat, Categoria categoria) {
         this.nom = nom;
