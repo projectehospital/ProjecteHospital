@@ -10,14 +10,16 @@ package cat.boscdelacoma.model.business.entities;
  */
 public class Torn {
 
-    
     private String tipusTorn;
+    private long id;
+
+    public Torn(long id , String tipusTorn) {
+        this.id = id;
+        this.tipusTorn = tipusTorn;
+    
+    }
 
     public Torn() {
-    }
-    
-    public Torn(String tipusTorn) {
-        this.tipusTorn = tipusTorn;
     }
 
     public String getTipusTorn() {
@@ -26,5 +28,13 @@ public class Torn {
 
     public void setTipusTorn(String tipusTorn) {
         this.tipusTorn = tipusTorn;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

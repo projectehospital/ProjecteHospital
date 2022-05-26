@@ -12,6 +12,7 @@ import cat.boscdelacoma.model.business.entities.Treballador;
 import cat.boscdelacoma.model.business.entities.Unitat;
 import java.time.LocalDate;
 import java.util.Scanner;
+import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.MYSQLConnection;
 
 /**
  *
@@ -229,4 +230,9 @@ public class Menu {
         System.out.printf(mesos, "7. Juliol", "8. Agost", "9. Setembre");
         System.out.printf(mesos, "10. Octubre", "11. Novembre", "12. Desembre");
     }
+    
+    
+    
+    
+    
 }

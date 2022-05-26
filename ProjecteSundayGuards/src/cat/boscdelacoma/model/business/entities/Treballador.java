@@ -11,16 +11,14 @@ import java.util.ArrayList;
  * @author Victo
  */
 public class Treballador {
+    private long id;
     private String nom, dni, password;
     private Rol rol;
     private int edat, guardiesPendents;
     private Categoria categoria;
     private ArrayList<Guardia> guardiesFetes;
 
-    public Treballador() {
-    }
-
-    public Treballador(String nom, String dni, String password, int edat, Categoria categoria) {
+    public Treballador(long id ,String nom, String dni, String password, int edat, Categoria categoria) {
         this.nom = nom;
         this.dni = dni;
         this.password = password;
@@ -52,11 +50,11 @@ public class Treballador {
         this.password = password;
     }
 
-    public Rol getRol() {
+    public Rol getRolTreballador() {
         return rol;
     }
 
-    public void setRol(Rol rol) {
+    public void setRolTreballador(Rol rol) {
         this.rol = rol;
     }
 
@@ -76,11 +74,11 @@ public class Treballador {
         this.guardiesPendents = guardiesPendents;
     }
 
-    public Categoria getCategoria() {
+    public Categoria getCategoriaTreballador() {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setCategoriaTreballador(Categoria categoria) {
         this.categoria = categoria;
     }
 
@@ -91,7 +89,7 @@ public class Treballador {
     public void setGuardiesFetes(ArrayList<Guardia> guardiesFetes) {
         this.guardiesFetes = guardiesFetes;
     }
-    
+    // vigilar conflicte amb metodes afegir eliminar i obtenir
     public void afegirGurardia(Guardia g){
         guardiesFetes.add(g);
     }

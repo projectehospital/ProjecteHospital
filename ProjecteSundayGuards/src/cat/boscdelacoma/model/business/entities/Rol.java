@@ -6,24 +6,24 @@ package cat.boscdelacoma.model.business.entities;
 
 /**
  *
- * @author Victo
+ * @author osama
  */
 public class Rol {
-    private String rol;
     
-    public Rol() {
+    private String tipusRol;
+    
         
+    public Rol (String tipusRol){
+    
+        this.tipusRol = tipusRol;
     }
 
-    public Rol(String rol) {
-        this.rol = rol;
+    public String getTipusRol() {
+        return tipusRol;
     }
 
-    public String getRol() {
-        return rol;
+    public void setTipusRol(String tipusRol) {
+        this.tipusRol = tipusRol;
     }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
+    
 }
