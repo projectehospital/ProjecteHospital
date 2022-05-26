@@ -27,7 +27,7 @@ public class JDBCTornDAO implements TornDAO {
             ResultSet resultat = query.executeQuery("select * from torn");
             List<Torn> list = new ArrayList<>();
             while (resultat.next()) {
-                list.add(new Torn(resultat.getString("tipus_torn"), resultat.getLong("id")));
+                list.add(new Torn( resultat.getLong("id"), resultat.getString("tipus_torn")));
             }
             return list;
         } catch (SQLException ex) {
@@ -48,6 +48,26 @@ public class JDBCTornDAO implements TornDAO {
                 t.setTipusTorn(resultat.getString("tipus_torn"));
                 t.setId(resultat.getLong("id"));
                 return t;
+            } else {
+                return null;
+            }
+
+        } catch (SQLException ex) {
+            throw new DAOException();
+        }
+    }
+    
+    public Torn getFromTipusTorn(String t) throws DAOException {
+        try {
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from torn where tipus_torn=?");
+            query.setString(1, t);
+            ResultSet resultat = query.executeQuery();
+
+            if (resultat.next()) {
+                Torn u = new Torn();
+                u.setTipusTorn(resultat.getString("tipus_torn"));
+                u.setId(resultat.getLong("id"));
+                return u;
             } else {
                 return null;
             }

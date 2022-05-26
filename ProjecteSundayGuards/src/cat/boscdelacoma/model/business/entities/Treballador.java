@@ -4,6 +4,7 @@
  */
 package cat.boscdelacoma.model.business.entities;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -11,17 +12,61 @@ import java.util.ArrayList;
  * @author Victo
  */
 public class Treballador {
-    private String nom, dni, password, rol;
-    private int edat, guardiesPendents;
+    
+    private long id, esCapDeUnitat;
+    private String nom, dni, passwd, rol;
+    private int guardiesPrevistes;
+    private LocalDate dataNaixament;
     private Categoria categoria;
-    private ArrayList<Guardia> guardiesFetes;
+    private ArrayList<Guardia> llistaGuardiesFetes;
 
-    public Treballador(String nom, String dni, String password, int edat, Categoria categoria) {
+    public Treballador(long id, String nom, String dni, String passwd, LocalDate dataNaixament, Categoria categoria, long esCapDeUnitat) {
+        this.id = id;
         this.nom = nom;
         this.dni = dni;
-        this.password = password;
-        this.edat = edat;
+        this.passwd = passwd;
+        this.dataNaixament = dataNaixament;
         this.categoria = categoria;
+        this.esCapDeUnitat = esCapDeUnitat;
+    }
+    
+    public Treballador(long id, String nom, String dni, String passwd, LocalDate dataNaixament, Categoria categoria) {
+        this.id = id;
+        this.nom = nom;
+        this.dni = dni;
+        this.passwd = passwd;
+        this.dataNaixament = dataNaixament;
+        this.categoria = categoria;
+    }
+    
+    public Treballador(){
+    }
+    
+    /**
+     * @return the id
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(long id) {
+        this.id = id;
+    }
+    /**
+     * @return the esCapDeUnitat
+     */
+    public long getEsCapDeUnitat() {
+        return esCapDeUnitat;
+    }
+
+    /**
+     * @param esCapDeUnitat the esCapDeUnitat to set
+     */
+    public void setEsCapDeUnitat(long esCapDeUnitat) {
+        this.esCapDeUnitat = esCapDeUnitat;
     }
 
     public String getNom() {
@@ -41,11 +86,11 @@ public class Treballador {
     }
 
     public String getPassword() {
-        return password;
+        return passwd;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String passwd) {
+        this.passwd = passwd;
     }
 
     public String getRol() {
@@ -56,20 +101,20 @@ public class Treballador {
         this.rol = rol;
     }
 
-    public int getEdat() {
-        return edat;
+    public LocalDate getEdat() {
+        return dataNaixament;
     }
 
-    public void setEdat(int edat) {
-        this.edat = edat;
+    public void setEdat(LocalDate dataNaixament) {
+        this.dataNaixament = dataNaixament;
     }
 
     public int getGuardiesPendents() {
-        return guardiesPendents;
+        return guardiesPrevistes;
     }
 
-    public void setGuardiesPendents(int guardiesPendents) {
-        this.guardiesPendents = guardiesPendents;
+    public void setGuardiesPendents(int guardiesPrevistes) {
+        this.guardiesPrevistes = guardiesPrevistes;
     }
 
     public Categoria getCategoria() {
@@ -81,14 +126,22 @@ public class Treballador {
     }
 
     public ArrayList<Guardia> getGuardiesFetes() {
-        return guardiesFetes;
+        return llistaGuardiesFetes;
     }
 
-    public void setGuardiesFetes(ArrayList<Guardia> guardiesFetes) {
-        this.guardiesFetes = guardiesFetes;
+    public void setGuardiesFetes(ArrayList<Guardia> llistaGuardiesFetes) {
+        this.llistaGuardiesFetes = llistaGuardiesFetes;
     }
     
-    public int obtenirGuardiesFetes(ArrayList<Guardia> guardiesFetes){
-        return guardiesFetes.size();
+    public void afegirGuardia(Guardia g){
+        getGuardiesFetes().add(g);
+    }
+    
+    public void eliminarGuardia(Guardia g){
+        getGuardiesFetes().remove(g);
+    }
+    
+    public int obtenirGuardiesFetes(ArrayList<Guardia> llistaGuardiesFetes){
+        return llistaGuardiesFetes.size();
     }    
 }

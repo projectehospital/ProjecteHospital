@@ -4,10 +4,7 @@
  */
 package cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql;
 
-import cat.boscdelacoma.model.business.entities.Categoria;
 import cat.boscdelacoma.model.business.entities.Guardia;
-import cat.boscdelacoma.model.business.entities.Torn;
-import cat.boscdelacoma.model.business.entities.Unitat;
 import cat.boscdelacoma.model.persistence.dao.contracts.GuardiaDAO;
 import cat.boscdelacoma.model.persistence.exceptions.DAOException;
 import java.sql.PreparedStatement;
@@ -32,11 +29,11 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
             Statement query = MYSQLConnection.getInstance().getConnection().createStatement();
             ResultSet resultat = query.executeQuery("select * from guardia");
             List<Guardia> list = new ArrayList<>();
-            Torn t = new Torn();
-            Categoria c = new Categoria();
-            Unitat u = new Unitat();
+            JDBCCategoriaDAO c = new JDBCCategoriaDAO();
+            JDBCUnitatDAO u = new JDBCUnitatDAO();
+            JDBCTornDAO t = new JDBCTornDAO();
             while (resultat.next()) {
-                list.add(new Guardia(resultat.getLong("id"), convertToLocalDateViaInstant(resultat.getDate("dia")), resultat.getString("tipus_unitat")));
+                list.add(new Guardia(resultat.getLong("id"), deDateALocalDate(resultat.getDate("dia")), u.getFromTipusUnitat(resultat.getString("tipus_unitat")), t.getFromTipusTorn(resultat.getString("tipus_torn")), c.getFromTipusCategoria(resultat.getString("tipus_categoria")), resultat.getShort("places_disponibles")));
             }
             return list;
         } catch (SQLException ex) {
@@ -48,27 +45,21 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
     @Override
     public Guardia get(long id) throws DAOException {
         try {
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from hospitalProva.guardia where id=?");
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from guardia where id=?");
             query.setLong(1, id);
             ResultSet resultat = query.executeQuery();
 
             if (resultat.next()) {
                 Guardia g = new Guardia();
-                Torn t = new Torn();
-                Categoria c = new Categoria();
-                Unitat u = new Unitat();
+                JDBCUnitatDAO u = new JDBCUnitatDAO();
+                JDBCTornDAO t = new JDBCTornDAO();
+                JDBCCategoriaDAO c = new JDBCCategoriaDAO();
                 g.setId(resultat.getLong("id"));
-                g.setDia(convertToLocalDateViaInstant(resultat.getDate("dia")));
+                g.setDia(deDateALocalDate(resultat.getDate("dia")));
                 g.setPlacesDisponibles(resultat.getShort("places_disponibles"));
-                //Fem un objecte Unitat per poder accedir a unitat a Guardia
-                u.setTipusUnitat(resultat.getString("tipus_unitat"));
-                g.setUnitat(u);
-                //Fem un objecte Torn per poder accedir a torn a Guardia
-                t.setTipusTorn(resultat.getString("tipus_torn"));
-                g.setTorn(t);
-                //Fem un objecte Categoria per poder accedir a categoria a Guardia
-                c.setTipusCategoria(resultat.getString("tipus_categoria"));
-                g.setCategroia(c);
+                g.setUnitat(u.getFromTipusUnitat("tipus_unitat"));
+                g.setTorn(t.getFromTipusTorn("tipus_torn"));
+                g.setCategoria(c.getFromTipusCategoria("tipus_categoria"));
                 return g;
             } else {
                 return null;
@@ -84,18 +75,26 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
 
         try {
 
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("insert into hospitalProva.guardia(id, dia, tipus_unitat, tipus_torn, tipus_categoria, places_disponibles) VALUES(?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("insert into guardia(id, dia, tipus_unitat, tipus_torn, tipus_categoria, places_disponibles) VALUES(?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
+            JDBCUnitatDAO u = new JDBCUnitatDAO();
+            JDBCTornDAO t = new JDBCTornDAO();
+            JDBCCategoriaDAO c = new JDBCCategoriaDAO();
             query.setLong(1, g.getId());
-            query.setDate(1, (java.sql.Date) convertToDateViaSqlDate(g.getDia()));
-            query.setLong(1, g.getId());
-            query.setLong(1, g.getId());
-            query.setLong(1, g.getId());
-            query.setLong(1, g.getId());
+            query.setDate(2, (java.sql.Date) deLocalDateADate(g.getDia()));
+            query.setString(3, g.getUnitat().getTipusUnitat());
+            query.setString(4, g.getTorn().getTipusTorn());
+            query.setString(5, g.getCategoria().getTipusCategoria());
+            query.setShort(6, g.getPlacesDisponibles());
             query.executeUpdate();
             ResultSet rst = query.getGeneratedKeys();
             if (rst.next()) {
-                t.setId(rst.getShort(1));
+                g.setId(rst.getLong(1));
+                g.setDia(deDateALocalDate(rst.getDate(2)));
+                g.setUnitat(u.getFromTipusUnitat(rst.getString(3)));
+                g.setTorn(t.getFromTipusTorn(rst.getString(4)));
+                g.setCategoria(c.getFromTipusCategoria(rst.getString(5)));
+                g.setPlacesDisponibles(rst.getShort(6));
             }
 
         } catch (SQLException ex) {
@@ -107,9 +106,16 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
     public void update(Guardia g) throws DAOException {
         try {
 
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("update hospitalProva.guardia set tipus_torn=? where id=?");
-            query.setString(1, t.getTipusTorn());
-            query.setShort(2, t.getId());
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("update guardia set dia=?, tipus_unitat=?, tipus_torn=?, tipus_categoria=?, places_disponibles=? where id=?");
+            JDBCUnitatDAO u = new JDBCUnitatDAO();
+            JDBCTornDAO t = new JDBCTornDAO();
+            JDBCCategoriaDAO c = new JDBCCategoriaDAO();
+            query.setDate(1, (java.sql.Date) deLocalDateADate(g.getDia()));
+            query.setString(2, g.getUnitat().getTipusUnitat());
+            query.setString(3, g.getTorn().getTipusTorn());
+            query.setString(4, g.getCategoria().getTipusCategoria());
+            query.setShort(5, g.getPlacesDisponibles());
+            query.setLong(6, g.getId());
             query.executeUpdate();
 
         } catch (SQLException ex) {
@@ -123,8 +129,8 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
     public void delete(Guardia g) throws DAOException {
         try {
 
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("delete from hospitalProva.torn where id=?");
-            query.setShort(1, t.getId());
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("delete from guardia where id=?");
+            query.setLong(1, g.getId());
             query.executeUpdate();
 
         } catch (SQLException ex) {
@@ -133,13 +139,13 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
         }
     }
 
-    public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+    public LocalDate deDateALocalDate(Date dateToConvert) {
         return dateToConvert.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
     }
 
-    public Date convertToDateViaSqlDate(LocalDate dateToConvert) {
+    public Date deLocalDateADate(LocalDate dateToConvert) {
         return java.sql.Date.valueOf(dateToConvert);
     }
 }

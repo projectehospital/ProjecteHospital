@@ -19,15 +19,15 @@ public class Guardia {
     private ArrayList<Treballador> treballadors;
     private Torn torn;
     private Unitat unitat;
-    private Categoria categroia;
+    private Categoria categoria;
     
-    public Guardia(long id, LocalDate dia, short placesDisponibles, Torn torn, Unitat unitat, Categoria categroia) {
+    public Guardia(long id, LocalDate dia,Unitat unitat, Torn torn, Categoria categoria, short placesDisponibles) {
         this.id = id;
         this.dia = dia;
-        this.placesDisponibles = placesDisponibles;
-        this.torn = torn;
         this.unitat = unitat;
-        this.categroia = categroia;
+        this.torn = torn;
+        this.categoria = categoria;
+        this.placesDisponibles = placesDisponibles;
     }
 
     public Guardia() {
@@ -81,11 +81,11 @@ public class Guardia {
         this.unitat = unitat;
     }
 
-    public Categoria getCategroia() {
-        return categroia;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setCategroia(Categoria categroia) {
-        this.categroia = categroia;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }
