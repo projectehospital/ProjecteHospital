@@ -19,6 +19,9 @@ public class Guardia {
     private Torn torn;
     private Unitat unitat;
     private Categoria categroia;
+    
+    public Guardia(){
+    }
 
     public Guardia(LocalDate dia, short placesDisponibles, Torn torn, Unitat unitat, Categoria categroia) {
         this.dia = dia;
