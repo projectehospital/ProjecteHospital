@@ -26,16 +26,23 @@ public class Menu {
         /*Creem un objecte Treballador d'exemple amb el rol d'Administrador, si
         el treballador té rol d'Admin (coincideix) accedirà al menú 
         d'administració, en cas contrari anirà al menú d'usuari*/
-        Treballador ex = new Treballador();
-        Rol r = new Rol();
-        r.setRol("Administrador");
-        ex.setRol(r);
-        if (t.getRol() == ex.getRol()) {
+        
+        // es podria fer amb un case
+        
+        
+        if (t.getRolTreballador().getTipusRol().equals("Administrador")) {
+            // menu per l'administrador permet crear guardies 
+            menuAdministracio();
+        } else if (t.getRolTreballador().getTipusRol().equals("CAP")) {
+           // menu que permet la tria de quin menu es vol accedir
             menuAdmin();
-        } else {
+        } else if (t.getRolTreballador().getTipusRol().equals("Usuari")) {
+            // menu basic de triar guardia usuari !!! s'ha d'afegir opcions com llistar guardia
             menuUsuari();
         }
-
+        
+        
+        
     }
 
     private static void menuAdmin() {
@@ -95,8 +102,9 @@ public class Menu {
             case 0:
                 break;
             case 1:
-                System.out.println("Dia de la guàrida (dd/mm/aaaa):");
+                System.out.println("Dia de la guàrida (aaaa/mm/dd):");
                 String dia = entrada.nextLine();
+                
                 //Convertim la data de String a LocalDate
                 LocalDate data = LocalDate.parse(dia);
                 System.out.println("Places de la guàrdia:");

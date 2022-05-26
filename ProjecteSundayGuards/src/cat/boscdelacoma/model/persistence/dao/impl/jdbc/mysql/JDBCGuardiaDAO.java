@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.ZoneId;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
@@ -45,6 +45,52 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
 
     }
 
+    public Guardia getPerData(LocalDate dia) throws DAOException, SQLException{
+        
+        try {
+                 PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from hospitalProva.guardia where dia=?");
+            query.setDate(1,convertirLocalDateADate(dia) );
+           
+            ResultSet resultat = query.executeQuery();
+
+            if (resultat.next()) {
+                Guardia g = new Guardia();
+                Torn t = new Torn();
+                Categoria c = new Categoria();
+                Unitat u = new Unitat();
+                g.setId(resultat.getLong("id"));
+                g.setDia(convertToLocalDateViaInstant(resultat.getDate("dia")));
+                g.setPlacesDisponibles(resultat.getShort("places_disponibles"));
+                //Fem un objecte Unitat per poder accedir a unitat a Guardia
+                u.setTipusUnitat(resultat.getString("tipus_unitat"));
+                g.setUnitat(u);
+                //Fem un objecte Torn per poder accedir a torn a Guardia
+                t.setTipusTorn(resultat.getString("tipus_torn"));
+                g.setTorn(t);
+                //Fem un objecte Categoria per poder accedir a categoria a Guardia
+                c.setTipusCategoria(resultat.getString("tipus_categoria"));
+                g.setCategroia(c);
+                return g;
+            } else {
+                return null;
+            }
+
+            
+            
+        }catch(DAOException e ){
+        
+            throw new DAOException();
+            
+        }catch(SQLException ex){
+            
+            throw new SQLException();
+        }
+        
+    
+    
+    }
+    
+    
     @Override
     public Guardia get(long id) throws DAOException {
         try {
@@ -133,13 +179,13 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
         }
     }
 
-    public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+    public LocalDate convertirDateALocalDate (Date dateToConvert) {
         return dateToConvert.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
     }
 
-    public Date convertToDateViaSqlDate(LocalDate dateToConvert) {
-        return java.sql.Date.valueOf(dateToConvert);
+    public Date convertirLocalDateADate (LocalDate dateToConvert) {
+        return Date.valueOf(dateToConvert);
     }
 }
