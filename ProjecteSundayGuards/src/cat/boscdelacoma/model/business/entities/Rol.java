@@ -13,6 +13,10 @@ public class Rol {
     private long id;
     private String tipusRol;
     
+    public Rol(){
+    
+    }
+    
         
     public Rol (long id, String tipusRol){
         this.id = id;

@@ -30,7 +30,7 @@ public class JDBCUnitatDAO implements UnitatDAO {
 
             if (resultat.next()) {
                 Unitat u = new Unitat();
-                u.setTipusUnitat(resultat.getString("tipus_torn"));
+                u.setTipusUnitat(resultat.getString("tipus_unitat"));
                 u.setId(resultat.getLong("id"));
                 return u;
             } else {
