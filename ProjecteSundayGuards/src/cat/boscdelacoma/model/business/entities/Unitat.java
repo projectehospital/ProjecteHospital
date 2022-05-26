@@ -10,13 +10,29 @@ package cat.boscdelacoma.model.business.entities;
  */
 public class Unitat {
     
+    private long id;
     private String tipusUnitat;
 
-    public Unitat(String tipusUnitat) {
+    public Unitat(long id, String tipusUnitat) {
+        this.id = id;
         this.tipusUnitat = tipusUnitat;
     }
 
     public Unitat() {
+    }
+    
+    /**
+     * @return the id
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(long id) {
+        this.id = id;
     }
     
     /**

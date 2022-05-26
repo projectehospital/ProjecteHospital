@@ -8,6 +8,7 @@ import cat.boscdelacoma.model.business.entities.Categoria;
 import cat.boscdelacoma.model.business.entities.Guardia;
 import cat.boscdelacoma.model.business.entities.Torn;
 import cat.boscdelacoma.model.business.entities.Unitat;
+import cat.boscdelacoma.model.persistence.dao.contracts.GuardiaDAO;
 import cat.boscdelacoma.model.persistence.exceptions.DAOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,7 +24,7 @@ import java.util.Date;
  *
  * @author Victo
  */
-public class JDBCGuardiaDAO {
+public class JDBCGuardiaDAO implements GuardiaDAO {
 
     @Override
     public List<Guardia> getAll() throws DAOException {
