@@ -43,11 +43,13 @@ create table treballador (
         passwd 	varchar(10)			not null,
         guardies_fetes   smallint 	,
         guardies_previstes smallint ,
+	es_cap_de_unitat   int 			, 
         tipus_contracte varchar(50),
         tipus_categoria  varchar(50), 
-		tipus_rol		varchar(50) ,
+	tipus_rol		varchar(50) ,
         foreign key (tipus_categoria) references categoria(tipus_categoria),
         foreign key (tipus_rol) references rol(tipus_rol),
+	foreign key (es_cap_de_unitat) references unitat(id),
         unique(DNI)
         
 );
