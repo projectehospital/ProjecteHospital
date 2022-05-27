@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.ZoneId;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
@@ -81,7 +81,7 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
             JDBCTornDAO t = new JDBCTornDAO();
             JDBCCategoriaDAO c = new JDBCCategoriaDAO();
             query.setLong(1, g.getId());
-            query.setDate(2, (java.sql.Date) deLocalDateADate(g.getDia()));
+            query.setDate(2,  deLocalDateADate(g.getDia()));
             query.setString(3, g.getUnitat().getTipusUnitat());
             query.setString(4, g.getTorn().getTipusTorn());
             query.setString(5, g.getCategoria().getTipusCategoria());
@@ -110,7 +110,7 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
             JDBCUnitatDAO u = new JDBCUnitatDAO();
             JDBCTornDAO t = new JDBCTornDAO();
             JDBCCategoriaDAO c = new JDBCCategoriaDAO();
-            query.setDate(1, (java.sql.Date) deLocalDateADate(g.getDia()));
+            query.setDate(1,  deLocalDateADate(g.getDia()));
             query.setString(2, g.getUnitat().getTipusUnitat());
             query.setString(3, g.getTorn().getTipusTorn());
             query.setString(4, g.getCategoria().getTipusCategoria());

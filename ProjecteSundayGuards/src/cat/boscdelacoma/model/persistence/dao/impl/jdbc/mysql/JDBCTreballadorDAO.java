@@ -15,7 +15,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -105,7 +105,7 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
             query.setLong(1, t.getId());
             query.setString(2, t.getDni());
             query.setString(3, t.getNom());
-            query.setDate(4, (java.sql.Date) deLocalDateADate(t.getDataNaixement()));
+            query.setDate(4,  deLocalDateADate(t.getDataNaixement()));
             query.setString(5, t.getPasswd());
             query.setShort(6, t.getGuardiesFetes());
             query.setShort(7, t.getGuardiesPrevistes());
@@ -144,7 +144,7 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
             JDBCRolDAO r = new JDBCRolDAO();
             query.setString(1, t.getDni());
             query.setString(2, t.getNom());
-            query.setDate(3, (java.sql.Date) deLocalDateADate(t.getDataNaixement()));
+            query.setDate(3,  deLocalDateADate(t.getDataNaixement()));
             query.setString(4, t.getPasswd());
             query.setShort(5, t.getGuardiesFetes());
             query.setShort(6, t.getGuardiesPrevistes());
@@ -169,7 +169,7 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
     }
 
     public Date deLocalDateADate(LocalDate dateToConvert) {
-        return java.sql.Date.valueOf(dateToConvert);
+        return Date.valueOf(dateToConvert);
     }
     
 }

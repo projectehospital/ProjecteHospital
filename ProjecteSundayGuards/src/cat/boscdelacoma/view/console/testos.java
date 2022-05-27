@@ -5,7 +5,9 @@
 package cat.boscdelacoma.view.console;
 
 import cat.boscdelacoma.model.business.entities.Torn;
+import cat.boscdelacoma.model.business.entities.Unitat;
 import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.JDBCTornDAO;
+import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.JDBCUnitatDAO;
 import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.MYSQLConnection;
 import cat.boscdelacoma.model.persistence.exceptions.DAOException;
 import java.util.ArrayList;
@@ -23,17 +25,17 @@ public class testos {
         MYSQLConnection con = MYSQLConnection.getInstance();
         System.out.println(con.getConnection());
 
-        JDBCTornDAO torn = new JDBCTornDAO();
-        Torn tor = new Torn();
-        tor.setId(3);
-        tor.setTipusTorn("Nito");
-        torn.delete(tor);
-        List llistaTorns = new ArrayList<Torn>();
-        llistaTorns = torn.getAll();
-        Torn t = new Torn();
-        for (int i = 0; i < llistaTorns.size(); i++) {
-            t = (Torn)llistaTorns.get(i);
-            System.out.println(t.getTipusTorn() + t.getId());
+        JDBCUnitatDAO unitat = new JDBCUnitatDAO();
+        Unitat u = new Unitat();
+        u.setId(6);
+        u.setTipusUnitat("Unitat 7");
+        unitat.delete(u);
+        List llistaUnitats = new ArrayList<Unitat>();
+        llistaUnitats = unitat.getAll();
+        Unitat t = new Unitat();
+        for (int i = 0; i < llistaUnitats.size(); i++) {
+            t = (Unitat)llistaUnitats.get(i);
+            System.out.println(t.getId() + " " + t.getTipusUnitat());
         }
 
     }
