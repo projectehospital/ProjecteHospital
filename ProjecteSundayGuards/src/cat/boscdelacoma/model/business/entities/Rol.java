@@ -10,12 +10,31 @@ package cat.boscdelacoma.model.business.entities;
  */
 public class Rol {
     
+    private long id;
     private String tipusRol;
     
-        
-    public Rol (String tipusRol){
+    public Rol(){
     
+    }
+    
+        
+    public Rol (long id, String tipusRol){
+        this.id = id;
         this.tipusRol = tipusRol;
+    }
+    
+     /**
+     * @return the id
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTipusRol() {

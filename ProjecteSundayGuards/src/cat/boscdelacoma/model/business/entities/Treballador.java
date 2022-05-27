@@ -4,6 +4,7 @@
  */
 package cat.boscdelacoma.model.business.entities;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -11,19 +12,61 @@ import java.util.ArrayList;
  * @author Victo
  */
 public class Treballador {
+    
     private long id;
-    private String nom, dni, password;
-    private Rol rol;
-    private int edat, guardiesPendents;
+    private String nom, dni, passwd, tipusContracte;
+    private short guardiesPrevistes, guardiesFetes, esCapDeUnitat;
+    private LocalDate dataNaixement;
+    private Rol rolTreballador;
     private Categoria categoria;
-    private ArrayList<Guardia> guardiesFetes;
+    private ArrayList<Guardia> llistaGuardiesFetes;
 
-    public Treballador(long id ,String nom, String dni, String password, int edat, Categoria categoria) {
+    public Treballador(long id, String dni, String nom, LocalDate dataNaixement, String passwd, short guardiesFetes, short guardiesPrevistes, String tipusContracte, Categoria categoria, Rol rolTreballador, short esCapDeUnitat) {
+        this.id = id;
         this.nom = nom;
         this.dni = dni;
-        this.password = password;
-        this.edat = edat;
+        this.passwd = passwd;
+        this.tipusContracte = tipusContracte;
+        this.guardiesPrevistes = guardiesPrevistes;
+        this.guardiesFetes = guardiesFetes;
+        this.esCapDeUnitat = esCapDeUnitat;
+        this.dataNaixement = dataNaixement;
+        this.rolTreballador = rolTreballador;
         this.categoria = categoria;
+    }
+
+    public Treballador(long id, String nom, String dni, String passwd, Rol rolTreballador, String tipusContracte, LocalDate dataNaixement, Categoria categoria, short esCapDeUnitat) {
+        this.id = id;
+        this.nom = nom;
+        this.dni = dni;
+        this.passwd = passwd;
+        this.rolTreballador = rolTreballador;
+        this.tipusContracte = tipusContracte;
+        this.dataNaixement = dataNaixement;
+        this.categoria = categoria;
+        this.esCapDeUnitat = esCapDeUnitat;
+    }
+    
+    public Treballador(long id, String nom, String dni, String passwd, Rol rolTreballador, String tipusContracte, LocalDate dataNaixement, Categoria categoria) {
+        this.id = id;
+        this.nom = nom;
+        this.dni = dni;
+        this.passwd = passwd;
+        this.rolTreballador = rolTreballador;
+        this.tipusContracte = tipusContracte;
+        this.dataNaixement = dataNaixement;
+        this.categoria = categoria;
+    }
+    
+    public Treballador(){
+    }
+    
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getNom() {
@@ -42,36 +85,60 @@ public class Treballador {
         this.dni = dni;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswd() {
+        return passwd;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswd(String passwd) {
+        this.passwd = passwd;
     }
 
     public Rol getRolTreballador() {
-        return rol;
+        return rolTreballador;
     }
 
-    public void setRolTreballador(Rol rol) {
-        this.rol = rol;
+    public void setRolTreballador(Rol rolTreballador) {
+        this.rolTreballador = rolTreballador;
     }
 
-    public int getEdat() {
-        return edat;
+    public String getTipusContracte() {
+        return tipusContracte;
     }
 
-    public void setEdat(int edat) {
-        this.edat = edat;
+    public void setTipusContracte(String tipusContracte) {
+        this.tipusContracte = tipusContracte;
     }
 
-    public int getGuardiesPendents() {
-        return guardiesPendents;
+    public short getGuardiesPrevistes() {
+        return guardiesPrevistes;
     }
 
-    public void setGuardiesPendents(int guardiesPendents) {
-        this.guardiesPendents = guardiesPendents;
+    public void setGuardiesPrevistes(short guardiesPrevistes) {
+        this.guardiesPrevistes = guardiesPrevistes;
+    }
+
+    public short getGuardiesFetes() {
+        return guardiesFetes;
+    }
+
+    public void setGuardiesFetes(short guardiesFetes) {
+        this.guardiesFetes = guardiesFetes;
+    }
+
+    public short getEsCapDeUnitat() {
+        return esCapDeUnitat;
+    }
+
+    public void setEsCapDeUnitat(short esCapDeUnitat) {
+        this.esCapDeUnitat = esCapDeUnitat;
+    }
+
+    public LocalDate getDataNaixement() {
+        return dataNaixement;
+    }
+
+    public void setDataNaixement(LocalDate dataNaixement) {
+        this.dataNaixement = dataNaixement;
     }
 
     public Categoria getCategoriaTreballador() {
@@ -82,12 +149,12 @@ public class Treballador {
         this.categoria = categoria;
     }
 
-    public ArrayList<Guardia> getGuardiesFetes() {
-        return guardiesFetes;
+    public ArrayList<Guardia> getLlistaGuardiesFetes() {
+        return llistaGuardiesFetes;
     }
 
-    public void setGuardiesFetes(ArrayList<Guardia> guardiesFetes) {
-        this.guardiesFetes = guardiesFetes;
+    public void setLlistaGuardiesFetes(ArrayList<Guardia> llistaGuardiesFetes) {
+        this.llistaGuardiesFetes = llistaGuardiesFetes;
     }
     // vigilar conflicte amb metodes afegir eliminar i obtenir
     public void afegirGurardia(Guardia g){
@@ -98,7 +165,15 @@ public class Treballador {
         guardiesFetes.remove(g);
     }
     
-    public int obtenirGuardiesFetes(ArrayList<Guardia> guardiesFetes){
-        return guardiesFetes.size();
+    public void afegirGuardia(Guardia g){
+        getLlistaGuardiesFetes().add(g);
+    }
+    
+    public void eliminarGuardia(Guardia g){
+        getLlistaGuardiesFetes().remove(g);
+    }
+    
+    public int obtenirGuardiesFetes(ArrayList<Guardia> llistaGuardiesFetes){
+        return llistaGuardiesFetes.size();
     }    
 }

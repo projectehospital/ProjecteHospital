@@ -24,8 +24,28 @@ public class JDBCCategoriaDAO implements CategoriaDAO {
     @Override
     public Categoria get(long id) throws DAOException {
         try {
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from unitat where id=?");
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from categoria where id=?");
             query.setLong(1, id);
+            ResultSet resultat = query.executeQuery();
+
+            if (resultat.next()) {
+                Categoria c = new Categoria();
+                c.setTipusCategoria(resultat.getString("tipus_categoria"));
+                c.setId(resultat.getLong("id"));
+                return c;
+            } else {
+                return null;
+            }
+
+        } catch (SQLException ex) {
+            throw new DAOException();
+        }
+    }
+    
+    public Categoria getFromTipusCategoria(String t) throws DAOException {
+        try {
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from categoria where tipus_categoria=?");
+            query.setString(1, t);
             ResultSet resultat = query.executeQuery();
 
             if (resultat.next()) {
@@ -94,7 +114,7 @@ public class JDBCCategoriaDAO implements CategoriaDAO {
     @Override
     public void update(Categoria c) throws DAOException {
         try {
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("update unitat set tipus_categoria=? where id=?");
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("update categoria set tipus_categoria=? where id=?");
             query.setString(1, c.getTipusCategoria());
             query.setLong(2, c.getId());
             query.executeUpdate();

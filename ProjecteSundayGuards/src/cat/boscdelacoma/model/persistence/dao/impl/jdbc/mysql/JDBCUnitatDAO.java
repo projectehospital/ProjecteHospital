@@ -30,7 +30,27 @@ public class JDBCUnitatDAO implements UnitatDAO {
 
             if (resultat.next()) {
                 Unitat u = new Unitat();
-                u.setTipusUnitat(resultat.getString("tipus_torn"));
+                u.setTipusUnitat(resultat.getString("tipus_unitat"));
+                u.setId(resultat.getLong("id"));
+                return u;
+            } else {
+                return null;
+            }
+
+        } catch (SQLException ex) {
+            throw new DAOException();
+        }
+    }
+    
+    public Unitat getFromTipusUnitat(String t) throws DAOException {
+        try {
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from unitat where tipus_unitat=?");
+            query.setString(1, t);
+            ResultSet resultat = query.executeQuery();
+
+            if (resultat.next()) {
+                Unitat u = new Unitat();
+                u.setTipusUnitat(resultat.getString("tipus_unitat"));
                 u.setId(resultat.getLong("id"));
                 return u;
             } else {
