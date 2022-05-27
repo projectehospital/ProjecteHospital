@@ -4,7 +4,10 @@
  */
 package cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql;
 
+import cat.boscdelacoma.model.business.entities.Categoria;
 import cat.boscdelacoma.model.business.entities.Guardia;
+import cat.boscdelacoma.model.business.entities.Torn;
+import cat.boscdelacoma.model.business.entities.Unitat;
 import cat.boscdelacoma.model.persistence.dao.contracts.GuardiaDAO;
 import cat.boscdelacoma.model.persistence.exceptions.DAOException;
 import java.sql.PreparedStatement;
@@ -45,8 +48,9 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
     public Guardia getPerData(LocalDate dia) throws DAOException, SQLException{
         
         try {
-                 PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from hospitalProva.guardia where dia=?");
-            query.setDate(1,convertirLocalDateADate(dia) );
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from guardia where dia=?");
+            
+            query.setDate(1,deLocalDateADate(dia) );
            
             ResultSet resultat = query.executeQuery();
 
@@ -56,7 +60,7 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
                 Categoria c = new Categoria();
                 Unitat u = new Unitat();
                 g.setId(resultat.getLong("id"));
-                g.setDia(convertToLocalDateViaInstant(resultat.getDate("dia")));
+                g.setDia(deDateALocalDate(resultat.getDate("dia")));
                 g.setPlacesDisponibles(resultat.getShort("places_disponibles"));
                 //Fem un objecte Unitat per poder accedir a unitat a Guardia
                 u.setTipusUnitat(resultat.getString("tipus_unitat"));
@@ -66,21 +70,15 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
                 g.setTorn(t);
                 //Fem un objecte Categoria per poder accedir a categoria a Guardia
                 c.setTipusCategoria(resultat.getString("tipus_categoria"));
-                g.setCategroia(c);
+                g.setCategoria(c);
                 return g;
             } else {
                 return null;
             }
-
-            
-            
-        }catch(DAOException e ){
-        
-            throw new DAOException();
-            
+  
         }catch(SQLException ex){
             
-            throw new SQLException();
+            throw new DAOException();
         }
         
     

@@ -43,7 +43,7 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
                 t.setGuardiesFetes(resultat.getShort("guardies_fetes"));
                 t.setGuardiesPrevistes(resultat.getShort("guardies_previstes"));
                 t.setTipusContracte(resultat.getString("tipus_contracte"));
-                t.setCategoria(c.getFromTipusCategoria(resultat.getString("tipus_categoria")));
+                t.setCategoriaTreballador(c.getFromTipusCategoria(resultat.getString("tipus_categoria")));
                 t.setRolTreballador(r.getFromTipusRol(resultat.getString("tipus_rol")));
                 t.setEsCapDeUnitat(resultat.getShort("es_cap_de_unitat"));
                 
@@ -110,9 +110,9 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
             query.setShort(6, t.getGuardiesFetes());
             query.setShort(7, t.getGuardiesPrevistes());
             query.setString(8, t.getTipusContracte());
-            query.setString(9, t.getCategoria().getTipusCategoria());
+            query.setString(9, t.getCategoriaTreballador().getTipusCategoria());
             query.setString(10, t.getRolTreballador().getTipusRol());
-            query.setShort(11, t.getEsCapDeUnitat());
+            query.setLong(11, t.getEsCapDeUnitat());
             query.executeUpdate();
             ResultSet rst = query.getGeneratedKeys();
             if (rst.next()) {
@@ -124,7 +124,7 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
                 t.setGuardiesFetes(rst.getShort(6));
                 t.setGuardiesPrevistes(rst.getShort(7));
                 t.setTipusContracte(rst.getString(8));
-                t.setCategoria(c.getFromTipusCategoria(rst.getString(9)));
+                t.setCategoriaTreballador(c.getFromTipusCategoria(rst.getString(9)));
                 t.setRolTreballador(r.getFromTipusRol(rst.getString(10)));
                 t.setEsCapDeUnitat(rst.getShort(11));
             }
@@ -149,9 +149,9 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
             query.setShort(5, t.getGuardiesFetes());
             query.setShort(6, t.getGuardiesPrevistes());
             query.setString(7, t.getTipusContracte());
-            query.setString(8, t.getCategoria().getTipusCategoria());
+            query.setString(8, t.getCategoriaTreballador().getTipusCategoria());
             query.setString(9, t.getRolTreballador().getTipusRol());
-            query.setShort(10, t.getEsCapDeUnitat());
+            query.setLong(10, t.getEsCapDeUnitat());
             query.setLong(11, t.getId());
             query.executeUpdate();
 

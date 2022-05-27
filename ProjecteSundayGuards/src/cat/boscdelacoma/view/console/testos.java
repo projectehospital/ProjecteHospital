@@ -20,22 +20,11 @@ import java.util.logging.Logger;
 public class testos {
 
     public static void main(String[] args) throws DAOException {
-        MYSQLConnection con = MYSQLConnection.getInstance();
-        System.out.println(con.getConnection());
-
-        JDBCTornDAO torn = new JDBCTornDAO();
-        Torn tor = new Torn();
-        tor.setId(3);
-        tor.setTipusTorn("Nito");
-        torn.delete(tor);
-        List llistaTorns = new ArrayList<Torn>();
-        llistaTorns = torn.getAll();
-        Torn t = new Torn();
-        for (int i = 0; i < llistaTorns.size(); i++) {
-            t = (Torn)llistaTorns.get(i);
-            System.out.println(t.getTipusTorn() + t.getId());
-        }
-
+        
+        System.out.println("1. Gener 2. Febrer 3. Març");
+        System.out.println("4. Abril 5. Maig  6. Juny");
+        System.out.println("7. Juliol 8. Agost   9. Setembre");
+        System.out.println("10. Octubre  11. Novembre   12. Desembre");
     }
 
 }
