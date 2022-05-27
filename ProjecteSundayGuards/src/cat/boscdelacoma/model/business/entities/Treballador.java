@@ -13,15 +13,18 @@ import java.util.ArrayList;
  */
 public class Treballador {
     
-    private long id;
+    private long id , esCapDeUnitat;
     private String nom, dni, passwd, tipusContracte;
-    private short guardiesPrevistes, guardiesFetes, esCapDeUnitat;
+    private short guardiesPrevistes, guardiesFetes;
     private LocalDate dataNaixement;
     private Rol rolTreballador;
     private Categoria categoria;
     private ArrayList<Guardia> llistaGuardiesFetes;
 
-    public Treballador(long id, String dni, String nom, LocalDate dataNaixement, String passwd, short guardiesFetes, short guardiesPrevistes, String tipusContracte, Categoria categoria, Rol rolTreballador, short esCapDeUnitat) {
+    public Treballador(long id, String dni, String nom, LocalDate dataNaixement, String passwd, short guardiesFetes, short guardiesPrevistes, String tipusContracte, Categoria categoria, Rol rolTreballador, long esCapDeUnitat) {
+       
+       // treballador amb guardies previstes i fetes
+        
         this.id = id;
         this.nom = nom;
         this.dni = dni;
@@ -125,7 +128,7 @@ public class Treballador {
         this.guardiesFetes = guardiesFetes;
     }
 
-    public short getEsCapDeUnitat() {
+    public long getEsCapDeUnitat() {
         return esCapDeUnitat;
     }
 
@@ -155,14 +158,6 @@ public class Treballador {
 
     public void setLlistaGuardiesFetes(ArrayList<Guardia> llistaGuardiesFetes) {
         this.llistaGuardiesFetes = llistaGuardiesFetes;
-    }
-    // vigilar conflicte amb metodes afegir eliminar i obtenir
-    public void afegirGurardia(Guardia g){
-        guardiesFetes.add(g);
-    }
-    
-    public void eliminarGuardia(Guardia g){
-        guardiesFetes.remove(g);
     }
     
     public void afegirGuardia(Guardia g){
