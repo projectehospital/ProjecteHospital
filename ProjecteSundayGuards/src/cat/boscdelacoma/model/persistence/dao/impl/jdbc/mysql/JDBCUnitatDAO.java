@@ -42,7 +42,7 @@ public class JDBCUnitatDAO implements UnitatDAO {
         }
     }
     
-    public Unitat getFromTipusUnitat(String t) throws DAOException {
+    public Unitat get(String t) throws DAOException {
         try {
             PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from unitat where tipus_unitat=?");
             query.setString(1, t);

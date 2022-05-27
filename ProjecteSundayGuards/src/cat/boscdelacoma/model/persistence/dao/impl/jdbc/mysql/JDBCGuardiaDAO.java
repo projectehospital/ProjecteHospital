@@ -33,7 +33,7 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
             JDBCUnitatDAO u = new JDBCUnitatDAO();
             JDBCTornDAO t = new JDBCTornDAO();
             while (resultat.next()) {
-                list.add(new Guardia(resultat.getLong("id"), deDateALocalDate(resultat.getDate("dia")), u.getFromTipusUnitat(resultat.getString("tipus_unitat")), t.getFromTipusTorn(resultat.getString("tipus_torn")), c.getFromTipusCategoria(resultat.getString("tipus_categoria")), resultat.getShort("places_disponibles")));
+                list.add(new Guardia(resultat.getLong("id"), deDateALocalDate(resultat.getDate("dia")), u.get(resultat.getString("tipus_unitat")), t.get(resultat.getString("tipus_torn")), c.get(resultat.getString("tipus_categoria")), resultat.getShort("places_disponibles")));
             }
             return list;
         } catch (SQLException ex) {
@@ -57,9 +57,9 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
                 g.setId(resultat.getLong("id"));
                 g.setDia(deDateALocalDate(resultat.getDate("dia")));
                 g.setPlacesDisponibles(resultat.getShort("places_disponibles"));
-                g.setUnitat(u.getFromTipusUnitat("tipus_unitat"));
-                g.setTorn(t.getFromTipusTorn("tipus_torn"));
-                g.setCategoria(c.getFromTipusCategoria("tipus_categoria"));
+                g.setUnitat(u.get("tipus_unitat"));
+                g.setTorn(t.get("tipus_torn"));
+                g.setCategoria(c.get("tipus_categoria"));
                 return g;
             } else {
                 return null;
@@ -91,9 +91,9 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
             if (rst.next()) {
                 g.setId(rst.getLong(1));
                 g.setDia(deDateALocalDate(rst.getDate(2)));
-                g.setUnitat(u.getFromTipusUnitat(rst.getString(3)));
-                g.setTorn(t.getFromTipusTorn(rst.getString(4)));
-                g.setCategoria(c.getFromTipusCategoria(rst.getString(5)));
+                g.setUnitat(u.get(rst.getString(3)));
+                g.setTorn(t.get(rst.getString(4)));
+                g.setCategoria(c.get(rst.getString(5)));
                 g.setPlacesDisponibles(rst.getShort(6));
             }
 
@@ -146,6 +146,6 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
     }
 
     public Date deLocalDateADate(LocalDate dateToConvert) {
-        return java.sql.Date.valueOf(dateToConvert);
+        return Date.valueOf(dateToConvert);
     }
 }

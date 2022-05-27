@@ -4,8 +4,13 @@
  */
 package cat.boscdelacoma.view.console;
 
+import cat.boscdelacoma.model.business.entities.Categoria;
+import cat.boscdelacoma.model.business.entities.Rol;
 import cat.boscdelacoma.model.business.entities.Torn;
 import cat.boscdelacoma.model.business.entities.Unitat;
+import cat.boscdelacoma.model.persistence.dao.contracts.CategoriaDAO;
+import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.JDBCCategoriaDAO;
+import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.JDBCRolDAO;
 import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.JDBCTornDAO;
 import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.JDBCUnitatDAO;
 import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.MYSQLConnection;
@@ -25,17 +30,23 @@ public class testos {
         MYSQLConnection con = MYSQLConnection.getInstance();
         System.out.println(con.getConnection());
 
-        JDBCUnitatDAO unitat = new JDBCUnitatDAO();
-        Unitat u = new Unitat();
-        u.setId(6);
-        u.setTipusUnitat("Unitat 7");
-        unitat.delete(u);
-        List llistaUnitats = new ArrayList<Unitat>();
-        llistaUnitats = unitat.getAll();
-        Unitat t = new Unitat();
-        for (int i = 0; i < llistaUnitats.size(); i++) {
-            t = (Unitat)llistaUnitats.get(i);
-            System.out.println(t.getId() + " " + t.getTipusUnitat());
+        try{
+        var rol = new JDBCRolDAO();
+        var u = new Rol();
+        u.setId(3);
+        u.setTipusRol("Jefe");
+        rol.add(u);
+        List llistaRols = new ArrayList<Rol>();
+        llistaRols = rol.getAll();
+        var t = new Rol();
+//        t = categoria.get(3);
+//        System.out.println(t.getId() + " " + t.getTipusCategoria());
+        for (int i = 0; i < llistaRols.size(); i++) {
+            t = (Rol)llistaRols.get(i);
+            System.out.println(t.getId() + " " + t.getTipusRol());
+        }
+        }catch(DAOException e){
+            System.out.println("Error:" + e);
         }
 
     }

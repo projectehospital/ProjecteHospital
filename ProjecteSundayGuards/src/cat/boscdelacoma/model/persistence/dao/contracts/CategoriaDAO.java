@@ -5,6 +5,7 @@
 package cat.boscdelacoma.model.persistence.dao.contracts;
 
 import cat.boscdelacoma.model.business.entities.Categoria;
+import cat.boscdelacoma.model.persistence.exceptions.DAOException;
 
 /**
  *
@@ -12,6 +13,7 @@ import cat.boscdelacoma.model.business.entities.Categoria;
  */
 public interface CategoriaDAO extends DAO<Categoria>{
     
-    
+    //sobrecàrrega
+    Categoria get (String s)throws DAOException;
     
 }

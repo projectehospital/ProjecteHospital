@@ -41,26 +41,6 @@ public class JDBCCategoriaDAO implements CategoriaDAO {
             throw new DAOException();
         }
     }
-    
-    public Categoria getFromTipusCategoria(String t) throws DAOException {
-        try {
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from categoria where tipus_categoria=?");
-            query.setString(1, t);
-            ResultSet resultat = query.executeQuery();
-
-            if (resultat.next()) {
-                Categoria c = new Categoria();
-                c.setTipusCategoria(resultat.getString("tipus_categoria"));
-                c.setId(resultat.getLong("id"));
-                return c;
-            } else {
-                return null;
-            }
-
-        } catch (SQLException ex) {
-            throw new DAOException();
-        }
-    }
 
     @Override
     public List<Categoria> getAll() throws DAOException {
@@ -123,6 +103,27 @@ public class JDBCCategoriaDAO implements CategoriaDAO {
 
             throw new DAOException();
 
+        }
+    }
+
+    @Override
+    public Categoria get(String s) throws DAOException {
+        try {
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from categoria where tipus_categoria=?");
+            query.setString(1, s);
+            ResultSet resultat = query.executeQuery();
+
+            if (resultat.next()) {
+                Categoria c = new Categoria();
+                c.setTipusCategoria(resultat.getString("tipus_categoria"));
+                c.setId(resultat.getLong("id"));
+                return c;
+            } else {
+                return null;
+            }
+
+        } catch (SQLException ex) {
+            throw new DAOException();
         }
     }
     

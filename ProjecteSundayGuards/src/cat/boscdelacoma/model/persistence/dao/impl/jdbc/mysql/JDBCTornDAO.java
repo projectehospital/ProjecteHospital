@@ -56,26 +56,6 @@ public class JDBCTornDAO implements TornDAO {
             throw new DAOException();
         }
     }
-    
-    public Torn getFromTipusTorn(String t) throws DAOException {
-        try {
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from torn where tipus_torn=?");
-            query.setString(1, t);
-            ResultSet resultat = query.executeQuery();
-
-            if (resultat.next()) {
-                Torn u = new Torn();
-                u.setTipusTorn(resultat.getString("tipus_torn"));
-                u.setId(resultat.getLong("id"));
-                return u;
-            } else {
-                return null;
-            }
-
-        } catch (SQLException ex) {
-            throw new DAOException();
-        }
-    }
 
     @Override
     public void add(Torn t) throws DAOException {
@@ -125,6 +105,27 @@ public class JDBCTornDAO implements TornDAO {
         } catch (SQLException ex) {
             throw new DAOException();
 
+        }
+    }
+
+    @Override
+    public Torn get(String s) throws DAOException {
+        try {
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from torn where tipus_torn=?");
+            query.setString(1, s);
+            ResultSet resultat = query.executeQuery();
+
+            if (resultat.next()) {
+                Torn u = new Torn();
+                u.setTipusTorn(resultat.getString("tipus_torn"));
+                u.setId(resultat.getLong("id"));
+                return u;
+            } else {
+                return null;
+            }
+
+        } catch (SQLException ex) {
+            throw new DAOException();
         }
     }
 }

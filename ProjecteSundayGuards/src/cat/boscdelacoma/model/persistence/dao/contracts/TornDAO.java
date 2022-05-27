@@ -5,6 +5,7 @@
 package cat.boscdelacoma.model.persistence.dao.contracts;
 
 import cat.boscdelacoma.model.business.entities.Torn;
+import cat.boscdelacoma.model.persistence.exceptions.DAOException;
 
 /**
  *
@@ -12,6 +13,7 @@ import cat.boscdelacoma.model.business.entities.Torn;
  */
 public interface TornDAO extends DAO<Torn>{
     
-    
+    //sobrecàrrega
+    Torn get (String s)throws DAOException;
     
 }

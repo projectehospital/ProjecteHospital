@@ -5,11 +5,13 @@
 package cat.boscdelacoma.model.persistence.dao.contracts;
 
 import cat.boscdelacoma.model.business.entities.Rol;
+import cat.boscdelacoma.model.persistence.exceptions.DAOException;
 
 /**
  *
  * @author Victo
  */
 public interface RolDAO extends DAO<Rol>{
-    
+    //sobrecàrrega
+    Rol get (String s)throws DAOException;
 }

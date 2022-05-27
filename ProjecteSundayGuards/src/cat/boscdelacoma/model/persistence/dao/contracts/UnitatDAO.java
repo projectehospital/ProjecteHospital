@@ -5,6 +5,7 @@
 package cat.boscdelacoma.model.persistence.dao.contracts;
 
 import cat.boscdelacoma.model.business.entities.Unitat;
+import cat.boscdelacoma.model.persistence.exceptions.DAOException;
 
 /**
  *
@@ -12,6 +13,7 @@ import cat.boscdelacoma.model.business.entities.Unitat;
  */
 public interface UnitatDAO extends DAO<Unitat>{
     
-    
+    //sobrecàrrega
+    Unitat get (String s)throws DAOException;
     
 }
