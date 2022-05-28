@@ -34,9 +34,10 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
             JDBCCategoriaDAO c = new JDBCCategoriaDAO();
             JDBCUnitatDAO u = new JDBCUnitatDAO();
             JDBCTornDAO t = new JDBCTornDAO();
+            // fem la conversio de la data
             LocalDate ld = resultat.getDate("dia").toLocalDate();
             while (resultat.next()) {
-                list.add(new Guardia(resultat.getLong("id"), ld, u.getPerString(resultat.getString("tipus_unitat")), t.getPerString(resultat.getString("tipus_torn")), c.getPerString(resultat.getString("tipus_categoria")), resultat.getShort("places_disponibles")));
+                list.add(new Guardia(resultat.getLong("id"), ld, u.getPerNom(resultat.getString("tipus_unitat")), t.getPerNom(resultat.getString("tipus_torn")), c.getPerNom(resultat.getString("tipus_categoria")), resultat.getShort("places_disponibles")));
             }
             return list;
         } catch (SQLException ex) {
@@ -103,9 +104,9 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
                 g.setId(resultat.getLong("id"));
                 g.setDia(ld);
                 g.setPlacesDisponibles(resultat.getShort("places_disponibles"));
-                g.setUnitat(u.getPerString("tipus_unitat"));
-                g.setTorn(t.getPerString("tipus_torn"));
-                g.setCategoria(c.getPerString("tipus_categoria"));
+                g.setUnitat(u.getPerNom("tipus_unitat"));
+                g.setTorn(t.getPerNom("tipus_torn"));
+                g.setCategoria(c.getPerNom("tipus_categoria"));
                 return g;
             } else {
                 return null;
@@ -138,9 +139,9 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
                 LocalDate ld = rst.getDate("dia").toLocalDate();
                 g.setId(rst.getLong("id"));
                 g.setDia(ld);
-                g.setUnitat(u.getPerString(rst.getString("tipus_unitat")));
-                g.setTorn(t.getPerString(rst.getString("tipus_torn")));
-                g.setCategoria(c.getPerString(rst.getString("tipus_categoria")));
+                g.setUnitat(u.getPerNom(rst.getString("tipus_unitat")));
+                g.setTorn(t.getPerNom(rst.getString("tipus_torn")));
+                g.setCategoria(c.getPerNom(rst.getString("tipus_categoria")));
                 g.setPlacesDisponibles(rst.getShort("places_disponibles"));
             }
 
@@ -160,7 +161,7 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
             query.setString(2, g.getUnitat().getTipusUnitat());
             query.setString(3, g.getTorn().getTipusTorn());
             query.setString(4, g.getCategoria().getTipusCategoria());
-            query.setShort(5, g.getPlacesDisponibles());
+            query.setLong(5, g.getPlacesDisponibles());
             query.setLong(6, g.getId());
             query.executeUpdate();
 

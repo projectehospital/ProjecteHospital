@@ -12,6 +12,7 @@ import cat.boscdelacoma.model.business.entities.Torn;
 import cat.boscdelacoma.model.business.entities.Treballador;
 import cat.boscdelacoma.model.business.entities.Unitat;
 import cat.boscdelacoma.model.persistence.dao.contracts.PlantillaGuardiaDAO;
+import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.JDBCGuardiaDAO;
 import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.JDBCPlantillaGuardiaDAO;
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -116,7 +117,7 @@ public class Menu {
         System.out.println("2. Eliminar Guàrdia");
         System.out.println("3. Crear un any de guàrdies segons la plantilla"); // falta codificar
         System.out.println("4. Afegir Treballador"); // falta codificar
-        
+        System.out.println("Tria una opcio");
         
         
         System.out.println("Tria el número de l'acció que vols fer: ");
@@ -132,7 +133,14 @@ public class Menu {
 
                 // comprovar que la guardia no esta ja creada
                 
+                JDBCGuardiaDAO comprG = new JDBCGuardiaDAO();
+                Guardia g = comprG.getPerData(dataGuardia);
                 
+                    if (g != null) {
+                        System.out.println("La guardia ja existeix!!");
+                        menuAdministracio();
+                        
+                    }
                 
                 
                 //Funcio per triar el tipus de torn que tindrà l'objecte torn
@@ -175,36 +183,12 @@ public class Menu {
                    
                 }
                 
+                menuAdministracio();
+                
             case 2:
                 mostrarMesos();
-                System.out.println("A quin mes vols eliminar una guàrdia? (Escriu el número)");
-                short mes = entrada.nextShort();
-                switch (mes) {
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                    case 5:
-                        break;
-                    case 6:
-                        break;
-                    case 7:
-                        break;
-                    case 8:
-                        break;
-                    case 9:
-                        break;
-                    case 10:
-                        break;
-                    case 11:
-                        break;
-                    case 12:
-                        break;
-                }
+                LocalDate datGuarEliminar = entrarDataGuardia(); 
+                
                 break;
             case 3: 
                 mostrarPlantilla();
@@ -391,7 +375,7 @@ public class Menu {
         
     }
 
-    private static LocalDate entrarDataGuardia() {
+    private static LocalDate entrarDataGuardia() throws DAOException {
          System.out.println("Entra l'any de la guardia a crear");
                 int any = entrada.nextShort();
                 System.out.println("Entra l'mes de la guardia a crear");
@@ -421,6 +405,8 @@ public class Menu {
 
     private static long obtenirPlaces(Unitat unitat , Categoria categoria , Torn torn) {
             
+        
+        // obtenim les places que hi ha en una unitat categoria i torn especific
             var jdbcplantilla = new JDBCPlantillaGuardiaDAO();
            PlantillaGuardia plG= new PlantillaGuardia();
            try{
