@@ -42,10 +42,10 @@ public class JDBCUnitatDAO implements UnitatDAO {
         }
     }
     
-    public Unitat getPerString(String t) throws DAOException {
+    public Unitat getPerNom(String unitat) throws DAOException {
         try {
             PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from unitat where tipus_unitat=?");
-            query.setString(1, t);
+            query.setString(1, unitat);
             ResultSet resultat = query.executeQuery();
 
             if (resultat.next()) {
@@ -58,6 +58,7 @@ public class JDBCUnitatDAO implements UnitatDAO {
             }
 
         } catch (SQLException ex) {
+            System.out.println("Error al obtenir unitat per nom");
             throw new DAOException();
         }
     }

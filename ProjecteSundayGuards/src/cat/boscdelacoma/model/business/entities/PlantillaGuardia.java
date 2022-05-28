@@ -11,11 +11,15 @@ package cat.boscdelacoma.model.business.entities;
 public class PlantillaGuardia {
     
     private long id , places;
-    private Unitat unitat;
-    private Categoria categoria;
-    private Torn torn;
+    private String unitat;
+    private String categoria;
+    private String torn;
     
-    public PlantillaGuardia(long id , Unitat unitat , Categoria categoria , Torn torn , long places) {
+    public PlantillaGuardia() {}
+    
+    // es una plantilla per el nomes necessitem saber el tipus i no l'objecte.
+    
+    public PlantillaGuardia(long id , String unitat , String categoria , String torn , long places) {
     
     this.id = id;
     this.unitat = unitat;
@@ -26,43 +30,43 @@ public class PlantillaGuardia {
     
     }
 
-    public long getId() {
+    public long getIdPlantilla() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setIdPlantilla(long id) {
         this.id = id;
     }
 
-    public long getPlaces() {
+    public long getPlacesPlantilla() {
         return places;
     }
 
-    public void setPlaces(long places) {
+    public void setPlacesPlantilla(long places) {
         this.places = places;
     }
 
-    public Unitat getUnitat() {
+    public String getNomUnitatPlantilla() {
         return unitat;
     }
 
-    public void setUnitat(Unitat unitat) {
+    public void setNomUnitatPlantilla(String unitat) {
         this.unitat = unitat;
     }
 
-    public Categoria getCategoria() {
+    public String getNomCategoriaPlantilla() {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setNomCategoriaPlantilla(String categoria) {
         this.categoria = categoria;
     }
 
-    public Torn getTorn() {
+    public String getNomTornPlantilla() {
         return torn;
     }
 
-    public void setTorn(Torn torn) {
+    public void setNomTornPlantilla(String torn) {
         this.torn = torn;
     }
     

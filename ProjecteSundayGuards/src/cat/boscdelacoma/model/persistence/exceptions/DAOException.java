@@ -10,6 +10,13 @@ package cat.boscdelacoma.model.persistence.exceptions;
  */
 public class DAOException extends Exception {
     
+    // es pot entrar el missatge de l'error
     
+    public DAOException (){}
+    public DAOException (String msg) {
+    
+        System.out.println(msg);
+    
+    }
     
 }

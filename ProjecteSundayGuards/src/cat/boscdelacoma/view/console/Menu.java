@@ -6,13 +6,17 @@ package cat.boscdelacoma.view.console;
 
 import cat.boscdelacoma.model.business.entities.Categoria;
 import cat.boscdelacoma.model.business.entities.Guardia;
+import cat.boscdelacoma.model.business.entities.PlantillaGuardia;
 import cat.boscdelacoma.model.business.entities.Rol;
 import cat.boscdelacoma.model.business.entities.Torn;
 import cat.boscdelacoma.model.business.entities.Treballador;
 import cat.boscdelacoma.model.business.entities.Unitat;
+import cat.boscdelacoma.model.persistence.dao.contracts.PlantillaGuardiaDAO;
+import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.JDBCPlantillaGuardiaDAO;
 import java.time.LocalDate;
 import java.util.Scanner;
 import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.MYSQLConnection;
+import cat.boscdelacoma.model.persistence.exceptions.DAOException;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.Month;
@@ -103,7 +107,7 @@ public class Menu {
         System.out.printf(capcelera, "DIA", "UNITAT", "TORN", "CATEGORIA", "PLACES DISPONIBLES");
     }
 
-    private static void menuAdministracio() {
+    private static void menuAdministracio() throws DAOException {
         
         // s'ha de comprovar si es cap de unitat o administrador per capar privilegis
         
@@ -126,7 +130,11 @@ public class Menu {
                 
                 LocalDate dataGuardia = entrarDataGuardia();
 
-               
+                // comprovar que la guardia no esta ja creada
+                
+                
+                
+                
                 //Funcio per triar el tipus de torn que tindrà l'objecte torn
                 Torn torn = triarTornAdmin();
                 
@@ -137,7 +145,7 @@ public class Menu {
                 //Funcio per triar el tipus de categoria que tindrà l'objecte categoria
                 Categoria categoria = triarCategoriaAdmin();
                 
-                System.out.println("Les places es definiran per defecte , si les vols entrar a ma pulsa s sino n  [s / n]");
+                System.out.println("Les places es definiran per defecte , si les vols entrar a ma prem s sino n  [s / n]");
                 String resposta = entrada.nextLine();
                     if (resposta.equalsIgnoreCase("s")) {
                         
@@ -150,12 +158,14 @@ public class Menu {
                         resposta = entrada.nextLine();
                         if (resposta.equalsIgnoreCase("s")) {
                             mostrarPlantilla(unitat , torn , categoria);
-                            long places = obtenirPlaces();
+        
+                        } 
+                       
+                         long places = obtenirPlaces(unitat , categoria , torn);
                          Guardia novaGuardia = new Guardia(dataGuardia , unitat , torn , categoria , places );
-                        }
                     }
-                Guardia novaGuardia = new Guardia(dataGuardia , unitat , torn , categoria );
-                // llegim un caracter
+
+                    // si l'entrada es n no es seguira cfreant la guardia
                     System.out.println("Vols crear una nova guardia? [s / n]");
                      resposta = entrada.nextLine();
                     if (resposta.equalsIgnoreCase("n")) {
@@ -285,15 +295,14 @@ public class Menu {
     }
 
     private static void mostrarMesos() {
-        //String perquè els mesos quedin alineats
-        String mesos = "%n%-25s%-25s%-25s%-25s%n";
-        System.out.printf(mesos, "1. Gener", "2. Febrer", "3. Març");
-        System.out.printf(mesos, "4. Abril", "5. Maig", "6. Juny");
-        System.out.printf(mesos, "7. Juliol", "8. Agost", "9. Setembre");
-        System.out.printf(mesos, "10. Octubre", "11. Novembre", "12. Desembre");
+        
+        System.out.println("1.Gener      2. Febrer    3. Març");
+        System.out.println("4.Abril      5. Maig      6. Juny");
+        System.out.println("7.Juliol     8. Agost     9. Setembre");
+        System.out.println("10.Octubre  11. Novembre 12. Desembre");
     }
 
-    private static LocalDate mostrarDiumengesDelMes(int any, int mes) {
+    private static LocalDate mostrarDiumengesDelMes(int any, int mes) throws DAOException {
             int errors = 0;
            // comprovacio de les dates entrada
           while(true) {
@@ -396,11 +405,31 @@ public class Menu {
                 
     }
 
-    private static void mostrarPlantilla(Unitat unitat , Torn torn , Categoria categoria) {
+    private static void mostrarPlantilla(Unitat unitat , Torn torn , Categoria categoria) throws DAOException {
         
-        
-        
-        
+           var jdbcplantilla = new JDBCPlantillaGuardiaDAO();
+           PlantillaGuardia plG= new PlantillaGuardia();
+           try{
+           plG = jdbcplantilla.get(categoria.getTipusCategoria(), unitat.getTipusUnitat(), torn.getTipusTorn());
+           System.out.printf("La guardia es crear amb la seguent plantilla : %d  %s  %s  %s %d " , plG.getIdPlantilla() , plG.getNomUnitatPlantilla(),
+                  plG.getNomCategoriaPlantilla() , plG.getNomTornPlantilla() , plG.getIdPlantilla());
+           } catch(DAOException e){
+               System.out.println("Error al mostrar plantilla" + e.getMessage());
+           }
+
+    }
+
+    private static long obtenirPlaces(Unitat unitat , Categoria categoria , Torn torn) {
+            
+            var jdbcplantilla = new JDBCPlantillaGuardiaDAO();
+           PlantillaGuardia plG= new PlantillaGuardia();
+           try{
+           plG = jdbcplantilla.get(categoria.getTipusCategoria(), unitat.getTipusUnitat(), torn.getTipusTorn());
+           return plG.getPlacesPlantilla();
+           } catch(DAOException e){
+               System.out.println("Error al obtenir places plantilla" + e.getMessage());
+           }
+        return -1;
     }
     
     

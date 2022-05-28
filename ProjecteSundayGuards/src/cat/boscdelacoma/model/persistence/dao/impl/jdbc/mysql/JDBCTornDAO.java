@@ -108,7 +108,7 @@ public class JDBCTornDAO implements TornDAO {
         }
     }
 
-    public Torn getPerString(String s) throws DAOException {
+    public Torn getPerNom(String s) throws DAOException {
         try {
             PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from torn where tipus_torn=?");
             query.setString(1, s);

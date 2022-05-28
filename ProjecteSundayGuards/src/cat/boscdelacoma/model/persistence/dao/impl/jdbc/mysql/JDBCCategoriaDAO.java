@@ -80,6 +80,7 @@ public class JDBCCategoriaDAO implements CategoriaDAO {
             query.setLong(1, c.getId());
             query.setString(2, c.getTipusCategoria());
             query.executeUpdate();
+        
             ResultSet rst = query.getGeneratedKeys();
             if (rst.next()) {
                 c.setTipusCategoria(rst.getString("tipus_categoria"));
@@ -106,7 +107,7 @@ public class JDBCCategoriaDAO implements CategoriaDAO {
         }
     }
 
-    public Categoria getPerString(String s) throws DAOException {
+    public Categoria getPerNom(String s) throws DAOException {
         try {
             PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from categoria where tipus_categoria=?");
             query.setString(1, s);
