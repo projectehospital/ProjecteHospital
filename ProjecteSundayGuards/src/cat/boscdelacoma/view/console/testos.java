@@ -34,8 +34,8 @@ public class testos {
         var rol = new JDBCRolDAO();
         var u = new Rol();
         u.setId(3);
-        u.setTipusRol("Jefe");
-        rol.add(u);
+        u.setTipusRol("Administrador");
+        rol.delete(u);
         List llistaRols = new ArrayList<Rol>();
         llistaRols = rol.getAll();
         var t = new Rol();

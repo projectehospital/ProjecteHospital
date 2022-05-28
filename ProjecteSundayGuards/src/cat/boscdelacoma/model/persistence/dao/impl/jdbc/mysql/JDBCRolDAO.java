@@ -74,15 +74,15 @@ public class JDBCRolDAO implements RolDAO{
     @Override
     public void add(Rol t) throws DAOException {
         try {
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("insert into rol(id, tipus_rol) VALUES(?, ?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("insert into rol(id, tipus_rol) values(?, ?)", Statement.RETURN_GENERATED_KEYS);
             
             query.setLong(1, t.getId());
             query.setString(2, t.getTipusRol());
             query.executeUpdate();
             ResultSet rst = query.getGeneratedKeys();
             if (rst.next()) {
-                t.setTipusRol(rst.getString("tipus_rol"));
                 t.setId(rst.getLong("id"));
+                t.setTipusRol(rst.getString("tipus_rol"));
             }
 
         } catch (SQLException ex) {
