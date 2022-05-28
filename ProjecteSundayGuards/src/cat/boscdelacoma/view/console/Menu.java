@@ -13,6 +13,10 @@ import cat.boscdelacoma.model.business.entities.Unitat;
 import java.time.LocalDate;
 import java.util.Scanner;
 import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.MYSQLConnection;
+import java.io.IOException;
+import java.time.Month;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -102,11 +106,11 @@ public class Menu {
             case 0:
                 break;
             case 1:
-                System.out.println("Dia de la guàrida (aaaa/mm/dd):");
-                String dia = entrada.nextLine();
+               
+                while(true) {
                 
-                //Convertim la data de String a LocalDate
-                LocalDate data = LocalDate.parse(dia);
+                LocalDate dataGuardia = entrarDataGuardia();
+
                 System.out.println("Places de la guàrdia:");
                 short places = entrada.nextShort();
                 Torn torn = new Torn();
@@ -118,8 +122,19 @@ public class Menu {
                 Categoria categoria = new Categoria();
                 //Funcio per triar el tipus de categoria que tindrà l'objecte categoria
                 triarCategoriaAdmin(categoria);
-                Guardia g = new Guardia(data, places, torn, unitat, categoria);
-                break;
+                
+                // llegim un caracter
+                    System.out.println("Vols crear una nova guardia? [s / n]");
+                    String resposta = entrada.nextLine();
+                    if (resposta.equalsIgnoreCase("n")) {
+                        break;
+                    } else {
+                        continue;
+                    }
+            
+                   
+                }
+                
             case 2:
                 mostrarMesos();
                 System.out.println("A quin mes vols eliminar una guàrdia? (Escriu el número)");
@@ -237,6 +252,29 @@ public class Menu {
         System.out.printf(mesos, "4. Abril", "5. Maig", "6. Juny");
         System.out.printf(mesos, "7. Juliol", "8. Agost", "9. Setembre");
         System.out.printf(mesos, "10. Octubre", "11. Novembre", "12. Desembre");
+    }
+
+    private static short mostrarDiumengesDelMes(short any, short mes) {
+        
+            if (any < 2022 ) {
+                System.out.println();
+                
+        }
+        
+            LocalDate now = LocalDate.
+        
+        
+        
+    }
+
+    private static LocalDate entrarDataGuardia() {
+         System.out.println("Entra l'any de la guardia a crear");
+                short any = entrada.nextShort();
+                System.out.println("Entra l'mes de la guardia a crear");
+                short mes = entrada.nextShort();
+                
+                short dia = mostrarDiumengesDelMes(any , mes);
+                 mostrarDiumengesDelMes(any , mes);
     }
     
     
