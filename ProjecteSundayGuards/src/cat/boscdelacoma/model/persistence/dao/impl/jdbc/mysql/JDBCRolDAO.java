@@ -105,8 +105,7 @@ public class JDBCRolDAO implements RolDAO{
         }
     }
 
-    @Override
-    public Rol get(String s) throws DAOException {
+    public Rol getPerString(String s) throws DAOException {
         try {
             PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from rol where tipus_rol=?");
             query.setString(1, s);

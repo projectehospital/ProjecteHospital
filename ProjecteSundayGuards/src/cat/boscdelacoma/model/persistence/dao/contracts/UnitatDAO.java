@@ -13,7 +13,4 @@ import cat.boscdelacoma.model.persistence.exceptions.DAOException;
  */
 public interface UnitatDAO extends DAO<Unitat>{
     
-    //sobrecàrrega
-    Unitat get (String s)throws DAOException;
-    
 }

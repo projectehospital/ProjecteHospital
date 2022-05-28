@@ -118,7 +118,7 @@ public class Menu {
                 Categoria categoria = new Categoria();
                 //Funcio per triar el tipus de categoria que tindrà l'objecte categoria
                 triarCategoriaAdmin(categoria);
-                Guardia g = new Guardia(data, places, torn, unitat, categoria);
+                //Guardia g = new Guardia(data, places, torn, unitat, categoria);
                 break;
             case 2:
                 mostrarMesos();
@@ -215,19 +215,19 @@ public class Menu {
         System.out.println("1. Infermer/a");
         System.out.println("2. TCAI");
 
-        switch (x) {
-            case 1:
-                categoria.setTipusCategoria("Infermer/a");
-                categoria.setDescripcio("Fa tasques d'infermeria");
-                break;
-            case 2:
-                categoria.setTipusCategoria("TCAI");
-                categoria.setDescripcio("Assisteix els inferemers/es");
-                break;
-            default:
-                System.out.println("Tria Infermer/a(1) o TCAI(2)");
-                triarCategoriaAdmin(categoria);
-        }
+//        switch (x) {
+//            case 1:
+//                categoria.setTipusCategoria("Infermer/a");
+//                categoria.setDescripcio("Fa tasques d'infermeria");
+//                break;
+//            case 2:
+//                categoria.setTipusCategoria("TCAI");
+//                categoria.setDescripcio("Assisteix els inferemers/es");
+//                break;
+//            default:
+//                System.out.println("Tria Infermer/a(1) o TCAI(2)");
+//                triarCategoriaAdmin(categoria);
+//        }
     }
 
     private static void mostrarMesos() {

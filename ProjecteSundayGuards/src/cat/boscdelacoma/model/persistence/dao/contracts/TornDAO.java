@@ -13,7 +13,4 @@ import cat.boscdelacoma.model.persistence.exceptions.DAOException;
  */
 public interface TornDAO extends DAO<Torn>{
     
-    //sobrecàrrega
-    Torn get (String s)throws DAOException;
-    
 }

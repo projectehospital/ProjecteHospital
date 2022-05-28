@@ -106,8 +106,7 @@ public class JDBCCategoriaDAO implements CategoriaDAO {
         }
     }
 
-    @Override
-    public Categoria get(String s) throws DAOException {
+    public Categoria getPerString(String s) throws DAOException {
         try {
             PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from categoria where tipus_categoria=?");
             query.setString(1, s);

@@ -13,7 +13,4 @@ import cat.boscdelacoma.model.persistence.exceptions.DAOException;
  */
 public interface CategoriaDAO extends DAO<Categoria>{
     
-    //sobrecàrrega
-    Categoria get (String s)throws DAOException;
-    
 }

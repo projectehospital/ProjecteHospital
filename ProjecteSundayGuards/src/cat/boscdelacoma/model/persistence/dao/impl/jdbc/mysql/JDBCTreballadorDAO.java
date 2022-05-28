@@ -43,8 +43,8 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
                 t.setGuardiesFetes(resultat.getShort("guardies_fetes"));
                 t.setGuardiesPrevistes(resultat.getShort("guardies_previstes"));
                 t.setTipusContracte(resultat.getString("tipus_contracte"));
-                t.setCategoriaTreballador(c.get(resultat.getString("tipus_categoria")));
-                t.setRolTreballador(r.get(resultat.getString("tipus_rol")));
+                t.setCategoriaTreballador(c.getPerString(resultat.getString("tipus_categoria")));
+                t.setRolTreballador(r.getPerString(resultat.getString("tipus_rol")));
                 t.setEsCapDeUnitat(resultat.getShort("es_cap_de_unitat"));
                 
                 return t;
@@ -70,8 +70,8 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
                         resultat.getString("nom"), deDateALocalDate(resultat.getDate("data_Naixement")), 
                         resultat.getString("passwd"), resultat.getShort("guardies_fetes"), 
                         resultat.getShort("guardies_previstes"), resultat.getString("tipus_contracte"), 
-                        c.get(resultat.getString("tipus_categoria")),
-                        r.get(resultat.getString("tipus_rol")),
+                        c.getPerString(resultat.getString("tipus_categoria")),
+                        r.getPerString(resultat.getString("tipus_rol")),
                         resultat.getShort("es_cap_de_unitat")));
             }
             return list;
@@ -124,8 +124,8 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
                 t.setGuardiesFetes(rst.getShort(6));
                 t.setGuardiesPrevistes(rst.getShort(7));
                 t.setTipusContracte(rst.getString(8));
-                t.setCategoriaTreballador(c.get(rst.getString(9)));
-                t.setRolTreballador(r.get(rst.getString(10)));
+                t.setCategoriaTreballador(c.getPerString(rst.getString(9)));
+                t.setRolTreballador(r.getPerString(rst.getString(10)));
                 t.setEsCapDeUnitat(rst.getShort(11));
             }
 
