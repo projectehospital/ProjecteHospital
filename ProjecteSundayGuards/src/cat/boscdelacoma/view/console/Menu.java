@@ -116,8 +116,8 @@ public class Menu {
         
         
         System.out.println("Tria el número de l'acció que vols fer: ");
-        int guardia = entrada.nextInt();
-        switch (guardia) {
+        int accio = entrada.nextInt();
+        switch (accio) {
             case 0:
                 break;
             case 1:
@@ -126,22 +126,38 @@ public class Menu {
                 
                 LocalDate dataGuardia = entrarDataGuardia();
 
-                System.out.println("Places de la guàrdia:");
-                short places = entrada.nextShort();
-                
-                Torn torn = new Torn();
+               
                 //Funcio per triar el tipus de torn que tindrà l'objecte torn
-                torn = triarTornAdmin(torn);
-                Unitat unitat = new Unitat();
-                //Funcio per triar el tipus de unitat que tindrà l'objecte unitat
-                triarUnitatAdmin(unitat);
-                Categoria categoria = new Categoria();
-                //Funcio per triar el tipus de categoria que tindrà l'objecte categoria
-                triarCategoriaAdmin(categoria);
+                Torn torn = triarTornAdmin();
                 
+                //Funcio per triar el tipus de unitat que tindrà l'objecte unitat
+                Unitat unitat = triarUnitatAdmin();
+ 
+                
+                //Funcio per triar el tipus de categoria que tindrà l'objecte categoria
+                Categoria categoria = triarCategoriaAdmin();
+                
+                System.out.println("Les places es definiran per defecte , si les vols entrar a ma pulsa s sino n  [s / n]");
+                String resposta = entrada.nextLine();
+                    if (resposta.equalsIgnoreCase("s")) {
+                        
+                         System.out.println("Places de la guàrdia:");
+                         long places = entrada.nextShort();
+                         Guardia novaGuardia = new Guardia(dataGuardia , unitat , torn , categoria , places );
+                    } else {
+                        System.out.println("Es definiran les places per defecte");
+                        System.out.println("Vols mostrar la plantilla?");
+                        resposta = entrada.nextLine();
+                        if (resposta.equalsIgnoreCase("s")) {
+                            mostrarPlantilla(unitat , torn , categoria);
+                            long places = obtenirPlaces();
+                         Guardia novaGuardia = new Guardia(dataGuardia , unitat , torn , categoria , places );
+                        }
+                    }
+                Guardia novaGuardia = new Guardia(dataGuardia , unitat , torn , categoria );
                 // llegim un caracter
                     System.out.println("Vols crear una nova guardia? [s / n]");
-                    String resposta = entrada.nextLine();
+                     resposta = entrada.nextLine();
                     if (resposta.equalsIgnoreCase("n")) {
                         break;
                     }
@@ -190,8 +206,8 @@ public class Menu {
         }
     }
 
-    private static Torn triarTornAdmin(Torn torn) {
-        
+    private static Torn triarTornAdmin() {
+        Torn torn =  new Torn();
         System.out.println("Torn de la guàrdia:");
         System.out.println("1. Dia");
         System.out.println("2. Nit");
@@ -205,27 +221,29 @@ public class Menu {
                 break;
             default:
                 System.out.println("Tria Dia(1) o Nit(2)");
-                triarTornAdmin(torn);
+                triarTornAdmin();
         }
         
         return torn;
     }
 
-    private static void triarUnitatAdmin(Unitat unitat) {
-        int x = entrada.nextShort();
+    private static Unitat triarUnitatAdmin() {
+        
+        Unitat unitat = new Unitat();
+        
         System.out.println("Unitat de la guàrdia:");
         System.out.println("1. Unitat 1");
         System.out.println("2. Unitat 2");
         System.out.println("3. Unitat 3");
         System.out.println("4. Unitat 4");
         System.out.println("5. Urgències");
-
+        int x = entrada.nextShort();
         switch (x) {
             case 1:
                 unitat.setTipusUnitat("Unitat 1");
                 break;
             case 2:
-                unitat.setTipusUnitat("Unitat 2");
+                unitat.setTipusUnitat("Unitat 2(s'ha de especificar el numero places)");
                 break;
             case 3:
                 unitat.setTipusUnitat("Unitat 3");
@@ -238,29 +256,32 @@ public class Menu {
                 break;
             default:
                 System.out.println("Tria una Unitat(1, 2, 3, 4) o Urgències(5)");
-                triarUnitatAdmin(unitat);
+                triarUnitatAdmin();
         }
+        
+        return unitat;
     }
 
-    private static void triarCategoriaAdmin(Categoria categoria) {
-        int x = entrada.nextShort();
+    private static Categoria triarCategoriaAdmin() {
+        
+        Categoria categoria = new Categoria();
+        
         System.out.println("Categoria de la guàrdia:");
-        System.out.println("1. Infermer/a");
+        System.out.println("1. Infermeria");
         System.out.println("2. TCAI");
-
+        int x = entrada.nextShort();
         switch (x) {
             case 1:
                 categoria.setTipusCategoria("Infermer/a");
-                categoria.setDescripcio("Fa tasques d'infermeria");
                 break;
             case 2:
                 categoria.setTipusCategoria("TCAI");
-                categoria.setDescripcio("Assisteix els inferemers/es");
                 break;
             default:
                 System.out.println("Tria Infermer/a(1) o TCAI(2)");
-                triarCategoriaAdmin(categoria);
+                triarCategoriaAdmin();
         }
+        return categoria;
     }
 
     private static void mostrarMesos() {
@@ -375,8 +396,11 @@ public class Menu {
                 
     }
 
-    private static void mostrarPlantilla() {
-        // mostrar la plantilla obtinguda de la base de dades
+    private static void mostrarPlantilla(Unitat unitat , Torn torn , Categoria categoria) {
+        
+        
+        
+        
     }
     
     

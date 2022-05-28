@@ -15,13 +15,31 @@ public class Guardia {
     
     private long id;
     private LocalDate dia;
-    private short placesDisponibles;
+    private long placesDisponibles;
     private ArrayList<Treballador> treballadors;
     private Torn torn;
     private Unitat unitat;
     private Categoria categoria;
     
-    public Guardia(long id, LocalDate dia,Unitat unitat, Torn torn, Categoria categoria, short placesDisponibles) {
+    public Guardia(long id, LocalDate dia,Unitat unitat, Torn torn, Categoria categoria, long placesDisponibles) {
+        this.id = id;
+        this.dia = dia;
+        this.unitat = unitat;
+        this.torn = torn;
+        this.categoria = categoria;
+        this.placesDisponibles = placesDisponibles;
+    }
+    
+    public Guardia( LocalDate dia,Unitat unitat, Torn torn, Categoria categoria, long placesDisponibles) {
+        this.id = id;
+        this.dia = dia;
+        this.unitat = unitat;
+        this.torn = torn;
+        this.categoria = categoria;
+        this.placesDisponibles = placesDisponibles;
+    }
+    
+     public Guardia( LocalDate dia,Unitat unitat, Torn torn, Categoria categoria) {
         this.id = id;
         this.dia = dia;
         this.unitat = unitat;
@@ -49,7 +67,7 @@ public class Guardia {
         this.dia = dia;
     }
 
-    public short getPlacesDisponibles() {
+    public long getPlacesDisponibles() {
         return placesDisponibles;
     }
 

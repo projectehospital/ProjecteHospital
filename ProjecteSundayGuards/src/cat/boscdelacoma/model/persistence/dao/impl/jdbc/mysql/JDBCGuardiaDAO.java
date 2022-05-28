@@ -129,7 +129,7 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
             query.setString(3, g.getUnitat().getTipusUnitat());
             query.setString(4, g.getTorn().getTipusTorn());
             query.setString(5, g.getCategoria().getTipusCategoria());
-            query.setShort(6, g.getPlacesDisponibles());
+            query.setLong(6, g.getPlacesDisponibles());
             query.executeUpdate();
             ResultSet rst = query.getGeneratedKeys();
             if (rst.next()) {
