@@ -5,13 +5,12 @@
 package cat.boscdelacoma.model.persistence.dao.contracts;
 
 import cat.boscdelacoma.model.business.entities.Categoria;
+import cat.boscdelacoma.model.persistence.exceptions.DAOException;
 
 /**
  *
  * @author osama
  */
 public interface CategoriaDAO extends DAO<Categoria>{
-    
-    
     
 }

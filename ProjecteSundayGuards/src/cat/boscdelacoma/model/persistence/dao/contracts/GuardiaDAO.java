@@ -5,13 +5,13 @@
 package cat.boscdelacoma.model.persistence.dao.contracts;
 
 import cat.boscdelacoma.model.business.entities.Guardia;
+import cat.boscdelacoma.model.persistence.exceptions.DAOException;
+import java.time.LocalDate;
 
 /**
  *
  * @author osama
  */
 public interface GuardiaDAO extends DAO<Guardia>{
-    
-    
     
 }

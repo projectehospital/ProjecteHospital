@@ -15,7 +15,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -43,8 +43,8 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
                 t.setGuardiesFetes(resultat.getShort("guardies_fetes"));
                 t.setGuardiesPrevistes(resultat.getShort("guardies_previstes"));
                 t.setTipusContracte(resultat.getString("tipus_contracte"));
-                t.setCategoriaTreballador(c.getFromTipusCategoria(resultat.getString("tipus_categoria")));
-                t.setRolTreballador(r.getFromTipusRol(resultat.getString("tipus_rol")));
+                t.setCategoriaTreballador(c.getPerString(resultat.getString("tipus_categoria")));
+                t.setRolTreballador(r.getPerString(resultat.getString("tipus_rol")));
                 t.setEsCapDeUnitat(resultat.getShort("es_cap_de_unitat"));
                 
                 return t;
@@ -70,8 +70,8 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
                         resultat.getString("nom"), deDateALocalDate(resultat.getDate("data_Naixement")), 
                         resultat.getString("passwd"), resultat.getShort("guardies_fetes"), 
                         resultat.getShort("guardies_previstes"), resultat.getString("tipus_contracte"), 
-                        c.getFromTipusCategoria(resultat.getString("tipus_categoria")),
-                        r.getFromTipusRol(resultat.getString("tipus_rol")),
+                        c.getPerString(resultat.getString("tipus_categoria")),
+                        r.getPerString(resultat.getString("tipus_rol")),
                         resultat.getShort("es_cap_de_unitat")));
             }
             return list;
@@ -105,7 +105,7 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
             query.setLong(1, t.getId());
             query.setString(2, t.getDni());
             query.setString(3, t.getNom());
-            query.setDate(4, (java.sql.Date) deLocalDateADate(t.getDataNaixement()));
+            query.setDate(4,  deLocalDateADate(t.getDataNaixement()));
             query.setString(5, t.getPasswd());
             query.setShort(6, t.getGuardiesFetes());
             query.setShort(7, t.getGuardiesPrevistes());
@@ -124,8 +124,8 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
                 t.setGuardiesFetes(rst.getShort(6));
                 t.setGuardiesPrevistes(rst.getShort(7));
                 t.setTipusContracte(rst.getString(8));
-                t.setCategoriaTreballador(c.getFromTipusCategoria(rst.getString(9)));
-                t.setRolTreballador(r.getFromTipusRol(rst.getString(10)));
+                t.setCategoriaTreballador(c.getPerString(rst.getString(9)));
+                t.setRolTreballador(r.getPerString(rst.getString(10)));
                 t.setEsCapDeUnitat(rst.getShort(11));
             }
 
@@ -144,7 +144,7 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
             JDBCRolDAO r = new JDBCRolDAO();
             query.setString(1, t.getDni());
             query.setString(2, t.getNom());
-            query.setDate(3, (java.sql.Date) deLocalDateADate(t.getDataNaixement()));
+            query.setDate(3,  deLocalDateADate(t.getDataNaixement()));
             query.setString(4, t.getPasswd());
             query.setShort(5, t.getGuardiesFetes());
             query.setShort(6, t.getGuardiesPrevistes());
@@ -169,7 +169,7 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
     }
 
     public Date deLocalDateADate(LocalDate dateToConvert) {
-        return java.sql.Date.valueOf(dateToConvert);
+        return Date.valueOf(dateToConvert);
     }
     
 }
