@@ -17,9 +17,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.ZoneId;
 import java.sql.Date;
-import java.util.Calendar;
 
 /**
  *
@@ -36,8 +34,9 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
             JDBCCategoriaDAO c = new JDBCCategoriaDAO();
             JDBCUnitatDAO u = new JDBCUnitatDAO();
             JDBCTornDAO t = new JDBCTornDAO();
+            LocalDate ld = resultat.getDate("dia").toLocalDate();
             while (resultat.next()) {
-                list.add(new Guardia(resultat.getLong("id"), deDateALocalDate(resultat.getDate("dia")), u.getPerString(resultat.getString("tipus_unitat")), t.getPerString(resultat.getString("tipus_torn")), c.getPerString(resultat.getString("tipus_categoria")), resultat.getShort("places_disponibles")));
+                list.add(new Guardia(resultat.getLong("id"), ld, u.getPerString(resultat.getString("tipus_unitat")), t.getPerString(resultat.getString("tipus_torn")), c.getPerString(resultat.getString("tipus_categoria")), resultat.getShort("places_disponibles")));
             }
             return list;
         } catch (SQLException ex) {
@@ -52,8 +51,7 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
         try {
             PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from guardia where dia=?");
             
-            query.setDate(1,deLocalDateADate(dia) );
-           
+            query.setDate(1,Date.valueOf(dia));
             ResultSet resultat = query.executeQuery();
 
             if (resultat.next()) {
@@ -61,8 +59,9 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
                 Torn t = new Torn();
                 Categoria c = new Categoria();
                 Unitat u = new Unitat();
+                LocalDate ld = resultat.getDate("dia").toLocalDate();
                 g.setId(resultat.getLong("id"));
-                g.setDia(deDateALocalDate(resultat.getDate("dia")));
+                g.setDia(ld);
                 g.setPlacesDisponibles(resultat.getShort("places_disponibles"));
                 //Fem un objecte Unitat per poder accedir a unitat a Guardia
                 u.setTipusUnitat(resultat.getString("tipus_unitat"));
@@ -96,12 +95,13 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
             ResultSet resultat = query.executeQuery();
 
             if (resultat.next()) {
+                LocalDate ld = resultat.getDate("dia").toLocalDate();
                 Guardia g = new Guardia();
                 JDBCUnitatDAO u = new JDBCUnitatDAO();
                 JDBCTornDAO t = new JDBCTornDAO();
                 JDBCCategoriaDAO c = new JDBCCategoriaDAO();
                 g.setId(resultat.getLong("id"));
-                g.setDia(deDateALocalDate(resultat.getDate("dia")));
+                g.setDia(ld);
                 g.setPlacesDisponibles(resultat.getShort("places_disponibles"));
                 g.setUnitat(u.getPerString("tipus_unitat"));
                 g.setTorn(t.getPerString("tipus_torn"));
@@ -127,7 +127,7 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
             JDBCTornDAO t = new JDBCTornDAO();
             JDBCCategoriaDAO c = new JDBCCategoriaDAO();
             query.setLong(1, g.getId());
-            query.setDate(2, deLocalDateADate(g.getDia()));
+            query.setDate(2, Date.valueOf(g.getDia()));
             query.setString(3, g.getUnitat().getTipusUnitat());
             query.setString(4, g.getTorn().getTipusTorn());
             query.setString(5, g.getCategoria().getTipusCategoria());
@@ -135,8 +135,9 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
             query.executeUpdate();
             ResultSet rst = query.getGeneratedKeys();
             if (rst.next()) {
+                LocalDate ld = rst.getDate("dia").toLocalDate();
                 g.setId(rst.getLong("id"));
-                g.setDia(deDateALocalDate(rst.getDate("dia")));
+                g.setDia(ld);
                 g.setUnitat(u.getPerString(rst.getString("tipus_unitat")));
                 g.setTorn(t.getPerString(rst.getString("tipus_torn")));
                 g.setCategoria(c.getPerString(rst.getString("tipus_categoria")));

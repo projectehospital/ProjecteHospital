@@ -34,7 +34,6 @@ public class testos {
     public static void main(String[] args) throws DAOException {
         MYSQLConnection con = MYSQLConnection.getInstance();
         System.out.println(con.getConnection());
-        /*
         try {
             var guardia = new JDBCGuardiaDAO();
 //            var categoria = new JDBCCategoriaDAO();
@@ -48,23 +47,18 @@ public class testos {
 //            u = unitat.get(1);
 //            var g = new Guardia(4, LocalDate.now(), u, t, c, (short)4);
 //            guardia.add(g);
-            List llistaGuardies = new ArrayList<Guardia>();
-            llistaGuardies = guardia.getAll();
+//            List llistaGuardies = new ArrayList<Guardia>();
+//            llistaGuardies = guardia.getAll();
             var gu = new Guardia();
             gu = guardia.get(1);
+            System.out.println(gu.getId() + " " + gu.getDia() + " " + gu.getUnitat().getTipusUnitat() + " " + gu.getTorn().getTipusTorn() + " " + gu.getCategoria().getTipusCategoria() + " " + gu.getPlacesDisponibles());
+//        for (int i = 0; i < llistaGuardies.size(); i++) {
+//            gu = (Guardia)llistaGuardies.get(i);
 //            System.out.println(gu.getId() + " " + gu.getDia() + " " + gu.getUnitat() + " " + gu.getTorn() + " " + gu.getCategoria() + " " + gu.getPlacesDisponibles());
-        for (int i = 0; i < llistaGuardies.size(); i++) {
-            gu = (Guardia)llistaGuardies.get(i);
-            System.out.println(gu.getId() + " " + gu.getDia() + " " + gu.getUnitat() + " " + gu.getTorn() + " " + gu.getCategoria() + " " + gu.getPlacesDisponibles());
-        }
+//        }
         } catch (DAOException e) {
-            System.out.println("Error:" + e);
+            System.out.println("Error:" + e.getMessage());
         }
-         */
-        
-        Date d = Date.valueOf("2022-05-28");
-        LocalDate ld = d.toLocalDate();
-        System.out.println(ld);
 
     }
 
