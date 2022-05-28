@@ -64,6 +64,14 @@ public class Guardia {
     public void setTreballadors(ArrayList<Treballador> treballadors) {
         this.treballadors = treballadors;
     }
+    
+    public void inscriureTreballador(Treballador t){
+        treballadors.add(t);
+    }
+    
+    public void eliminarTreballador(Treballador t){
+        treballadors.remove(t);
+    }
 
     public Torn getTorn() {
         return torn;

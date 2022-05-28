@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Treballador {
     
-    private long id, esCapDeUnitat;
+    private long id , esCapDeUnitat;
     private String nom, dni, passwd, tipusContracte;
     private short guardiesPrevistes, guardiesFetes;
     private LocalDate dataNaixement;
@@ -22,6 +22,9 @@ public class Treballador {
     private ArrayList<Guardia> llistaGuardiesFetes;
 
     public Treballador(long id, String dni, String nom, LocalDate dataNaixement, String passwd, short guardiesFetes, short guardiesPrevistes, String tipusContracte, Categoria categoria, Rol rolTreballador, long esCapDeUnitat) {
+       
+       // treballador amb guardies previstes i fetes
+        
         this.id = id;
         this.nom = nom;
         this.dni = dni;
@@ -35,7 +38,7 @@ public class Treballador {
         this.categoria = categoria;
     }
 
-    public Treballador(long id, String nom, String dni, String passwd, Rol rolTreballador, String tipusContracte, LocalDate dataNaixement, Categoria categoria, long esCapDeUnitat) {
+    public Treballador(long id, String nom, String dni, String passwd, Rol rolTreballador, String tipusContracte, LocalDate dataNaixement, Categoria categoria, short esCapDeUnitat) {
         this.id = id;
         this.nom = nom;
         this.dni = dni;
@@ -129,7 +132,7 @@ public class Treballador {
         return esCapDeUnitat;
     }
 
-    public void setEsCapDeUnitat(long esCapDeUnitat) {
+    public void setEsCapDeUnitat(short esCapDeUnitat) {
         this.esCapDeUnitat = esCapDeUnitat;
     }
 
