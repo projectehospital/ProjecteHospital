@@ -14,7 +14,14 @@ import java.time.LocalDate;
 import java.util.Scanner;
 import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.MYSQLConnection;
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.Month;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import static java.time.temporal.TemporalAdjusters.firstInMonth;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -97,9 +104,17 @@ public class Menu {
     }
 
     private static void menuAdministracio() {
+        
+        // s'ha de comprovar si es cap de unitat o administrador per capar privilegis
+        
         System.out.println("0. Sortir");
         System.out.println("1. Crear Guàrdia");
         System.out.println("2. Eliminar Guàrdia");
+        System.out.println("3. Crear un any de guàrdies segons la plantilla"); // falta codificar
+        System.out.println("4. Afegir Treballador"); // falta codificar
+        
+        
+        
         System.out.println("Tria el número de l'acció que vols fer: ");
         int guardia = entrada.nextInt();
         switch (guardia) {
@@ -113,9 +128,10 @@ public class Menu {
 
                 System.out.println("Places de la guàrdia:");
                 short places = entrada.nextShort();
+                
                 Torn torn = new Torn();
                 //Funcio per triar el tipus de torn que tindrà l'objecte torn
-                triarTornAdmin(torn);
+                torn = triarTornAdmin(torn);
                 Unitat unitat = new Unitat();
                 //Funcio per triar el tipus de unitat que tindrà l'objecte unitat
                 triarUnitatAdmin(unitat);
@@ -128,8 +144,6 @@ public class Menu {
                     String resposta = entrada.nextLine();
                     if (resposta.equalsIgnoreCase("n")) {
                         break;
-                    } else {
-                        continue;
                     }
             
                    
@@ -166,6 +180,8 @@ public class Menu {
                         break;
                 }
                 break;
+            case 3: 
+                mostrarPlantilla();
             //Si l'usuari tria un número diferent a 1 ó 2 se li notificarà i es tornarà a cridar el mètode
             default:
                 System.out.println("Tria un dels numeros associats als menús (1 ó 2)");
@@ -174,12 +190,12 @@ public class Menu {
         }
     }
 
-    private static void triarTornAdmin(Torn torn) {
-        int x = entrada.nextShort();
+    private static Torn triarTornAdmin(Torn torn) {
+        
         System.out.println("Torn de la guàrdia:");
         System.out.println("1. Dia");
         System.out.println("2. Nit");
-
+        int x = entrada.nextShort();
         switch (x) {
             case 1:
                 torn.setTipusTorn("Dia");
@@ -191,6 +207,8 @@ public class Menu {
                 System.out.println("Tria Dia(1) o Nit(2)");
                 triarTornAdmin(torn);
         }
+        
+        return torn;
     }
 
     private static void triarUnitatAdmin(Unitat unitat) {
@@ -254,27 +272,111 @@ public class Menu {
         System.out.printf(mesos, "10. Octubre", "11. Novembre", "12. Desembre");
     }
 
-    private static short mostrarDiumengesDelMes(short any, short mes) {
+    private static LocalDate mostrarDiumengesDelMes(int any, int mes) {
+            int errors = 0;
+           // comprovacio de les dates entrada
+          while(true) {
+            
+               if (any >= 2022 && (mes >= 1 && mes <=12)) {
+                   break;
+               }
+               if (any < 2022) {
+                   System.out.println("No es poden crear guardies d'aquest any!!");
+                   System.out.print("Entra un any correcte: ");
+                   any = entrada.nextInt();
+                   System.out.println();
+               } 
+               
+               if (mes < 1 || mes > 12) {
+                   System.out.println("No es poden crear guardies d'aquest mes!!");
+                   System.out.print("Entra un mes correcte:");
+                   mes = entrada.nextInt();
+                   System.out.println();
+               }
+               if (errors >= 5) {
+                   System.out.println("Vols cancelar la creacio de la guardia? [s / n]");
+                   String resposta = entrada.nextLine();
+                   
+                   if (resposta.equals("s")) {
+                       menuAdministracio();
+                   }
+              }
+
+                    }
+          
+        /* mostrem diumenges del l'any i el mes triat i capturem els dies triats
+           per crear-los posteriorment*/
+    
+       // array de dies possibles a triar , fem servir una LinkedList per tema de velocitat
+        List<Integer> dies = new LinkedList<Integer>();
         
-            if (any < 2022 ) {
-                System.out.println();
-                
+        LocalDate now = LocalDate.of(any, Month.JANUARY, 1);
+    // busca el primer diumenge de l'any
+    LocalDate diumenge = now.with(firstInMonth(DayOfWeek.SUNDAY));
+    System.out.println("Diumenges disponibles per crear");
+    do {
+        // bucle que obte tots els diumenges
+        if (diumenge.getMonthValue() == mes) {
+            System.out.println(diumenge.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)));
+            // afegim els dies possibles del mes indicat
+            dies.add(diumenge.getDayOfMonth());
+            diumenge = diumenge.plus(Period.ofDays(7));
+            
+            
+            
+        } else {
+            
+            diumenge = diumenge.plusMonths(1);
+            diumenge = diumenge.with(firstInMonth(DayOfWeek.SUNDAY));
+            
         }
         
-            LocalDate now = LocalDate.
         
+ 
+    } while (diumenge.getYear() == any);
+          
+              
+        System.out.println("Entra el dia de la guardia a crear");
+        int dia = entrada.nextInt();
+        
+        /* si la llista de dies possibles no conte el dia triat 
+        fa un bucle fins que el dies es correcte*/
+        while(!dies.contains(dia)) {
+        
+            System.out.println("El dia entrat no es un diumenge dels disponibles!!");
+            System.out.println("Entra un dels diumenges disponibles:");
+            for (Integer dy : dies) {
+                System.out.print(dy + " ");
+                
+            }
+            System.out.println();
+            dia = entrada.nextInt();
+        }
+        
+        
+        /* restem un a l'any ja que el bucle comprova fins al desembre i quan pasa
+         a l'any seguent para el bucle*/
+        return LocalDate.of(diumenge.getYear() - 1, diumenge.getMonthValue(), dia);
         
         
     }
 
     private static LocalDate entrarDataGuardia() {
          System.out.println("Entra l'any de la guardia a crear");
-                short any = entrada.nextShort();
+                int any = entrada.nextShort();
                 System.out.println("Entra l'mes de la guardia a crear");
-                short mes = entrada.nextShort();
+                int mes = entrada.nextShort();
                 
-                short dia = mostrarDiumengesDelMes(any , mes);
-                 mostrarDiumengesDelMes(any , mes);
+                /* el metode mostrarDiumengesDelMes() mostra els dies diponibles 
+                    i construeix la data de la guardia a crear
+                   */
+                
+                return mostrarDiumengesDelMes(any , mes);
+                
+    }
+
+    private static void mostrarPlantilla() {
+        // mostrar la plantilla obtinguda de la base de dades
     }
     
     

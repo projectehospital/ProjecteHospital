@@ -8,6 +8,7 @@ import cat.boscdelacoma.model.business.entities.Torn;
 import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.JDBCTornDAO;
 import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.MYSQLConnection;
 import cat.boscdelacoma.model.persistence.exceptions.DAOException;
+import static cat.boscdelacoma.view.console.Menu.entrada;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,10 +22,29 @@ public class testos {
 
     public static void main(String[] args) throws DAOException {
         
-        System.out.println("1. Gener 2. Febrer 3. Març");
-        System.out.println("4. Abril 5. Maig  6. Juny");
-        System.out.println("7. Juliol 8. Agost   9. Setembre");
-        System.out.println("10. Octubre  11. Novembre   12. Desembre");
+       
+        Torn torn = triarTornAdmin();
+        System.out.println(torn.getTipusTorn());
+        
     }
-
+ private static Torn triarTornAdmin() {
+        Torn torn = new Torn();
+        System.out.println("Torn de la guàrdia:");
+        System.out.println("1. Dia");
+        System.out.println("2. Nit");
+        int x = entrada.nextShort();
+        switch (x) {
+            case 1:
+                torn.setTipusTorn("Dia");
+                break;
+            case 2:
+                torn.setTipusTorn("Nit");
+                break;
+            default:
+                System.out.println("Tria Dia(1) o Nit(2)");
+                triarTornAdmin();
+        }
+        
+        return torn;
+    }
 }
