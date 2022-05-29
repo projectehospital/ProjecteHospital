@@ -8,12 +8,33 @@ package cat.boscdelacoma.model.business.entities;
  *
  * @author Victo
  */
-class Categoria {
+public class Categoria {
+    
+    private long id;
     private String tipusCategoria;
-    private String descripcio;
+    
+      public Categoria() {
+    }
+    
 
-    public Categoria(String tipusCategoria) {
+    public Categoria(long id, String tipusCategoria) {
+        this.id = id;
         this.tipusCategoria = tipusCategoria;
+    }
+
+    
+    /**
+     * @return the id
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTipusCategoria() {
@@ -22,14 +43,6 @@ class Categoria {
 
     public void setTipusCategoria(String tipusCategoria) {
         this.tipusCategoria = tipusCategoria;
-    }
-
-    public String getDescripcio() {
-        return descripcio;
-    }
-
-    public void setDescripcio(String descripcio) {
-        this.descripcio = descripcio;
     }
     
 }

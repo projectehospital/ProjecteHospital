@@ -6,24 +6,24 @@ package cat.boscdelacoma.model.business.entities;
 
 /**
  *
- * @author Victo
+ * @author osama
  */
-public class Unitat {
+public class Rol {
     
     private long id;
-    private String tipusUnitat;
+    private String tipusRol;
     
+    public Rol(){
     
-    public Unitat() {
     }
     
-
-    public Unitat(long id, String tipusUnitat) {
+        
+    public Rol (long id, String tipusRol){
         this.id = id;
-        this.tipusUnitat = tipusUnitat;
+        this.tipusRol = tipusRol;
     }
-
-    /**
+    
+     /**
      * @return the id
      */
     public long getId() {
@@ -36,18 +36,13 @@ public class Unitat {
     public void setId(long id) {
         this.id = id;
     }
-    
-    /**
-     * @return the tipusUnitat
-     */
-    public String getTipusUnitat() {
-        return tipusUnitat;
+
+    public String getTipusRol() {
+        return tipusRol;
     }
 
-    /**
-     * @param tipusUnitat the tipusUnitat to set
-     */
-    public void setTipusUnitat(String tipusUnitat) {
-        this.tipusUnitat = tipusUnitat;
+    public void setTipusRol(String tipusRol) {
+        this.tipusRol = tipusRol;
     }
+    
 }
