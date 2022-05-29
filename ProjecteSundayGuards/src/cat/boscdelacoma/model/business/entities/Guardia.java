@@ -25,10 +25,16 @@ public class Guardia {
     private Unitat unitat;
     private Categoria categroia;
     
-    public Guardia(){
+    
+        public Guardia() {
     }
-
-    public Guardia(LocalDate dia, short placesDisponibles, Torn torn, Unitat unitat, Categoria categroia) {
+        public Guardia(Guardia g) {
+            
+            
+            
+    }
+    public Guardia(long id, LocalDate dia,Unitat unitat, Torn torn, Categoria categoria, long placesDisponibles) {
+        this.id = id;
         this.dia = dia;
         this.unitat = unitat;
         this.torn = torn;
@@ -54,9 +60,7 @@ public class Guardia {
         this.placesDisponibles = placesDisponibles;
     }
 
-    public Guardia() {
-    }
-    
+
     public long getId() {
         return id;
     }

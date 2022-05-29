@@ -65,7 +65,7 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
         
         try {
             // obtenim les guardies d'un dia en especific         
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from guardia where dia = ? and tipus_categoria = '?'");
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from guardia where dia = ? and tipus_categoria = ?");
             query.setDate(1, Date.valueOf(dia));
             query.setString(2, categoria.getTipusCategoria());
             ResultSet resultat = query.executeQuery();
@@ -105,7 +105,7 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
     public Guardia getPerDades(LocalDate dia , Unitat unitat , Torn torn , Categoria categoria ) throws DAOException{
         
         try {
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from guardia where dia=? and tipus_unitat = '?' tipus_torn = '?' tipus_categoria = '?'");
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from guardia where dia=? and tipus_unitat = ? tipus_torn = ? tipus_categoria = ?");
             
             query.setDate(1,Date.valueOf(dia));
             query.setString(2,unitat.getTipusUnitat());

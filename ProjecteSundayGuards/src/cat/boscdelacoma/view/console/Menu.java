@@ -50,10 +50,10 @@ public class Menu {
         
         if (t.getRolTreballador().getTipusRol().equals("Administrador")) {
             // menu per l'administrador permet crear guardies 
-            menuAdministracio();
+            menuAdministracio(t);
         } else if (t.getRolTreballador().getTipusRol().equals("Cap de Unitat")) {
            // menu que permet la tria de quin menu es vol accedir
-            menuAdmin();
+            menuAdmin(t);
         } else if (t.getRolTreballador().getTipusRol().equals("Usuari")) {
             // menu basic de triar guardia usuari !!! s'ha d'afegir opcions com llistar guardia
             menuUsuari(t);
@@ -63,7 +63,7 @@ public class Menu {
         
     }
 
-    private static void menuAdmin() throws DAOException {
+    private static void menuAdmin(Treballador t) throws DAOException, SQLException {
         System.out.println("0. Sortir");
         System.out.println("1. Menú d'administració");
         System.out.println("2. Menú d'usuari (reservar guàrdia)");
@@ -73,15 +73,15 @@ public class Menu {
             case 0:
                 break;
             case 1:
-                menuAdministracio();
+                menuAdministracio(t);
                 break;
             case 2:
-                menuUsuari();
+                menuUsuari(t);
                 break;
             //Si l'usuari tria un número diferent a 1 ó 2 se li notificarà i es tornarà a cridar el mètode
             default:
                 System.out.println("Tria un dels numeros associats als menús (1 ó 2)");
-                menuAdmin();
+                menuAdmin(t);
                 break;
         }
     }
@@ -119,15 +119,16 @@ public class Menu {
             
                 
             case 2 :
-                    // apuntar-se a una guardia
-        
+                  
+                LocalDate dia = entrarDataGuardia();
+                System.out.println("La data ");
         
         
         }
         
     }
 
-    private static void menuAdministracio() throws DAOException {
+    private static void menuAdministracio(Treballador t) throws DAOException {
         
         // s'ha de comprovar si es cap de unitat o administrador per capar privilegis
         

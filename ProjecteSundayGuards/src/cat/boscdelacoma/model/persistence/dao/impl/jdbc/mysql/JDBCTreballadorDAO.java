@@ -172,7 +172,7 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
         try {
             
             // obtenim un treballador per les dades que entra al login
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from treballador where DNI = '?' passwd = '?'");
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from treballador where DNI = ? passwd = ?");
             query.setString(1, dni);
             query.setString(2, passwd);
             ResultSet resultat = query.executeQuery();
@@ -252,7 +252,7 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
         
     }
     
-       public List<Treballador> obtenirLlistaGuardies(long idTreballador) throws DAOException {
+       public ArrayList<Guardia> obtenirLlistaGuardies(long idTreballador) throws DAOException {
         try {
 
             // cancelem la guardia eliminant un registre en la taula guardies treballador
@@ -263,21 +263,14 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
 
             ResultSet rst = query.executeQuery();
             ArrayList<Guardia> llistaGuardies = new ArrayList<Guardia>();
-            JDBCTreballadorDAO treballador = new JDBCTreballadorDAO();
+            JDBCGuardiaDAO guardia = new JDBCGuardiaDAO();
             
             while(rst.next()) {
-            
-                llistaGuardies.add()
-                
-            
-            
-            
+
+                llistaGuardies.add(new Guardia(guardia.get(rst.getLong("id_guardia"))));
+
             }
-            
-            // al reservar guardia restem les places disponibles 
-            JDBCGuardiaDAO guardia = new JDBCGuardiaDAO();
-            guardia.sumarPlaces(g);
-            return true;
+            return llistaGuardies;
         } catch (SQLException ex) {
             System.out.println("Error al reservar guardia" + ex.getMessage());
             throw new DAOException();
