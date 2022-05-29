@@ -23,10 +23,12 @@ public class Guardia {
     private ArrayList<Treballador> llistaTreballadors; 
     private Torn torn;
     private Unitat unitat;
-    private Categoria categoria;
+    private Categoria categroia;
     
-    public Guardia(long id, LocalDate dia,Unitat unitat, Torn torn, Categoria categoria, long placesDisponibles) {
-        this.id = id;
+    public Guardia(){
+    }
+
+    public Guardia(LocalDate dia, short placesDisponibles, Torn torn, Unitat unitat, Categoria categroia) {
         this.dia = dia;
         this.unitat = unitat;
         this.torn = torn;
