@@ -12,15 +12,17 @@ public class Unitat {
     
     private long id;
     private String tipusUnitat;
+    
+    
+    public Unitat() {
+    }
+    
 
     public Unitat(long id, String tipusUnitat) {
         this.id = id;
         this.tipusUnitat = tipusUnitat;
     }
 
-    public Unitat() {
-    }
-    
     /**
      * @return the id
      */

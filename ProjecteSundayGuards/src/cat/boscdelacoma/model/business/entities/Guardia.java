@@ -1,9 +1,13 @@
+
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package cat.boscdelacoma.model.business.entities;
 
+import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.JDBCGuardiaDAO;
+import cat.boscdelacoma.model.persistence.exceptions.DAOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -16,7 +20,7 @@ public class Guardia {
     private long id;
     private LocalDate dia;
     private long placesDisponibles;
-    private ArrayList<Treballador> treballadors;
+    private ArrayList<Treballador> llistaTreballadors; 
     private Torn torn;
     private Unitat unitat;
     private Categoria categoria;
@@ -75,20 +79,22 @@ public class Guardia {
         this.placesDisponibles = placesDisponibles;
     }
 
-    public ArrayList<Treballador> getTreballadors() {
-        return treballadors;
+    public ArrayList<Treballador> getLlistaTreballadors() {
+        return llistaTreballadors;
     }
 
-    public void setTreballadors(ArrayList<Treballador> treballadors) {
-        this.treballadors = treballadors;
-    }
-    
-    public void inscriureTreballador(Treballador t){
-        treballadors.add(t);
-    }
-    
-    public void eliminarTreballador(Treballador t){
-        treballadors.remove(t);
+    public void setLlistaTreballadors(long idGuardia) {
+        
+        try {
+        
+             JDBCGuardiaDAO guard = new JDBCGuardiaDAO();
+             this.llistaTreballadors = guard.obtenirLlistaTreballadors(idGuardia);
+
+        } catch(DAOException ex) {
+            System.out.println("Error al obtenir llista de treballdors: " + ex.getMessage());
+       
+        }
+       
     }
 
     public Torn getTorn() {

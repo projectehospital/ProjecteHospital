@@ -19,12 +19,14 @@ import java.util.Scanner;
 import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.MYSQLConnection;
 import cat.boscdelacoma.model.persistence.exceptions.DAOException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.Month;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import static java.time.temporal.TemporalAdjusters.firstInMonth;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -38,7 +40,7 @@ public class Menu {
 
     static Scanner entrada;
 
-    public static void MenuInicial(Treballador t) {
+    public static void MenuInicial(Treballador t) throws DAOException {
         /*Creem un objecte Treballador d'exemple amb el rol d'Administrador, si
         el treballador té rol d'Admin (coincideix) accedirà al menú 
         d'administració, en cas contrari anirà al menú d'usuari*/
@@ -49,19 +51,19 @@ public class Menu {
         if (t.getRolTreballador().getTipusRol().equals("Administrador")) {
             // menu per l'administrador permet crear guardies 
             menuAdministracio();
-        } else if (t.getRolTreballador().getTipusRol().equals("CAP")) {
+        } else if (t.getRolTreballador().getTipusRol().equals("Cap de Unitat")) {
            // menu que permet la tria de quin menu es vol accedir
             menuAdmin();
         } else if (t.getRolTreballador().getTipusRol().equals("Usuari")) {
             // menu basic de triar guardia usuari !!! s'ha d'afegir opcions com llistar guardia
-            menuUsuari();
+            menuUsuari(t);
         }
         
         
         
     }
 
-    private static void menuAdmin() {
+    private static void menuAdmin() throws DAOException {
         System.out.println("0. Sortir");
         System.out.println("1. Menú d'administració");
         System.out.println("2. Menú d'usuari (reservar guàrdia)");
@@ -84,28 +86,45 @@ public class Menu {
         }
     }
 
-    private static void menuUsuari() {
-        mostrarMesos();
-        System.out.println("Tria el número del mes vols reservar una guàrdia: \n");
+    private static void menuUsuari(Treballador treballador) throws DAOException, SQLException {
+        System.out.println("1.Llistar Guardies ");
+        System.out.println("2.Apuntar-se a guardia");
+        System.out.println("3.Cancelar guardia");
+        short x = entrada.nextShort();
+        
+        switch(x){
+            
+            case 1 :
+                   // llista guardia depenent de la categoria del treballador
+                try{
+                   LocalDate dia = entrarDataGuardia();
+                   System.out.println("Es mostraran les guardies del dia:" + dia.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)));
 
-        //Entrem el mes al qual vol reservar guàrdia el treballador
-        entrada = new Scanner(System.in);
-        int mes = entrada.nextInt();
+                       JDBCGuardiaDAO guardies = new JDBCGuardiaDAO();
+                       List<Guardia> llistaGuardies = new ArrayList<Guardia>();
+                       llistaGuardies = guardies.getPerData(dia, treballador.getCategoriaTreballador());
+                       
+                       for (Guardia Guardy : llistaGuardies) {
+                           System.out.println(Guardy.getId() + " " + Guardy.getDia() + " " + Guardy.getUnitat().getTipusUnitat()
+                            + " " + Guardy.getTorn().getTipusTorn() + " " + Guardy.getCategoria().getTipusCategoria() + " " + Guardy.getPlacesDisponibles());
+                       }
+                       
+                       
+               
+                   
+            }catch(DAOException e) {
+                    System.out.println("Error al llistar Guardies d'una data" + e.getMessage());
 
-        //Creem un objecte LocalDate amb la data actual i posem en variables el mes actual i l'any actual
-        LocalDate d = LocalDate.now();
-        int mesActual = d.getMonthValue();
-        int any = d.getYear();
-
-        //Si el treballador vol reservar per un mes de l'any vinent farem que l'any de l'objecte LocalDate siqui el de l'any següent
-        if (mes < mesActual) {
-            d.withYear(any + 1);
+            }
+            
+                
+            case 2 :
+                    // apuntar-se a una guardia
+        
+        
+        
         }
-
-        //String perquè la capçalera estigui alineada
-        String capcelera = "%n%-25s%-25s%-25s%-25s%-25s%n";
-
-        System.out.printf(capcelera, "DIA", "UNITAT", "TORN", "CATEGORIA", "PLACES DISPONIBLES");
+        
     }
 
     private static void menuAdministracio() throws DAOException {
@@ -126,32 +145,29 @@ public class Menu {
             case 0:
                 break;
             case 1:
-               
+               // crear guardia 
                 while(true) {
                 
                 LocalDate dataGuardia = entrarDataGuardia();
 
-                // comprovar que la guardia no esta ja creada
+                //Funcio per triar el tipus de torn que tindrà l'objecte torn
+                Torn torn = triarTorn();
+                
+                //Funcio per triar el tipus de unitat que tindrà l'objecte unitat
+                Unitat unitat = triarUnitat();
+ 
+                
+                //Funcio per triar el tipus de categoria que tindrà l'objecte categoria
+                Categoria categoria = triarCategoria();
                 
                 JDBCGuardiaDAO comprG = new JDBCGuardiaDAO();
-                Guardia g = comprG.getPerData(dataGuardia);
+                Guardia g = comprG.getPerDades(dataGuardia , unitat , torn , categoria);
                 
                     if (g != null) {
                         System.out.println("La guardia ja existeix!!");
                         menuAdministracio();
                         
                     }
-                
-                
-                //Funcio per triar el tipus de torn que tindrà l'objecte torn
-                Torn torn = triarTornAdmin();
-                
-                //Funcio per triar el tipus de unitat que tindrà l'objecte unitat
-                Unitat unitat = triarUnitatAdmin();
- 
-                
-                //Funcio per triar el tipus de categoria que tindrà l'objecte categoria
-                Categoria categoria = triarCategoriaAdmin();
                 
                 System.out.println("Les places es definiran per defecte , si les vols entrar a ma prem s sino n  [s / n]");
                 String resposta = entrada.nextLine();
@@ -186,21 +202,48 @@ public class Menu {
                 menuAdministracio();
                 
             case 2:
+                
+                // eliminar guardia
                 mostrarMesos();
                 LocalDate datGuarEliminar = entrarDataGuardia(); 
+                System.out.println("La data a eliminar sera:" + datGuarEliminar.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)));
                 
+                Torn t = triarTorn();
+                Unitat u = triarUnitat();
+                Categoria c = triarCategoria();
+                
+               try { 
+                JDBCGuardiaDAO guarEliminar = new JDBCGuardiaDAO();
+                Guardia gEliminar = new Guardia();
+                // construim la data a eliminar per pasarla per parametre
+                gEliminar.setCategoria(c);
+                gEliminar.setTorn(t);
+                gEliminar.setUnitat(u);
+                gEliminar.setDia(datGuarEliminar);
+                
+                guarEliminar.delete(gEliminar);
+                
+               } catch (DAOException e) {
+               
+                   System.out.println("Error al elimiar la guardia" + e.getMessage());
+               }
+                System.out.println("La guardia s'ha eliminat correctament");
+
                 break;
             case 3: 
-                mostrarPlantilla();
+               // mostrarPlantilla();
             //Si l'usuari tria un número diferent a 1 ó 2 se li notificarà i es tornarà a cridar el mètode
+                
+            case 4:
+               // afegir treballador 
+                
             default:
-                System.out.println("Tria un dels numeros associats als menús (1 ó 2)");
                 menuAdministracio();
                 break;
         }
     }
 
-    private static Torn triarTornAdmin() {
+    private static Torn triarTorn() {
         Torn torn =  new Torn();
         System.out.println("Torn de la guàrdia:");
         System.out.println("1. Dia");
@@ -215,13 +258,13 @@ public class Menu {
                 break;
             default:
                 System.out.println("Tria Dia(1) o Nit(2)");
-                triarTornAdmin();
+                triarTorn();
         }
         
         return torn;
     }
 
-    private static Unitat triarUnitatAdmin() {
+    private static Unitat triarUnitat() {
         
         Unitat unitat = new Unitat();
         
@@ -250,13 +293,13 @@ public class Menu {
                 break;
             default:
                 System.out.println("Tria una Unitat(1, 2, 3, 4) o Urgències(5)");
-                triarUnitatAdmin();
+                triarUnitat();
         }
         
         return unitat;
     }
 
-    private static Categoria triarCategoriaAdmin() {
+    private static Categoria triarCategoria() {
         
         Categoria categoria = new Categoria();
         
@@ -273,7 +316,7 @@ public class Menu {
                 break;
             default:
                 System.out.println("Tria Infermer/a(1) o TCAI(2)");
-                triarCategoriaAdmin();
+                triarCategoria();
         }
         return categoria;
     }
@@ -295,21 +338,22 @@ public class Menu {
                    break;
                }
                if (any < 2022) {
-                   System.out.println("No es poden crear guardies d'aquest any!!");
+
                    System.out.print("Entra un any correcte: ");
                    any = entrada.nextInt();
                    System.out.println();
                } 
                
                if (mes < 1 || mes > 12) {
-                   System.out.println("No es poden crear guardies d'aquest mes!!");
+
                    System.out.print("Entra un mes correcte:");
                    mes = entrada.nextInt();
                    System.out.println();
                }
                if (errors >= 5) {
-                   System.out.println("Vols cancelar la creacio de la guardia? [s / n]");
+                   System.out.println("Vols tornar al menu? [s / n]");
                    String resposta = entrada.nextLine();
+                   errors = 0;
                    
                    if (resposta.equals("s")) {
                        menuAdministracio();
@@ -327,7 +371,7 @@ public class Menu {
         LocalDate now = LocalDate.of(any, Month.JANUARY, 1);
     // busca el primer diumenge de l'any
     LocalDate diumenge = now.with(firstInMonth(DayOfWeek.SUNDAY));
-    System.out.println("Diumenges disponibles per crear");
+    System.out.println("Diumenges disponibles");
     do {
         // bucle que obte tots els diumenges
         if (diumenge.getMonthValue() == mes) {
@@ -350,11 +394,11 @@ public class Menu {
     } while (diumenge.getYear() == any);
           
               
-        System.out.println("Entra el dia de la guardia a crear");
+        System.out.println("Entra el dia de la guardia");
         int dia = entrada.nextInt();
         
         /* si la llista de dies possibles no conte el dia triat 
-        fa un bucle fins que el dies es correcte*/
+        fa un bucle fins que el dia es correcte*/
         while(!dies.contains(dia)) {
         
             System.out.println("El dia entrat no es un diumenge dels disponibles!!");
@@ -376,13 +420,13 @@ public class Menu {
     }
 
     private static LocalDate entrarDataGuardia() throws DAOException {
-         System.out.println("Entra l'any de la guardia a crear");
+         System.out.println("Entra l'any de la guardia");
                 int any = entrada.nextShort();
-                System.out.println("Entra l'mes de la guardia a crear");
+                System.out.println("Entra l'mes de la guardia");
                 int mes = entrada.nextShort();
                 
                 /* el metode mostrarDiumengesDelMes() mostra els dies diponibles 
-                    i construeix la data de la guardia a crear
+                    i construeix la data de la guardia a crear o a eliminar
                    */
                 
                 return mostrarDiumengesDelMes(any , mes);
@@ -395,8 +439,8 @@ public class Menu {
            PlantillaGuardia plG= new PlantillaGuardia();
            try{
            plG = jdbcplantilla.get(categoria.getTipusCategoria(), unitat.getTipusUnitat(), torn.getTipusTorn());
-           System.out.printf("La guardia es crear amb la seguent plantilla : %d  %s  %s  %s %d " , plG.getIdPlantilla() , plG.getNomUnitatPlantilla(),
-                  plG.getNomCategoriaPlantilla() , plG.getNomTornPlantilla() , plG.getIdPlantilla());
+           System.out.printf("La guardia es crear amb la seguent plantilla : %d  %s  %s  %s %d " , plG.getId() , plG.getNomUnitatPlantilla(),
+                  plG.getNomCategoriaPlantilla() , plG.getNomTornPlantilla() , plG.getId());
            } catch(DAOException e){
                System.out.println("Error al mostrar plantilla" + e.getMessage());
            }

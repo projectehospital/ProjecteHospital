@@ -4,6 +4,8 @@
  */
 package cat.boscdelacoma.model.business.entities;
 
+import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.JDBCTreballadorDAO;
+import cat.boscdelacoma.model.persistence.exceptions.DAOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -13,17 +15,39 @@ import java.util.ArrayList;
  */
 public class Treballador {
     
-    private long id , esCapDeUnitat;
+    private long id , esCapDeUnitat = 0;
+    // en cas que un treballador no sigui cap de unitat el valor sera zero
     private String nom, dni, passwd, tipusContracte;
-    private short guardiesPrevistes, guardiesFetes;
+    private long guardiesPrevistes, guardiesFetes;
     private LocalDate dataNaixement;
     private Rol rolTreballador;
     private Categoria categoria;
-    private ArrayList<Guardia> llistaGuardiesFetes;
+    private ArrayList<Guardia> llistaGuardiesFetes; // possible hashmap
 
-    public Treballador(long id, String dni, String nom, LocalDate dataNaixement, String passwd, short guardiesFetes, short guardiesPrevistes, String tipusContracte, Categoria categoria, Rol rolTreballador, long esCapDeUnitat) {
+    
+    
+    
+     public Treballador(){
+    }
+     
+      public Treballador(Treballador treballador){
+          // contructor de copia de treballador 
+        this.id = treballador.getId();
+        this.nom = treballador.getNom();
+        this.dni = treballador.getDni();
+        this.passwd = treballador.getPasswd();
+        this.tipusContracte = treballador.getTipusContracte();
+        this.guardiesPrevistes = treballador.getGuardiesPrevistes();
+        this.guardiesFetes = treballador.getGuardiesFetes();
+        this.dataNaixement = treballador.getDataNaixement();
+        this.rolTreballador = treballador.getRolTreballador();
+        this.categoria = getCategoriaTreballador();
+        this.esCapDeUnitat = treballador.getEsCapDeUnitat();
+    }
+    
+    public Treballador(long id, String dni, String nom, LocalDate dataNaixement, String passwd, long guardiesFetes, long guardiesPrevistes, String tipusContracte, Categoria categoria, Rol rolTreballador, long esCapDeUnitat) {
        
-       // treballador amb guardies previstes i fetes
+       // treballador amb guardies previstes i fetes 
         
         this.id = id;
         this.nom = nom;
@@ -32,13 +56,15 @@ public class Treballador {
         this.tipusContracte = tipusContracte;
         this.guardiesPrevistes = guardiesPrevistes;
         this.guardiesFetes = guardiesFetes;
-        this.esCapDeUnitat = esCapDeUnitat;
         this.dataNaixement = dataNaixement;
         this.rolTreballador = rolTreballador;
         this.categoria = categoria;
+        this.esCapDeUnitat = esCapDeUnitat;
     }
 
-    public Treballador(long id, String nom, String dni, String passwd, Rol rolTreballador, String tipusContracte, LocalDate dataNaixement, Categoria categoria, short esCapDeUnitat) {
+    public Treballador(long id, String dni, String nom, LocalDate dataNaixement ,String passwd, String tipusContracte , Categoria categoria, Rol rolTreballador, long esCapDeUnitat) {
+        
+        // treballador que no s'especifica les guardies fetes
         this.id = id;
         this.nom = nom;
         this.dni = dni;
@@ -48,20 +74,6 @@ public class Treballador {
         this.dataNaixement = dataNaixement;
         this.categoria = categoria;
         this.esCapDeUnitat = esCapDeUnitat;
-    }
-    
-    public Treballador(long id, String nom, String dni, String passwd, Rol rolTreballador, String tipusContracte, LocalDate dataNaixement, Categoria categoria) {
-        this.id = id;
-        this.nom = nom;
-        this.dni = dni;
-        this.passwd = passwd;
-        this.rolTreballador = rolTreballador;
-        this.tipusContracte = tipusContracte;
-        this.dataNaixement = dataNaixement;
-        this.categoria = categoria;
-    }
-    
-    public Treballador(){
     }
     
     public long getId() {
@@ -112,27 +124,28 @@ public class Treballador {
         this.tipusContracte = tipusContracte;
     }
 
-    public short getGuardiesPrevistes() {
+    public long getGuardiesPrevistes() {
         return guardiesPrevistes;
     }
 
-    public void setGuardiesPrevistes(short guardiesPrevistes) {
+    public void setGuardiesPrevistes(long guardiesPrevistes) {
         this.guardiesPrevistes = guardiesPrevistes;
     }
 
-    public short getGuardiesFetes() {
+    public long getGuardiesFetes() {
         return guardiesFetes;
     }
 
-    public void setGuardiesFetes(short guardiesFetes) {
+    public void setGuardiesFetes(long guardiesFetes) {
         this.guardiesFetes = guardiesFetes;
     }
 
     public long getEsCapDeUnitat() {
+        // si no ho es retorna 0
         return esCapDeUnitat;
     }
 
-    public void setEsCapDeUnitat(short esCapDeUnitat) {
+    public void setEsCapDeUnitat ( long esCapDeUnitat) {
         this.esCapDeUnitat = esCapDeUnitat;
     }
 
@@ -156,19 +169,45 @@ public class Treballador {
         return llistaGuardiesFetes;
     }
 
-    public void setLlistaGuardiesFetes(ArrayList<Guardia> llistaGuardiesFetes) {
-        this.llistaGuardiesFetes = llistaGuardiesFetes;
+    public void setLlistaGuardiesFetes(long idTreballador) {
+        try{
+            
+        JDBC
+        
+        } catch(DAOException e) {
+        
+        
+        
+        }
     }
     
-    public void afegirGuardia(Guardia g){
-        getLlistaGuardiesFetes().add(g);
+    public void apuntarseAGuardia(long idGuardia) throws DAOException {
+        
+        try {
+        JDBCTreballadorDAO t = new JDBCTreballadorDAO();
+        t.reservarGuardia(this.id, idGuardia);
+        }catch(DAOException e){
+            System.out.println("Error al apuntar-se a la guardia" + e.getMessage());
+            throw new DAOException();
+        }
     }
     
-    public void eliminarGuardia(Guardia g){
-        getLlistaGuardiesFetes().remove(g);
+    public void desapuntarseDeGuardia(long idGuardia) throws DAOException {
+        
+        try {
+        JDBCTreballadorDAO t = new JDBCTreballadorDAO();
+        t.cancelarGuardia(this.id , idGuardia);
+        }catch(DAOException e){
+            System.out.println("Error al desapuntar-se de la guardia" + e.getMessage());
+            throw new DAOException();
+        }
     }
+    
+    
+
     
     public int obtenirGuardiesFetes(ArrayList<Guardia> llistaGuardiesFetes){
+       // retorna les guardies ja fetes 
         return llistaGuardiesFetes.size();
     }    
 }

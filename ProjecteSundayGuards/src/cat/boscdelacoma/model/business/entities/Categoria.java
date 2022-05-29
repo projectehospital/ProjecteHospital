@@ -12,14 +12,16 @@ public class Categoria {
     
     private long id;
     private String tipusCategoria;
+    
+      public Categoria() {
+    }
+    
 
     public Categoria(long id, String tipusCategoria) {
         this.id = id;
         this.tipusCategoria = tipusCategoria;
     }
 
-    public Categoria() {
-    }
     
     /**
      * @return the id

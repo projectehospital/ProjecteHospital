@@ -17,7 +17,7 @@ public class PlantillaGuardia {
     
     public PlantillaGuardia() {}
     
-    // es una plantilla per el nomes necessitem saber el tipus i no l'objecte.
+    // es una plantilla per el que nomes necessitem saber el tipus i no l'objecte per aixo es pasen Strings
     
     public PlantillaGuardia(long id , String unitat , String categoria , String torn , long places) {
     
@@ -30,11 +30,11 @@ public class PlantillaGuardia {
     
     }
 
-    public long getIdPlantilla() {
+    public long getId() {
         return id;
     }
 
-    public void setIdPlantilla(long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
