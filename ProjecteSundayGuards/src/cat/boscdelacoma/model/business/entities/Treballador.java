@@ -76,6 +76,13 @@ public class Treballador {
         this.esCapDeUnitat = esCapDeUnitat;
     }
     
+    public Treballador(String dni , String passwd){
+        
+        this.dni = dni;
+        this.passwd = passwd;
+                                
+    }
+    
     public long getId() {
         return id;
     }

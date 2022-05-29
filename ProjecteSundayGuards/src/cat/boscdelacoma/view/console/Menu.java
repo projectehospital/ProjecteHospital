@@ -40,7 +40,7 @@ public class Menu {
 
     static Scanner entrada;
 
-    public static void MenuInicial(Treballador t) throws DAOException {
+    public static void menuInicial(Treballador t) throws DAOException, SQLException {
         /*Creem un objecte Treballador d'exemple amb el rol d'Administrador, si
         el treballador té rol d'Admin (coincideix) accedirà al menú 
         d'administració, en cas contrari anirà al menú d'usuari*/

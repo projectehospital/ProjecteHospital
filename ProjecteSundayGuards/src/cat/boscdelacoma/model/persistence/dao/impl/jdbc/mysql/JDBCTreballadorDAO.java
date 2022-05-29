@@ -41,12 +41,12 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
                 t.setNom(resultat.getString("nom"));
                 t.setDataNaixement((resultat.getDate("data_Naixement").toLocalDate()));
                 t.setPasswd(resultat.getString("passwd"));
-                t.setGuardiesFetes(resultat.getShort("guardies_fetes"));
-                t.setGuardiesPrevistes(resultat.getShort("guardies_previstes"));
+                t.setGuardiesFetes(resultat.getLong("guardies_fetes"));
+                t.setGuardiesPrevistes(resultat.getLong("guardies_previstes"));
                 t.setTipusContracte(resultat.getString("tipus_contracte"));
                 t.setCategoriaTreballador(c.getPerNom(resultat.getString("tipus_categoria")));
                 t.setRolTreballador(r.getPerString(resultat.getString("tipus_rol")));
-                t.setEsCapDeUnitat(resultat.getShort("es_cap_de_unitat"));
+                t.setEsCapDeUnitat(resultat.getLong("es_cap_de_unitat"));
                 
                 return t;
             } else {
@@ -69,11 +69,11 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
             while (resultat.next()) {
                 list.add(new Treballador(resultat.getLong("id"), resultat.getString("DNI"), 
                         resultat.getString("nom"), (resultat.getDate("data_Naixement").toLocalDate()), 
-                        resultat.getString("passwd"), resultat.getShort("guardies_fetes"), 
-                        resultat.getShort("guardies_previstes"), resultat.getString("tipus_contracte"), 
+                        resultat.getString("passwd"), resultat.getLong("guardies_fetes"), 
+                        resultat.getLong("guardies_previstes"), resultat.getString("tipus_contracte"), 
                         c.getPerNom(resultat.getString("tipus_categoria")),
                         r.getPerString(resultat.getString("tipus_rol")),
-                        resultat.getShort("es_cap_de_unitat")));
+                        resultat.getLong("es_cap_de_unitat")));
             }
             return list;
         } catch (SQLException ex) {
@@ -166,6 +166,44 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
 
         }
     }
+    
+    
+     public Treballador getTreballadorLogin(String dni , String passwd) throws DAOException {
+        try {
+            
+            // obtenim un treballador per les dades que entra al login
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from treballador where DNI = '?' passwd = '?'");
+            query.setString(1, dni);
+            query.setString(2, passwd);
+            ResultSet resultat = query.executeQuery();
+
+            if (resultat.next()) {
+                Treballador t = new Treballador();
+                JDBCCategoriaDAO c = new JDBCCategoriaDAO();
+                JDBCRolDAO r = new JDBCRolDAO();
+                t.setId(resultat.getLong("id"));
+                t.setDni(resultat.getString("DNI"));
+                t.setNom(resultat.getString("nom"));
+                t.setDataNaixement((resultat.getDate("data_Naixement").toLocalDate()));
+                t.setPasswd(resultat.getString("passwd"));
+                t.setGuardiesFetes(resultat.getLong("guardies_fetes"));
+                t.setGuardiesPrevistes(resultat.getLong("guardies_previstes"));
+                t.setTipusContracte(resultat.getString("tipus_contracte"));
+                t.setCategoriaTreballador(c.getPerNom(resultat.getString("tipus_categoria")));
+                t.setRolTreballador(r.getPerString(resultat.getString("tipus_rol")));
+                t.setEsCapDeUnitat(resultat.getLong("es_cap_de_unitat"));
+                
+                return t;
+            } else {
+                return null;
+            }
+
+        } catch (SQLException ex) {
+            throw new DAOException();
+        }
+    }
+    
+    
     
     public boolean reservarGuardia(long idTreballador ,long idGuardia) throws DAOException {
         try {
