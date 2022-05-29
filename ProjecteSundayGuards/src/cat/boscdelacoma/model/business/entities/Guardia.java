@@ -25,6 +25,14 @@ public class Guardia {
     private Unitat unitat;
     private Categoria categoria;
     
+    
+        public Guardia() {
+    }
+        public Guardia(Guardia g) {
+            
+            
+            
+    }
     public Guardia(long id, LocalDate dia,Unitat unitat, Torn torn, Categoria categoria, long placesDisponibles) {
         this.id = id;
         this.dia = dia;
@@ -52,9 +60,7 @@ public class Guardia {
         this.placesDisponibles = placesDisponibles;
     }
 
-    public Guardia() {
-    }
-    
+
     public long getId() {
         return id;
     }

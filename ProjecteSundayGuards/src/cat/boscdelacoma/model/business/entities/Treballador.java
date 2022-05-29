@@ -31,7 +31,7 @@ public class Treballador {
     }
      
       public Treballador(Treballador treballador){
-          // contructor de copia de treballador 
+          // contructor de copia de treballador copia tot menys array de guardies
         this.id = treballador.getId();
         this.nom = treballador.getNom();
         this.dni = treballador.getDni();
@@ -179,13 +179,12 @@ public class Treballador {
     public void setLlistaGuardiesFetes(long idTreballador) {
         try{
             
-        JDBC
-        
+        JDBCTreballadorDAO treb = new JDBCTreballadorDAO();
+        treb.obtenirLlistaGuardies(idTreballador);
         } catch(DAOException e) {
-        
-        
-        
+            System.out.println("Error al obtenir llista guardies de treballador:" + e.getMessage());
         }
+        
     }
     
     public void apuntarseAGuardia(long idGuardia) throws DAOException {
@@ -209,12 +208,8 @@ public class Treballador {
             throw new DAOException();
         }
     }
-    
-    
 
-    
     public int obtenirGuardiesFetes(ArrayList<Guardia> llistaGuardiesFetes){
-       // retorna les guardies ja fetes 
         return llistaGuardiesFetes.size();
     }    
 }
