@@ -99,21 +99,21 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
     public void add(Treballador t) throws DAOException {
         try {
 
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("insert into treballador VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("insert into treballador VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
             JDBCRolDAO r = new JDBCRolDAO();
             JDBCCategoriaDAO c = new JDBCCategoriaDAO();
-            query.setLong(1, t.getId());
-            query.setString(2, t.getDni());
-            query.setString(3, t.getNom());
-            query.setDate(4,  Date.valueOf(t.getDataNaixement()));
-            query.setString(5, t.getPasswd());
-            query.setLong(6, t.getGuardiesFetes());
-            query.setLong(7, t.getGuardiesPrevistes());
-            query.setString(8, t.getTipusContracte());
-            query.setString(9, t.getCategoriaTreballador().getTipusCategoria());
-            query.setString(10, t.getRolTreballador().getTipusRol());
-            query.setLong(11, t.getEsCapDeUnitat());
+            //query.setLong(1, t.getId());
+            query.setString(1, t.getDni());
+            query.setString(2, t.getNom());
+            query.setDate(3,  Date.valueOf(t.getDataNaixement()));
+            query.setString(4, t.getPasswd());
+            query.setLong(5, t.getGuardiesFetes());
+            query.setLong(6, t.getGuardiesPrevistes());
+            query.setString(7, t.getTipusContracte());
+            query.setString(8, t.getCategoriaTreballador().getTipusCategoria());
+            query.setString(9, t.getRolTreballador().getTipusRol());
+            query.setLong(10, t.getEsCapDeUnitat());
             query.executeUpdate();
             ResultSet rst = query.getGeneratedKeys();
             Treballador t2 = new Treballador();

@@ -4,6 +4,7 @@
  */
 package cat.boscdelacoma.model.business.entities;
 
+import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.JDBCGuardiaDAO;
 import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.JDBCTreballadorDAO;
 import cat.boscdelacoma.model.persistence.exceptions.DAOException;
 import java.time.LocalDate;
@@ -61,6 +62,23 @@ public class Treballador {
         this.categoria = categoria;
         this.esCapDeUnitat = esCapDeUnitat;
     }
+    
+      public Treballador( String dni, String nom, LocalDate dataNaixement, String passwd, long guardiesFetes, long guardiesPrevistes, String tipusContracte, Categoria categoria, Rol rolTreballador, long esCapDeUnitat) {
+       
+       // treballador amb guardies previstes i fetes sense id
+        
+
+        this.nom = nom;
+        this.dni = dni;
+        this.passwd = passwd;
+        this.tipusContracte = tipusContracte;
+        this.guardiesPrevistes = guardiesPrevistes;
+        this.guardiesFetes = guardiesFetes;
+        this.dataNaixement = dataNaixement;
+        this.rolTreballador = rolTreballador;
+        this.categoria = categoria;
+        this.esCapDeUnitat = esCapDeUnitat;
+    }
 
     public Treballador(long id, String dni, String nom, LocalDate dataNaixement ,String passwd, String tipusContracte , Categoria categoria, Rol rolTreballador, long esCapDeUnitat) {
         
@@ -69,6 +87,8 @@ public class Treballador {
         this.nom = nom;
         this.dni = dni;
         this.passwd = passwd;
+        this.guardiesPrevistes = 0;
+        this.guardiesFetes = 0;
         this.rolTreballador = rolTreballador;
         this.tipusContracte = tipusContracte;
         this.dataNaixement = dataNaixement;
@@ -173,6 +193,7 @@ public class Treballador {
     }
 
     public ArrayList<Guardia> getLlistaGuardiesFetes() {
+        this.setLlistaGuardiesFetes(id);
         return llistaGuardiesFetes;
     }
 
@@ -181,6 +202,7 @@ public class Treballador {
             
         JDBCTreballadorDAO treb = new JDBCTreballadorDAO();
         treb.obtenirLlistaGuardies(idTreballador);
+        
         } catch(DAOException e) {
             System.out.println("Error al obtenir llista guardies de treballador:" + e.getMessage());
         }
@@ -191,7 +213,16 @@ public class Treballador {
         
         try {
         JDBCTreballadorDAO t = new JDBCTreballadorDAO();
-        t.reservarGuardia(this.id, idGuardia);
+        
+        JDBCGuardiaDAO g = new JDBCGuardiaDAO();
+        
+            if (g.get(idGuardia) !=null) {
+                t.reservarGuardia(this.id, idGuardia);
+                this.setLlistaGuardiesFetes(idGuardia);
+            } else {
+                System.out.println("La guardia l'id de la guardia no existeix");
+            }
+        
         }catch(DAOException e){
             System.out.println("Error al apuntar-se a la guardia" + e.getMessage());
             throw new DAOException();
@@ -202,6 +233,16 @@ public class Treballador {
         
         try {
         JDBCTreballadorDAO t = new JDBCTreballadorDAO();
+        
+         JDBCGuardiaDAO g = new JDBCGuardiaDAO();
+        // comprovem que la guardia existeix
+            if (g.get(idGuardia) !=null) {
+                t.cancelarGuardia(this.id , idGuardia);
+                this.setLlistaGuardiesFetes(idGuardia);
+            } else {
+                System.out.println("La guardia l'id de la guardia no existeix");
+            }
+        
         t.cancelarGuardia(this.id , idGuardia);
         }catch(DAOException e){
             System.out.println("Error al desapuntar-se de la guardia" + e.getMessage());
