@@ -33,9 +33,8 @@ import java.util.logging.Logger;
  */
 public class InterficieTextual {
 
-    public static void main(Treballador treballador) throws DAOException, SQLException {
- 
-        
+    public static void main(String[] args) throws DAOException, SQLException {
+
           Menu nouMenu = new Menu();
             
           try {
@@ -51,6 +50,7 @@ public class InterficieTextual {
               System.out.println(e.getMessage());
               
           }
-        
+
+
     }
 }

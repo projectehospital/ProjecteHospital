@@ -166,7 +166,7 @@ public class Menu {
                 
                     if (g != null) {
                         System.out.println("La guardia ja existeix!!");
-                        menuAdministracio();
+                        //menuAdministracio();
                         
                     }
                 
@@ -200,7 +200,7 @@ public class Menu {
                    
                 }
                 
-                menuAdministracio();
+                //menuAdministracio();
                 
             case 2:
                 
@@ -209,7 +209,7 @@ public class Menu {
                 LocalDate datGuarEliminar = entrarDataGuardia(); 
                 System.out.println("La data a eliminar sera:" + datGuarEliminar.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)));
                 
-                Torn t = triarTorn();
+                //Torn t = triarTorn();
                 Unitat u = triarUnitat();
                 Categoria c = triarCategoria();
                 
@@ -218,7 +218,7 @@ public class Menu {
                 Guardia gEliminar = new Guardia();
                 // construim la data a eliminar per pasarla per parametre
                 gEliminar.setCategoria(c);
-                gEliminar.setTorn(t);
+                //gEliminar.setTorn(t);
                 gEliminar.setUnitat(u);
                 gEliminar.setDia(datGuarEliminar);
                 
@@ -239,7 +239,7 @@ public class Menu {
                // afegir treballador 
                 
             default:
-                menuAdministracio();
+                //menuAdministracio();
                 break;
         }
     }
@@ -357,7 +357,7 @@ public class Menu {
                    errors = 0;
                    
                    if (resposta.equals("s")) {
-                       menuAdministracio();
+                       //menuAdministracio();
                    }
               }
 

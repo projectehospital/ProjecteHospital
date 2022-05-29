@@ -27,28 +27,28 @@ import java.sql.Date;
 public class JDBCGuardiaDAO implements GuardiaDAO {
 
     @Override
-    public List<Guardia> getAll() throws DAOException {
+    public ArrayList<Guardia> getAll() throws DAOException {
         try {
             Statement query = MYSQLConnection.getInstance().getConnection().createStatement();
             ResultSet resultat = query.executeQuery("select * from guardia");
-            List<Guardia> list = new ArrayList<>();
+            ArrayList<Guardia> list = new ArrayList<>();
             JDBCCategoriaDAO c = new JDBCCategoriaDAO();
             JDBCUnitatDAO u = new JDBCUnitatDAO();
             JDBCTornDAO t = new JDBCTornDAO();
             JDBCTreballadorDAO treb = new JDBCTreballadorDAO();
             // fem la conversio de la data
-            
+
             while (resultat.next()) {
                 LocalDate locdat = resultat.getDate("dia").toLocalDate();
                 Guardia g = new Guardia();
                 g.setId(resultat.getLong("id"));
                 g.setDia(locdat);
                 g.setPlacesDisponibles(resultat.getShort("places_disponibles"));
-                g.setUnitat(u.getPerNom("tipus_unitat"));
-                g.setTorn(t.getPerNom("tipus_torn"));
-                g.setCategoria(c.getPerNom("tipus_categoria"));
+                g.setUnitat(u.getPerNom(resultat.getString("tipus_unitat")));
+                g.setTorn(t.getPerNom(resultat.getString("tipus_torn")));
+                g.setCategoria(c.getPerNom(resultat.getString("tipus_categoria")));
                 g.setLlistaTreballadors(g.getId());
-                
+
                 list.add(g);
             }
 
@@ -58,61 +58,56 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
         }
 
     }
-    
-    public List<Guardia> getPerData(LocalDate dia , Categoria categoria) throws DAOException, SQLException{
-        
+
+    public ArrayList<Guardia> getPerData(LocalDate dia, Categoria categoria) throws DAOException, SQLException {
+
         // el parametre categoria ens permet mostrar nomes les guardies de la categoria del treballador
-        
         try {
             // obtenim les guardies d'un dia en especific         
             PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from guardia where dia = ? and tipus_categoria = ?");
             query.setDate(1, Date.valueOf(dia));
             query.setString(2, categoria.getTipusCategoria());
             ResultSet resultat = query.executeQuery();
-            List<Guardia> list = new ArrayList<>();
+            ArrayList<Guardia> list = new ArrayList<>();
             JDBCCategoriaDAO c = new JDBCCategoriaDAO();
             JDBCUnitatDAO u = new JDBCUnitatDAO();
             JDBCTornDAO t = new JDBCTornDAO();
             // fem la conversio de la data
 
             while (resultat.next()) {
-             
+
                 LocalDate locdat = resultat.getDate("dia").toLocalDate();
                 Guardia g = new Guardia();
                 g.setId(resultat.getLong("id"));
                 g.setDia(locdat);
                 g.setPlacesDisponibles(resultat.getShort("places_disponibles"));
-                g.setUnitat(u.getPerNom("tipus_unitat"));
-                g.setTorn(t.getPerNom("tipus_torn"));
-                g.setCategoria(c.getPerNom("tipus_categoria"));
+                g.setUnitat(u.getPerNom(resultat.getString("tipus_unitat")));
+                g.setTorn(t.getPerNom(resultat.getString("tipus_torn")));
+                g.setCategoria(c.getPerNom(resultat.getString("tipus_categoria")));
                 g.setLlistaTreballadors(g.getId());
-                
+
                 list.add(g);
 
             }
             return list;
-        }catch(SQLException ex){
-            
+        } catch (SQLException ex) {
+
             System.out.println("Error al obtenir guardia per data");
             throw new DAOException("Error al obtenir guardia per data");
         }
-        
-    
-    
+
     }
 
-  
-    public Guardia getPerDades(LocalDate dia , Unitat unitat , Torn torn , Categoria categoria ) throws DAOException{
-        
+    public Guardia getPerDades(LocalDate dia, Unitat unitat, Torn torn, Categoria categoria) throws DAOException {
+
         try {
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from guardia where dia=? and tipus_unitat = ? tipus_torn = ? tipus_categoria = ?");
-            
-            query.setDate(1,Date.valueOf(dia));
-            query.setString(2,unitat.getTipusUnitat());
-            query.setString(3,torn.getTipusTorn());
-            query.setString(4,categoria.getTipusCategoria());
-            
-            
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from guardia where dia=? and tipus_unitat = ? and tipus_torn = ? and tipus_categoria = ?");
+
+            query.setDate(1, Date.valueOf(dia));
+            query.setString(2, unitat.getTipusUnitat());
+            query.setString(3, torn.getTipusTorn());
+            query.setString(4, categoria.getTipusCategoria());
+
             ResultSet resultat = query.executeQuery();
             // daos per obtenir les dades de unitat torn i guardia
             JDBCCategoriaDAO c = new JDBCCategoriaDAO();
@@ -125,26 +120,23 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
                 g.setId(resultat.getLong("id"));
                 g.setDia(locdat);
                 g.setPlacesDisponibles(resultat.getShort("places_disponibles"));
-                g.setUnitat(u.getPerNom("tipus_unitat"));
-                g.setTorn(t.getPerNom("tipus_torn"));
-                g.setCategoria(c.getPerNom("tipus_categoria"));
+                g.setUnitat(u.getPerNom(resultat.getString("tipus_unitat")));
+                g.setTorn(t.getPerNom(resultat.getString("tipus_torn")));
+                g.setCategoria(c.getPerNom(resultat.getString("tipus_categoria")));
                 g.setLlistaTreballadors(g.getId());
-                
+
                 return g;
             } else {
                 return null;
             }
-  
-        }catch(SQLException ex){
-            
+
+        } catch (SQLException ex) {
+
             throw new DAOException();
         }
-        
-    
-    
+
     }
-    
-    
+
     @Override
     public Guardia get(long id) throws DAOException {
         try {
@@ -162,9 +154,9 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
                 g.setId(resultat.getLong("id"));
                 g.setDia(ld);
                 g.setPlacesDisponibles(resultat.getShort("places_disponibles"));
-                g.setUnitat(u.getPerNom("tipus_unitat"));
-                g.setTorn(t.getPerNom("tipus_torn"));
-                g.setCategoria(c.getPerNom("tipus_categoria"));
+                g.setUnitat(u.getPerNom(resultat.getString("tipus_unitat")));
+                g.setTorn(t.getPerNom(resultat.getString("tipus_torn")));
+                g.setCategoria(c.getPerNom(resultat.getString("tipus_categoria")));
                 g.setLlistaTreballadors(g.getId());
                 return g;
             } else {
@@ -244,10 +236,10 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
 
         }
     }
-    
+
     public void restarPlaces(long idGuardia) throws DAOException {
-      try {
-          // metode que resta les places ja que un treballador ha fet una reserva
+        try {
+            // metode que resta les places ja que un treballador ha fet una reserva
             PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("update guardia set places_disponibles = places_disponibles - 1 where id=?");
             query.setLong(1, idGuardia);
             query.executeUpdate();
@@ -257,12 +249,12 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
             throw new DAOException();
 
         }
-      
+
     }
-    
+
     public void sumarPlaces(long idGuardia) throws DAOException {
-      try {
-          // metode que resta les places ja que un treballador ha fet una reserva
+        try {
+            // metode que resta les places ja que un treballador ha fet una reserva
             PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("update guardia set places_disponibles = places_disponibles + 1 where id=?");
             query.setLong(1, idGuardia);
             query.executeUpdate();
@@ -272,22 +264,21 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
             throw new DAOException();
 
         }
-      
+
     }
-    
-    
+
     public ArrayList<Treballador> obtenirLlistaTreballadors(long idGuardia) throws DAOException {
-        
+
         try {
-                  // metode en el qual obtenim una llista de treballador d'una determinada guardia
+            // metode en el qual obtenim una llista de treballador d'una determinada guardia
             PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from guardies_treballador where id_guardia = ?");
             query.setLong(1, idGuardia);
             ResultSet resultat = query.executeQuery();
             ArrayList<Treballador> list = new ArrayList<Treballador>();
             JDBCTreballadorDAO treb = new JDBCTreballadorDAO();
-      
+
             while (resultat.next()) {
-                 // obtenim el treballador per l'id de la taula guardies_treballador i l'obtenim gracies al JDBCTreballadorDAO
+                // obtenim el treballador per l'id de la taula guardies_treballador i l'obtenim gracies al JDBCTreballadorDAO
                 list.add(new Treballador(treb.get(resultat.getLong("id_treballador"))));
             }
             return list;
@@ -296,8 +287,5 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
         }
 
     }
-    
-    
 
- 
 }

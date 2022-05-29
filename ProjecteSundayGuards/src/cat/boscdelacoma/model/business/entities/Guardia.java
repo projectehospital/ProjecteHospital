@@ -23,7 +23,7 @@ public class Guardia {
     private ArrayList<Treballador> llistaTreballadors; 
     private Torn torn;
     private Unitat unitat;
-    private Categoria categroia;
+    private Categoria categoria;
     
     
         public Guardia() {
@@ -86,6 +86,7 @@ public class Guardia {
     }
 
     public ArrayList<Treballador> getLlistaTreballadors() {
+        this.setLlistaTreballadors(id);
         return llistaTreballadors;
     }
 

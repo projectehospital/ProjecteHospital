@@ -89,7 +89,7 @@ public class JDBCCategoriaDAOIT {
         String s = "Infermer/a";
         JDBCCategoriaDAO instance = new JDBCCategoriaDAO();
         Categoria expResult = new Categoria(1, "Infermer/a");
-        Categoria result = instance.getPerString("Infermer/a");
+        Categoria result = instance.getPerNom("Infermer/a");
         assertEquals(expResult, result);
     }
 

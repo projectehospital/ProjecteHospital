@@ -192,6 +192,7 @@ public class Treballador {
         try {
         JDBCTreballadorDAO t = new JDBCTreballadorDAO();
         t.reservarGuardia(this.id, idGuardia);
+        this.setLlistaGuardiesFetes(idGuardia);
         }catch(DAOException e){
             System.out.println("Error al apuntar-se a la guardia" + e.getMessage());
             throw new DAOException();
@@ -203,6 +204,7 @@ public class Treballador {
         try {
         JDBCTreballadorDAO t = new JDBCTreballadorDAO();
         t.cancelarGuardia(this.id , idGuardia);
+        this.setLlistaGuardiesFetes(idGuardia);
         }catch(DAOException e){
             System.out.println("Error al desapuntar-se de la guardia" + e.getMessage());
             throw new DAOException();

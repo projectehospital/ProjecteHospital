@@ -114,10 +114,10 @@ public class JDBCCategoriaDAO implements CategoriaDAO {
             ResultSet resultat = query.executeQuery();
 
             if (resultat.next()) {
-                Categoria c = new Categoria();
-                c.setTipusCategoria(resultat.getString("tipus_categoria"));
-                c.setId(resultat.getLong("id"));
-                return c;
+                Categoria ca = new Categoria();
+                ca.setTipusCategoria(resultat.getString("tipus_categoria"));
+                ca.setId(resultat.getLong("id"));
+                return ca;
             } else {
                 return null;
             }
