@@ -28,13 +28,13 @@ public class Menu {
         System.out.println("11. Novembre");
         System.out.println("12. Desembre");
         
-        entrada = new Scanner(System.in);
+        /*/ entrada = new Scanner(System.in);
         int mes = entrada.nextInt();
         LocalDate d = new LocalDate();
         
         while(mes == d.getMonthValue()){
         
-        }
+        }/*/
 //        switch(mes){
 //            case 1:
 //                
@@ -77,4 +77,4 @@ public class Menu {
 //                break;
         }
     }
-}
+
