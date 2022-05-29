@@ -6,9 +6,10 @@ package cat.boscdelacoma.controller;
 
 import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.JDBCTreballadorDAO;
 import cat.boscdelacoma.model.business.entities.Treballador;
-import cat.boscdelacoma.persistence.exception.DAOException;
+import cat.boscdelacoma.model.persistence.exceptions.DAOException;
 import cat.boscdelacoma.view.console.Menu;
-import static cat.boscdelacoma.view.console.SHA512;
+import cat.boscdelacoma.view.console.SHA512;
+import cat.boscdelacoma.view.console.testos;
 import javafx.application.Platform;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -64,20 +65,19 @@ public class SundayGuardsController implements Initializable {
             String dni= inputDni.getText();
             String contrasenya= inputContrasenya.getText();
             inputDni=limitText(inputDni,20);
-            contrasenya= SHA512(contrasenya, "Perrito");
+            /*/contrasenya= SHA512(contrasenya, "Perrito");/*/
 
                 try{
-                    treb=treballador.get(Long.parseLong(dni), contrasenya);
-                                        
-                }catch(DaoException ex){
-                    
+                    Treballador treb=treb.get(Long.parseLong(dni), contrasenya);
+                                        //s'ha d'implementar mètode per DNI i contrasenya//
+                }catch(DAOException ex){
                     Alert alert= new Alert(Alert.AlertType.ERROR);
-                    
+                    System.out.println("Error al obtenir treballador per mètode DNI i contrasenya"+ ex.getMessage());
                     alert.setHeaderText("Error de la base de dades");
                     alert.show();
                 }      
                 
-                if (treb==null){
+                if (treballador==null){
                     
                     Alert alert= new Alert(Alert.AlertType.ERROR);
                     
@@ -85,8 +85,12 @@ public class SundayGuardsController implements Initializable {
                     alert.show();
                 }
                 else{
+                    //enviar treballador per paràmetre al main//
+                    
+                    testos.main(treb);
                     
                     stage.hide();
+                    
                     
                 }
                 
@@ -125,6 +129,7 @@ public class SundayGuardsController implements Initializable {
 
     @FXML
     private void btnAccioCancelar(ActionEvent event) {
+        stage.hide();
         }
 
    

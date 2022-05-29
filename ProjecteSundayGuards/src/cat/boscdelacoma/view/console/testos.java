@@ -8,6 +8,7 @@ import cat.boscdelacoma.model.business.entities.Categoria;
 import cat.boscdelacoma.model.business.entities.Guardia;
 import cat.boscdelacoma.model.business.entities.Guardia;
 import cat.boscdelacoma.model.business.entities.Torn;
+import cat.boscdelacoma.model.business.entities.Treballador;
 import cat.boscdelacoma.model.business.entities.Unitat;
 import cat.boscdelacoma.model.persistence.dao.contracts.GuardiaDAO;
 import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.JDBCCategoriaDAO;
@@ -31,34 +32,13 @@ import java.util.logging.Logger;
  */
 public class testos {
 
-    public static void main(String[] args) throws DAOException {
-        MYSQLConnection con = MYSQLConnection.getInstance();
-        System.out.println(con.getConnection());
-        try {
-            var guardia = new JDBCGuardiaDAO();
-//            var categoria = new JDBCCategoriaDAO();
-//            var torn = new JDBCTornDAO();
-//            var unitat = new JDBCUnitatDAO();
-//            var c = new Categoria();
-//            var t = new Torn();
-//            var u = new Unitat();
-//            c = categoria.get(1);
-//            t = torn.get(1);
-//            u = unitat.get(1);
-//            var g = new Guardia(4, LocalDate.now(), u, t, c, (short)4);
-//            guardia.add(g);
-//            List llistaGuardies = new ArrayList<Guardia>();
-//            llistaGuardies = guardia.getAll();
-            var gu = new Guardia();
-            gu = guardia.get(1);
-            System.out.println(gu.getId() + " " + gu.getDia() + " " + gu.getUnitat().getTipusUnitat() + " " + gu.getTorn().getTipusTorn() + " " + gu.getCategoria().getTipusCategoria() + " " + gu.getPlacesDisponibles());
-//        for (int i = 0; i < llistaGuardies.size(); i++) {
-//            gu = (Guardia)llistaGuardies.get(i);
-//            System.out.println(gu.getId() + " " + gu.getDia() + " " + gu.getUnitat() + " " + gu.getTorn() + " " + gu.getCategoria() + " " + gu.getPlacesDisponibles());
-//        }
-        } catch (DAOException e) {
-            System.out.println("Error:" + e.getMessage());
-        }
-
+    public static void main(Treballador treballador) throws DAOException {
+    
+        Menu nouMenu= new Menu();
+        
+        nouMenu.MenuInicial(treballador);
+    
     }
+    
 }
+
