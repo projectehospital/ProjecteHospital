@@ -293,23 +293,19 @@ public class Menu {
                 String resp = entrada.nextLine();
                 
                 if (resp.equalsIgnoreCase("s")) {
+                    
                     System.out.println("Entra el numero de guardies fetes ");
-                    long gFetes;
+                    long gFetes = entrada.nextLong();
                     System.out.println("Entra el numero de guardies previstes");
-                    long gPrevistes;
-                    
-                    
-                } 
-                long gFetes = 0;
-                long gPrevistes = 0;
-                // obtenim la data de naixement del treballador
+                    long gPrevistes = entrada.nextLong();
+                    // obtenim la data de naixement del treballador
                 System.out.println("Entra la data de naixement del treballador [yyyy/mm/dd]");
                 String arrData[] = entrada.nextLine().split("[/]");
                 LocalDate dataNaix = LocalDate.of(Integer.parseInt(arrData[0]), Integer.parseInt(arrData[1]),Integer.parseInt(arrData[2]));
                 System.out.println("Entra el rol de treballador a afegir [ (Cap de Unitat) / (Usuari) ]");
                 String rol = entrada.nextLine();
                 while(true) {
-                    
+                    // es podria afegir el rol administrador mes endevant
                         if (rol.equals("Cap de Unitat") || rol.equals("Usuari")) {
                                 break;
                         }
@@ -320,50 +316,73 @@ public class Menu {
                 JDBCRolDAO jRol = new JDBCRolDAO();
                 Rol rolTreb = jRol.getPerNom(rol);
                 System.out.println("Entra la categoria del treballador [ (Infermeria) / (TCAI) ] ");
-                String categoria = entrada.nextLine();
-                while(true) {
+                Categoria categoria = triarCategoria();
+               
+                System.out.println("Es cap d'unitat el treballador? [s / n] ");
+                     resp = entrada.nextLine();
+                if (resp.equalsIgnoreCase("s")) {
+                        Unitat unitat = triarUnitat();   
+                       Treballador treballadorNou = new Treballador(dni , nom ,
+                               dataNaix, passwd , 
+                               gFetes , gPrevistes , 
+                               tipusContracte , categoria ,
+                               rolTreb , unitat.getId()   );
+                } else {
                     
-                        if (rol.equals("Infermeria") || rol.equals("TCAI")) {
+                        JDBCUnitatDAO jdUnitat = new JDBCUnitatDAO();
+                        Unitat unitat = jdUnitat.getPerNom("No és cap");
+                    }
+                
+                    // la primera part s'executa si el treballador te guardies fetes sino s'executa la segona i es posa a 0
+                } else {
+                    
+                    long gFetes=0;
+                    long gPrevistes=0;
+                    // obtenim la data de naixement del treballador
+                System.out.println("Entra la data de naixement del treballador [yyyy/mm/dd]");
+                String arrData[] = entrada.nextLine().split("[/]");
+                LocalDate dataNaix = LocalDate.of(Integer.parseInt(arrData[0]), Integer.parseInt(arrData[1]),Integer.parseInt(arrData[2]));
+                System.out.println("Entra el rol de treballador a afegir [ (Cap de Unitat) / (Usuari) ]");
+                String rol = entrada.nextLine();
+                while(true) {
+                    // es podria afegir el rol administrador mes endevant
+                        if (rol.equals("Cap de Unitat") || rol.equals("Usuari")) {
                                 break;
                         }
-                        System.out.println("No s'ha escrit be la categoria");
-                        System.out.println("Entra la categoria del treballador [ (Infermeria) / (TCAI) ] ");
-                        categoria = entrada.nextLine();
+                        System.out.println("No s'ha escrit be el rol");
+                        System.out.println("Entra el rol de treballador a afegir [ (Cap de Unitat) / (Usuari) ]");
+                        rol = entrada.nextLine();
                 }
+                JDBCRolDAO jRol = new JDBCRolDAO();
+                Rol rolTreb = jRol.getPerNom(rol);
+                System.out.println("Entra la categoria del treballador [ (Infermeria) / (TCAI) ] ");
+                Categoria categoria = triarCategoria();
+               
                 System.out.println("Es cap d'unitat el treballador? [s / n] ");
                      resp = entrada.nextLine();
                     if (resp.equalsIgnoreCase("s")) {
-                        System.out.println("Entrem el nom de la Unitat [ (Unitat 1) /(Unitat 2) / (Unitat 3) / (Unitat 4) / (Urgencies)");
-                        String unitat = entrada.nextLine();      
-                        while(true) {
-                            
-                            if ( unitat.equals("Unitat 1") || 
-                                 unitat.equals("Unitat 2") || 
-                                 unitat.equals("Unitat 3") ||
-                                 unitat.equals("Unitat 4") ||
-                                 unitat.equals("Urgencies") ) {
-                                
-                                break;
-                            }
-                            System.out.println("Nom de unitat incorrecte");
-                System.out.println("Entrem el nom de la Unitat [ (Unitat 1) /(Unitat 2) / (Unitat 3) / (Unitat 4) / (Urgencies)");            
-                            unitat = entrada.nextLine();   
-                        }
+                        Unitat unitat = triarUnitat();   
+                       Treballador treballadorNou = new Treballador(dni , nom ,
+                               dataNaix, passwd , 
+                               gFetes , gPrevistes , 
+                               tipusContracte , categoria ,
+                               rolTreb , unitat.getId()   );
                 } else {
                     
-                        String unitat = "No es cap";
-                        
+                        JDBCUnitatDAO jdUnitat = new JDBCUnitatDAO();
+                        Unitat unitat = jdUnitat.getPerNom("No és cap");
                     }
                 
-                    Treballador treballadorNou = new Treballador(dni , nom , dataNaix, passwd ,gFetes , gPrevistes , tipusContracte ,  );
- 
-                     
-                
-                
+                }
+
+                break;
                 
                 
             case 4:
-               // afegir treballador 
+               // eliminar treballador 
+                
+                JDBCTreballadorDAO trebAfegir = new JDBCTreballadorDAO();
+                System.out.println("Entrem el npm");
                 
             default:
                 menuAdministracio(treballador);
