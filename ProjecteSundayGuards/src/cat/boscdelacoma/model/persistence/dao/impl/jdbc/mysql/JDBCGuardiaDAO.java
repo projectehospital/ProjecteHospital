@@ -27,11 +27,11 @@ import java.sql.Date;
 public class JDBCGuardiaDAO implements GuardiaDAO {
 
     @Override
-    public List<Guardia> getAll() throws DAOException {
+    public ArrayList<Guardia> getAll() throws DAOException {
         try {
             Statement query = MYSQLConnection.getInstance().getConnection().createStatement();
             ResultSet resultat = query.executeQuery("select * from guardia");
-            List<Guardia> list = new ArrayList<>();
+            ArrayList<Guardia> list = new ArrayList<>();
             JDBCCategoriaDAO c = new JDBCCategoriaDAO();
             JDBCUnitatDAO u = new JDBCUnitatDAO();
             JDBCTornDAO t = new JDBCTornDAO();
@@ -59,17 +59,17 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
 
     }
     
-    public List<Guardia> getPerData(LocalDate dia , Categoria categoria) throws DAOException, SQLException{
+    public ArrayList<Guardia> getPerData(LocalDate dia , Categoria categoria) throws DAOException, SQLException{
         
         // el parametre categoria ens permet mostrar nomes les guardies de la categoria del treballador
         
         try {
             // obtenim les guardies d'un dia en especific         
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from guardia where dia = ? and tipus_categoria = '?'");
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from guardia where dia = ? and tipus_categoria = ?");
             query.setDate(1, Date.valueOf(dia));
             query.setString(2, categoria.getTipusCategoria());
             ResultSet resultat = query.executeQuery();
-            List<Guardia> list = new ArrayList<>();
+            ArrayList<Guardia> list = new ArrayList<>();
             JDBCCategoriaDAO c = new JDBCCategoriaDAO();
             JDBCUnitatDAO u = new JDBCUnitatDAO();
             JDBCTornDAO t = new JDBCTornDAO();
@@ -105,7 +105,7 @@ public class JDBCGuardiaDAO implements GuardiaDAO {
     public Guardia getPerDades(LocalDate dia , Unitat unitat , Torn torn , Categoria categoria ) throws DAOException{
         
         try {
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from guardia where dia=? and tipus_unitat = '?' tipus_torn = '?' tipus_categoria = '?'");
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from guardia where dia=? and tipus_unitat = ? tipus_torn = ? tipus_categoria = ?");
             
             query.setDate(1,Date.valueOf(dia));
             query.setString(2,unitat.getTipusUnitat());

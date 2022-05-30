@@ -25,6 +25,20 @@ public class Guardia {
     private Unitat unitat;
     private Categoria categoria;
     
+    
+        public Guardia() {
+    }
+        public Guardia(Guardia g) {
+            
+            this.id = g.getId();
+            this.dia = g.getDia();
+            this.placesDisponibles = g.getPlacesDisponibles();
+            this.torn = g.getTorn();
+            this.unitat = g.getUnitat();
+            this.categoria = g.getCategoria();
+            
+            
+    }
     public Guardia(long id, LocalDate dia,Unitat unitat, Torn torn, Categoria categoria, long placesDisponibles) {
         this.id = id;
         this.dia = dia;
@@ -41,6 +55,7 @@ public class Guardia {
         this.torn = torn;
         this.categoria = categoria;
         this.placesDisponibles = placesDisponibles;
+        
     }
     
      public Guardia( LocalDate dia,Unitat unitat, Torn torn, Categoria categoria) {
@@ -52,9 +67,7 @@ public class Guardia {
         this.placesDisponibles = placesDisponibles;
     }
 
-    public Guardia() {
-    }
-    
+
     public long getId() {
         return id;
     }
@@ -80,6 +93,7 @@ public class Guardia {
     }
 
     public ArrayList<Treballador> getLlistaTreballadors() {
+        this.setLlistaTreballadors(id);
         return llistaTreballadors;
     }
 

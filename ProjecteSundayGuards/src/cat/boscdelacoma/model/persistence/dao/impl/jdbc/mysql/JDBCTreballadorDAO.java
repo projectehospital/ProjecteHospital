@@ -41,12 +41,12 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
                 t.setNom(resultat.getString("nom"));
                 t.setDataNaixement((resultat.getDate("data_Naixement").toLocalDate()));
                 t.setPasswd(resultat.getString("passwd"));
-                t.setGuardiesFetes(resultat.getShort("guardies_fetes"));
-                t.setGuardiesPrevistes(resultat.getShort("guardies_previstes"));
+                t.setGuardiesFetes(resultat.getLong("guardies_fetes"));
+                t.setGuardiesPrevistes(resultat.getLong("guardies_previstes"));
                 t.setTipusContracte(resultat.getString("tipus_contracte"));
                 t.setCategoriaTreballador(c.getPerNom(resultat.getString("tipus_categoria")));
                 t.setRolTreballador(r.getPerString(resultat.getString("tipus_rol")));
-                t.setEsCapDeUnitat(resultat.getShort("es_cap_de_unitat"));
+                t.setEsCapDeUnitat(resultat.getLong("es_cap_de_unitat"));
                 
                 return t;
             } else {
@@ -69,11 +69,11 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
             while (resultat.next()) {
                 list.add(new Treballador(resultat.getLong("id"), resultat.getString("DNI"), 
                         resultat.getString("nom"), (resultat.getDate("data_Naixement").toLocalDate()), 
-                        resultat.getString("passwd"), resultat.getShort("guardies_fetes"), 
-                        resultat.getShort("guardies_previstes"), resultat.getString("tipus_contracte"), 
+                        resultat.getString("passwd"), resultat.getLong("guardies_fetes"), 
+                        resultat.getLong("guardies_previstes"), resultat.getString("tipus_contracte"), 
                         c.getPerNom(resultat.getString("tipus_categoria")),
                         r.getPerString(resultat.getString("tipus_rol")),
-                        resultat.getShort("es_cap_de_unitat")));
+                        resultat.getLong("es_cap_de_unitat")));
             }
             return list;
         } catch (SQLException ex) {
@@ -99,21 +99,21 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
     public void add(Treballador t) throws DAOException {
         try {
 
-            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("insert into treballador VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("insert into treballador VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
             JDBCRolDAO r = new JDBCRolDAO();
             JDBCCategoriaDAO c = new JDBCCategoriaDAO();
-            query.setLong(1, t.getId());
-            query.setString(2, t.getDni());
-            query.setString(3, t.getNom());
-            query.setDate(4,  Date.valueOf(t.getDataNaixement()));
-            query.setString(5, t.getPasswd());
-            query.setLong(6, t.getGuardiesFetes());
-            query.setLong(7, t.getGuardiesPrevistes());
-            query.setString(8, t.getTipusContracte());
-            query.setString(9, t.getCategoriaTreballador().getTipusCategoria());
-            query.setString(10, t.getRolTreballador().getTipusRol());
-            query.setLong(11, t.getEsCapDeUnitat());
+            //query.setLong(1, t.getId());
+            query.setString(1, t.getDni());
+            query.setString(2, t.getNom());
+            query.setDate(3,  Date.valueOf(t.getDataNaixement()));
+            query.setString(4, t.getPasswd());
+            query.setLong(5, t.getGuardiesFetes());
+            query.setLong(6, t.getGuardiesPrevistes());
+            query.setString(7, t.getTipusContracte());
+            query.setString(8, t.getCategoriaTreballador().getTipusCategoria());
+            query.setString(9, t.getRolTreballador().getTipusRol());
+            query.setLong(10, t.getEsCapDeUnitat());
             query.executeUpdate();
             ResultSet rst = query.getGeneratedKeys();
             Treballador t2 = new Treballador();
@@ -167,6 +167,44 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
         }
     }
     
+    
+     public Treballador getTreballadorLogin(String dni , String passwd) throws DAOException {
+        try {
+            
+            // obtenim un treballador per les dades que entra al login
+            PreparedStatement query = MYSQLConnection.getInstance().getConnection().prepareStatement("select * from treballador where DNI = ? passwd = ?");
+            query.setString(1, dni);
+            query.setString(2, passwd);
+            ResultSet resultat = query.executeQuery();
+
+            if (resultat.next()) {
+                Treballador t = new Treballador();
+                JDBCCategoriaDAO c = new JDBCCategoriaDAO();
+                JDBCRolDAO r = new JDBCRolDAO();
+                t.setId(resultat.getLong("id"));
+                t.setDni(resultat.getString("DNI"));
+                t.setNom(resultat.getString("nom"));
+                t.setDataNaixement((resultat.getDate("data_Naixement").toLocalDate()));
+                t.setPasswd(resultat.getString("passwd"));
+                t.setGuardiesFetes(resultat.getLong("guardies_fetes"));
+                t.setGuardiesPrevistes(resultat.getLong("guardies_previstes"));
+                t.setTipusContracte(resultat.getString("tipus_contracte"));
+                t.setCategoriaTreballador(c.getPerNom(resultat.getString("tipus_categoria")));
+                t.setRolTreballador(r.getPerString(resultat.getString("tipus_rol")));
+                t.setEsCapDeUnitat(resultat.getLong("es_cap_de_unitat"));
+                
+                return t;
+            } else {
+                return null;
+            }
+
+        } catch (SQLException ex) {
+            throw new DAOException();
+        }
+    }
+    
+    
+    
     public boolean reservarGuardia(long idTreballador ,long idGuardia) throws DAOException {
         try {
 
@@ -214,7 +252,7 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
         
     }
     
-       public List<Treballador> obtenirLlistaGuardies(long idTreballador) throws DAOException {
+       public ArrayList<Guardia> obtenirLlistaGuardies(long idTreballador) throws DAOException {
         try {
 
             // cancelem la guardia eliminant un registre en la taula guardies treballador
@@ -225,21 +263,14 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
 
             ResultSet rst = query.executeQuery();
             ArrayList<Guardia> llistaGuardies = new ArrayList<Guardia>();
-            JDBCTreballadorDAO treballador = new JDBCTreballadorDAO();
+            JDBCGuardiaDAO guardia = new JDBCGuardiaDAO();
             
             while(rst.next()) {
-            
-                llistaGuardies.add()
-                
-            
-            
-            
+
+                llistaGuardies.add(new Guardia(guardia.get(rst.getLong("id_guardia"))));
+
             }
-            
-            // al reservar guardia restem les places disponibles 
-            JDBCGuardiaDAO guardia = new JDBCGuardiaDAO();
-            guardia.sumarPlaces(g);
-            return true;
+            return llistaGuardies;
         } catch (SQLException ex) {
             System.out.println("Error al reservar guardia" + ex.getMessage());
             throw new DAOException();

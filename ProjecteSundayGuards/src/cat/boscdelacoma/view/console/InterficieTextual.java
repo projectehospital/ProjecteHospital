@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,15 +31,26 @@ import java.util.logging.Logger;
  *
  * @author osama
  */
-public class testos {
+public class InterficieTextual {
 
-    public static void main(Treballador treballador) throws DAOException {
-    
-        Menu nouMenu= new Menu();
+    public static void main(Treballador treballador) throws DAOException, SQLException {
+ 
         
-        nouMenu.MenuInicial(treballador);
-    
+          Menu nouMenu = new Menu();
+            
+          try {
+              
+            nouMenu.menuInicial(treballador);
+            
+          } catch (DAOException ex) {
+          
+              System.out.println("Error al inicial la interficie textual:" + ex.getMessage());
+              
+          } catch (SQLException e){
+          
+              System.out.println(e.getMessage());
+              
+          }
+        
     }
-    
 }
-
