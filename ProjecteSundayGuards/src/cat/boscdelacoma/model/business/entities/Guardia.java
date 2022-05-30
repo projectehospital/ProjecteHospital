@@ -1,9 +1,13 @@
+
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package cat.boscdelacoma.model.business.entities;
 
+import cat.boscdelacoma.model.persistence.dao.impl.jdbc.mysql.JDBCGuardiaDAO;
+import cat.boscdelacoma.model.persistence.exceptions.DAOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -13,31 +17,65 @@ import java.util.ArrayList;
  */
 public class Guardia {
     
+    private long id;
     private LocalDate dia;
-    private short placesDisponibles;
-    private ArrayList<Treballador> treballadors;
+    private long placesDisponibles;
+    private ArrayList<Treballador> llistaTreballadors; 
     private Torn torn;
     private Unitat unitat;
-    private Categoria categroia;
+    private Categoria categoria;
     
-    public Guardia(){
+    
+        public Guardia() {
     }
-
-    public Guardia(LocalDate dia, short placesDisponibles, Torn torn, Unitat unitat, Categoria categroia) {
+        public Guardia(Guardia g) {
+            
+            this.id = g.getId();
+            this.dia = g.getDia();
+            this.placesDisponibles = g.getPlacesDisponibles();
+            this.torn = g.getTorn();
+            this.unitat = g.getUnitat();
+            this.categoria = g.getCategoria();
+            
+            
+    }
+    public Guardia(long id, LocalDate dia,Unitat unitat, Torn torn, Categoria categoria, long placesDisponibles) {
+        this.id = id;
         this.dia = dia;
+        this.unitat = unitat;
+        this.torn = torn;
+        this.categoria = categoria;
         this.placesDisponibles = placesDisponibles;
-        this.torn = torn;
-        this.unitat = unitat;
-        this.categroia = categroia;
-    }
-
-    public Guardia(LocalDate dia, Torn torn, Unitat unitat, Categoria categroia) {
-        this.dia = dia;
-        this.torn = torn;
-        this.unitat = unitat;
-        this.categroia = categroia;
     }
     
+    public Guardia( LocalDate dia,Unitat unitat, Torn torn, Categoria categoria, long placesDisponibles) {
+        this.id = id;
+        this.dia = dia;
+        this.unitat = unitat;
+        this.torn = torn;
+        this.categoria = categoria;
+        this.placesDisponibles = placesDisponibles;
+        
+    }
+    
+     public Guardia( LocalDate dia,Unitat unitat, Torn torn, Categoria categoria) {
+        this.id = id;
+        this.dia = dia;
+        this.unitat = unitat;
+        this.torn = torn;
+        this.categoria = categoria;
+        this.placesDisponibles = placesDisponibles;
+    }
+
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public LocalDate getDia() {
         return dia;
     }
@@ -46,7 +84,7 @@ public class Guardia {
         this.dia = dia;
     }
 
-    public short getPlacesDisponibles() {
+    public long getPlacesDisponibles() {
         return placesDisponibles;
     }
 
@@ -54,20 +92,23 @@ public class Guardia {
         this.placesDisponibles = placesDisponibles;
     }
 
-    public ArrayList<Treballador> getTreballadors() {
-        return treballadors;
+    public ArrayList<Treballador> getLlistaTreballadors() {
+        this.setLlistaTreballadors(id);
+        return llistaTreballadors;
     }
 
-    public void setTreballadors(ArrayList<Treballador> treballadors) {
-        this.treballadors = treballadors;
-    }
-    
-    public void inscriureTreballador(Treballador t){
-        treballadors.add(t);
-    }
-    
-    public void eliminarTreballador(Treballador t){
-        treballadors.remove(t);
+    public void setLlistaTreballadors(long idGuardia) {
+        
+        try {
+        
+             JDBCGuardiaDAO guard = new JDBCGuardiaDAO();
+             this.llistaTreballadors = guard.obtenirLlistaTreballadors(idGuardia);
+
+        } catch(DAOException ex) {
+            System.out.println("Error al obtenir llista de treballdors: " + ex.getMessage());
+       
+        }
+       
     }
 
     public Torn getTorn() {
@@ -86,11 +127,11 @@ public class Guardia {
         this.unitat = unitat;
     }
 
-    public Categoria getCategroia() {
-        return categroia;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setCategroia(Categoria categroia) {
-        this.categroia = categroia;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }

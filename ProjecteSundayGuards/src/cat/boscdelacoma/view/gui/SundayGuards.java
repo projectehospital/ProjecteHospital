@@ -4,6 +4,8 @@
  */
 package cat.boscdelacoma.view.gui;
 
+import static javafx.application.Application.launch;
+import cat.boscdelacoma.controller.SundayGuardsController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,8 +20,10 @@ public class SundayGuards extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("SundayGuards.fxml"));
-        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLSundayGuards.fxml"));
+        Parent root = loader.load();
+        SundayGuardsController controlador= loader.getController();
+        controlador.setStage(stage);
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
