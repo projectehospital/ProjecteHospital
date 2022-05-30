@@ -55,7 +55,6 @@ public class SundayGuardsController implements Initializable {
 
     }
 
-    @FXML
     private void btnAccioAccedir(ActionEvent event) throws SQLException {
 
         if (espaisPlens(inputDni, inputContrasenya)) {
@@ -64,7 +63,7 @@ public class SundayGuardsController implements Initializable {
             String dni = inputDni.getText();
             String contrasenya = inputContrasenya.getText();
             inputDni = limitText(inputDni, 20);
-            /*/contrasenya= SHA512(contrasenya, "Perrito");/*/
+
 
             try {
                 Treballador treb = treballador.getTreballadorLogin(dni, contrasenya);
@@ -123,7 +122,6 @@ public class SundayGuardsController implements Initializable {
         return textField;
     }
 
-    @FXML
     private void btnAccioCancelar(ActionEvent event) {
         stage.hide();
     }

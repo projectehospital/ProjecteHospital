@@ -21,12 +21,12 @@
                <children>
                   <ImageView fitHeight="106.0" fitWidth="386.0" layoutX="32.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="C:\Users\Oussama\Documents\GitHub\ProjecteHospital\ProjecteSundayGuards\src\cat\boscdelacoma\view\gui\hospital-d_olot.png" />
+                        <Image url="" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="48.0" fitWidth="66.0" layoutX="203.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="C:\Users\Oussama\Documents\GitHub\ProjecteHospital\ProjecteSundayGuards\src\cat\boscdelacoma\view\gui\user.png" />
+                        <Image url="" />
                      </image>
                   </ImageView>
                </children>
