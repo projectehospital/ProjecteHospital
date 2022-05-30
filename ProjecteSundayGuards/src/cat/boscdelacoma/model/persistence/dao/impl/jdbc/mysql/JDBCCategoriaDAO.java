@@ -43,11 +43,11 @@ public class JDBCCategoriaDAO implements CategoriaDAO {
     }
 
     @Override
-    public List<Categoria> getAll() throws DAOException {
+    public ArrayList<Categoria> getAll() throws DAOException {
         try {
             Statement query = MYSQLConnection.getInstance().getConnection().createStatement();
             ResultSet resultat = query.executeQuery("select * from categoria");
-            List<Categoria> list = new ArrayList<>();
+            ArrayList<Categoria> list = new ArrayList<>();
             while (resultat.next()) {
                 list.add(new Categoria(resultat.getLong("id"), resultat.getString("tipus_categoria")));
             }

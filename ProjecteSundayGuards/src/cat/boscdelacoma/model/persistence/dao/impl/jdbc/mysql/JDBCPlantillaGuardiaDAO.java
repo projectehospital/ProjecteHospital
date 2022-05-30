@@ -24,11 +24,11 @@ import java.util.List;
  */
 public class JDBCPlantillaGuardiaDAO implements PlantillaGuardiaDAO  {
     
-    public List<PlantillaGuardia> getAll() throws DAOException {
+    public ArrayList<PlantillaGuardia> getAll() throws DAOException {
         try {
             Statement query = MYSQLConnection.getInstance().getConnection().createStatement();
             ResultSet resultat = query.executeQuery("select * from plantilla_guardia");
-            List<PlantillaGuardia> list = new ArrayList<>();
+            ArrayList<PlantillaGuardia> list = new ArrayList<>();
             JDBCCategoriaDAO c = new JDBCCategoriaDAO();
             JDBCUnitatDAO u = new JDBCUnitatDAO();
             JDBCTornDAO t = new JDBCTornDAO();

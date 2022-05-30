@@ -21,11 +21,11 @@ import java.util.ArrayList;
 public class JDBCTornDAO implements TornDAO {
 
     @Override
-    public List<Torn> getAll() throws DAOException {
+    public ArrayList<Torn> getAll() throws DAOException {
         try {
             Statement query = MYSQLConnection.getInstance().getConnection().createStatement();
             ResultSet resultat = query.executeQuery("select * from torn");
-            List<Torn> list = new ArrayList<>();
+            ArrayList<Torn> list = new ArrayList<>();
             while (resultat.next()) {
                 list.add(new Torn( resultat.getLong("id"), resultat.getString("tipus_torn")));
             }

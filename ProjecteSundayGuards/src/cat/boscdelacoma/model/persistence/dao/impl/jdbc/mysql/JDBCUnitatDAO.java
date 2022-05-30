@@ -64,11 +64,11 @@ public class JDBCUnitatDAO implements UnitatDAO {
     }
 
     @Override
-    public List<Unitat> getAll() throws DAOException {
+    public ArrayList<Unitat> getAll() throws DAOException {
         try {
             Statement query = MYSQLConnection.getInstance().getConnection().createStatement();
             ResultSet resultat = query.executeQuery("select * from unitat");
-            List<Unitat> list = new ArrayList<>();
+            ArrayList<Unitat> list = new ArrayList<>();
             while (resultat.next()) {
                 list.add(new Unitat(resultat.getLong("id"), resultat.getString("tipus_unitat")));
             }

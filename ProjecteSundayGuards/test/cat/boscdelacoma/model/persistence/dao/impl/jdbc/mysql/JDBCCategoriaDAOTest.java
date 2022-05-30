@@ -26,21 +26,21 @@ public class JDBCCategoriaDAOTest {
         System.out.println("get");
         long id = 1;
         JDBCCategoriaDAO instance = new JDBCCategoriaDAO();
-        Categoria expResult = new Categoria(1, "Infermer/a");
+        Categoria expResult = new Categoria(1, "Infermeria");
         Categoria result = instance.get(id);
         assertEquals(expResult.getId(), result.getId());
     }
     
-//    @Test
-//    public void testGetAll() throws Exception {
-//        System.out.println("getAll");
-//        JDBCCategoriaDAO instance = new JDBCCategoriaDAO();
-//        List<Categoria> expResult = null;
-//        List<Categoria> result = instance.getAll();
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
+    @Test
+    public void testGetAll() throws Exception {
+        System.out.println("getAll");
+        JDBCCategoriaDAO instance = new JDBCCategoriaDAO();
+        var expResult = new ArrayList<Categoria>();
+        
+        ArrayList<Categoria> result = instance.getAll();
+        assertEquals(expResult, result);
+    }
+
 //    @Test
 //    public void testDelete() throws Exception {
 //        System.out.println("delete");

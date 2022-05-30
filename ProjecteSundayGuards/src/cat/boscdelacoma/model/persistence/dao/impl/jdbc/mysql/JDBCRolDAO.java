@@ -44,11 +44,11 @@ public class JDBCRolDAO implements RolDAO{
     }
 
     @Override
-    public List<Rol> getAll() throws DAOException {
+    public ArrayList<Rol> getAll() throws DAOException {
         try {
             Statement query = MYSQLConnection.getInstance().getConnection().createStatement();
             ResultSet resultat = query.executeQuery("select * from rol");
-            List<Rol> list = new ArrayList<>();
+            ArrayList<Rol> list = new ArrayList<>();
             while (resultat.next()) {
                 list.add(new Rol(resultat.getLong("id"), resultat.getString("tipus_rol")));
             }
