@@ -39,6 +39,7 @@ public class SundayGuardsController implements Initializable {
     private Button btnCancelar;
     @FXML
     private PasswordField inputContrasenya;
+    private Menu m = new Menu();
 
     /**
      * Initializes the controller class.
@@ -55,7 +56,6 @@ public class SundayGuardsController implements Initializable {
 
     }
 
-    @FXML
     private void btnAccioAccedir(ActionEvent event) throws SQLException {
 
         if (espaisPlens(inputDni, inputContrasenya)) {
@@ -78,8 +78,6 @@ public class SundayGuardsController implements Initializable {
                     alert.show();
                 } else {
                     //enviar treballador per paràmetre al main//
-
-                    Menu m = new Menu();
                     m.menuInicial(treb);
 
                     stage.hide();
@@ -123,7 +121,6 @@ public class SundayGuardsController implements Initializable {
         return textField;
     }
 
-    @FXML
     private void btnAccioCancelar(ActionEvent event) {
         stage.hide();
     }
