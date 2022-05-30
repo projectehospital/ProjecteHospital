@@ -45,7 +45,7 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
                 t.setGuardiesPrevistes(resultat.getLong("guardies_previstes"));
                 t.setTipusContracte(resultat.getString("tipus_contracte"));
                 t.setCategoriaTreballador(c.getPerNom(resultat.getString("tipus_categoria")));
-                t.setRolTreballador(r.getPerString(resultat.getString("tipus_rol")));
+                t.setRolTreballador(r.getPerNom(resultat.getString("tipus_rol")));
                 t.setEsCapDeUnitat(resultat.getLong("es_cap_de_unitat"));
                 
                 return t;
@@ -72,7 +72,7 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
                         resultat.getString("passwd"), resultat.getLong("guardies_fetes"), 
                         resultat.getLong("guardies_previstes"), resultat.getString("tipus_contracte"), 
                         c.getPerNom(resultat.getString("tipus_categoria")),
-                        r.getPerString(resultat.getString("tipus_rol")),
+                        r.getPerNom(resultat.getString("tipus_rol")),
                         resultat.getLong("es_cap_de_unitat")));
             }
             return list;
@@ -116,24 +116,11 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
             query.setLong(10, t.getEsCapDeUnitat());
             query.executeUpdate();
             ResultSet rst = query.getGeneratedKeys();
-            Treballador t2 = new Treballador();
+            
             if (rst.next()) {
- 
-                t2.setId(rst.getLong("id"));
-                t2.setDni(rst.getString("DNI"));
-                t2.setNom(rst.getString("nom"));
-                t2.setDataNaixement((rst.getDate("data_Naixement").toLocalDate()));
-                t2.setPasswd(rst.getString("passwd"));
-                t2.setGuardiesFetes(rst.getLong("guardies_fetes"));
-                t2.setGuardiesPrevistes(rst.getLong("guardies_previstes"));
-                t2.setTipusContracte(rst.getString("tipus_contracte"));
-                t2.setCategoriaTreballador(c.getPerNom(rst.getString("tipus_categoria")));
-                t2.setRolTreballador(r.getPerString(rst.getString("tipus_rol")));
-                t2.setEsCapDeUnitat(rst.getLong("es_cap_de_unitat"));
+                System.out.println("Treballador afegit!!");
             }
-            if (t.equals(t2)) {
-                System.out.println("S'ha afegit treballador correctament");
-            }
+           
         } catch (SQLException ex) {
             throw new DAOException();
         }
@@ -190,7 +177,7 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
                 t.setGuardiesPrevistes(resultat.getLong("guardies_previstes"));
                 t.setTipusContracte(resultat.getString("tipus_contracte"));
                 t.setCategoriaTreballador(c.getPerNom(resultat.getString("tipus_categoria")));
-                t.setRolTreballador(r.getPerString(resultat.getString("tipus_rol")));
+                t.setRolTreballador(r.getPerNom(resultat.getString("tipus_rol")));
                 t.setEsCapDeUnitat(resultat.getLong("es_cap_de_unitat"));
                 
                 return t;
