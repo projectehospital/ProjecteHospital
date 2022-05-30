@@ -47,7 +47,8 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
                 t.setTipusContracte(resultat.getString("tipus_contracte"));
                 t.setCategoriaTreballador(c.getPerNom(resultat.getString("tipus_categoria")));
                 t.setRolTreballador(r.getPerNom(resultat.getString("tipus_rol")));
-
+                t.setEsCapDeUnitat(resultat.getLong("es_cap_de_unitat"));
+                
                 return t;
             } else {
                 return null;
@@ -120,6 +121,7 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
             if (rst.next()) {
                 System.out.println("Treballador afegit");
             }
+           
         } catch (SQLException ex) {
             System.out.println("Error de id: " + ex.getMessage());
         }
@@ -177,7 +179,6 @@ public class JDBCTreballadorDAO implements TreballadorDAO {
                 t.setTipusContracte(resultat.getString("tipus_contracte"));
                 t.setCategoriaTreballador(c.getPerNom(resultat.getString("tipus_categoria")));
                 t.setRolTreballador(r.getPerNom(resultat.getString("tipus_rol")));
-
                 return t;
             } else {
                 return null;

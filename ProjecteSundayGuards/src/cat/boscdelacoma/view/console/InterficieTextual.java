@@ -33,7 +33,7 @@ import java.util.logging.Logger;
  */
 public class InterficieTextual {
 
-    public static void main(Treballador treballador) throws DAOException, SQLException {
+    public static void interficieTextual(Treballador treballador) throws DAOException, SQLException {
 
           Menu nouMenu = new Menu();
             

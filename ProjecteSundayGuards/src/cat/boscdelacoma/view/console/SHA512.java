@@ -15,7 +15,7 @@ import java.util.Scanner;
  */
     
 public class SHA512 {
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void SHA51() throws NoSuchAlgorithmException {
         Scanner in = new Scanner(System.in);
         System.out.print("Enter message: ");
         String input = in.nextLine();
