@@ -33,24 +33,9 @@ import java.util.logging.Logger;
  */
 public class InterficieTextual {
 
-    public static void interficieTextual(Treballador treballador) throws DAOException, SQLException {
+     public static void main(String[] args)throws DAOException, SQLException {
 
-          Menu nouMenu = new Menu();
-            
-          try {
-              
-            nouMenu.menuInicial(treballador);
-            
-          } catch (DAOException ex) {
-          
-              System.out.println("Error al inicial la interficie textual:" + ex.getMessage());
-              
-          } catch (SQLException e){
-          
-              System.out.println(e.getMessage());
-              
-          }
-
+        
 
     }
 }

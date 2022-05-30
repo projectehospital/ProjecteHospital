@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" accessibleRole="BUTTON" disable="false" prefHeight="413.0" prefWidth="450.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cat.boscdelacoma.controller.SundayGuardsController">
+<AnchorPane id="AnchorPane" accessibleRole="BUTTON" disable="false" prefHeight="413.0" prefWidth="450.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="cat.boscdelacoma.controller.SundayGuardsController">
    <children>
       <Label layoutX="72.0" layoutY="211.0" prefHeight="38.0" prefWidth="42.0" style="-fx-background-color: transparent; -fx-border-radius: #0598ff;" text="Usuari" />
       <TextField fx:id="inputDni" layoutX="174.0" layoutY="221.0" prefHeight="19.0" prefWidth="188.0" promptText="Usuari" style="-fx-border-color: #000000; -fx-border-width: 0px 0px 1px 0px; -fx-background-color: transparent;" />

@@ -20,7 +20,7 @@ public class SundayGuards extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLSundayGuards.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("C:\\Users\\Victo\\Documents\\GitHub\\ProjecteHospital\\ProjecteSundayGuards\\src\\cat\\boscdelacoma\\view\\gui"));
         Parent root = loader.load();
         SundayGuardsController controlador= loader.getController();
         controlador.setStage(stage);
@@ -34,7 +34,10 @@ public class SundayGuards extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        
         launch(args);
+        
     }
     
 }

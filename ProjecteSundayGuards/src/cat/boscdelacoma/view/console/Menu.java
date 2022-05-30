@@ -43,7 +43,7 @@ import java.util.logging.Logger;
  */
 public class Menu {
 
-    static Scanner entrada;
+    static Scanner entrada =  new Scanner(System.in);
 
     public void menuInicial(Treballador treballador) throws DAOException, SQLException {
         /*Creem un objecte Treballador d'exemple amb el rol d'Administrador, si
@@ -73,7 +73,7 @@ public class Menu {
         System.out.println("1. Menú d'administració");
         System.out.println("2. Menú d'usuari (reservar guàrdia)");
         System.out.println("Escull el menú al qual vols accedir: ");
-        int menu = entrada.nextInt();
+        int menu = Integer.parseInt(entrada.nextLine());
         switch (menu) {
             case 0:
                 break;
@@ -95,7 +95,8 @@ public class Menu {
         System.out.println("1.Llistar Guardies ");
         System.out.println("2.Apuntar-se a guardia");
         System.out.println("3.Cancelar guardia");
-        short x = entrada.nextShort();
+        System.out.println("Tria una opcio");
+        int x = Integer.parseInt(entrada.nextLine());
         
         switch(x){
             
@@ -114,7 +115,7 @@ public class Menu {
                             + " " + Guardy.getTorn().getTipusTorn() + " " + Guardy.getCategoria().getTipusCategoria() + " " + Guardy.getPlacesDisponibles());
                        }
                        
-                       
+                       menuUsuari(treballador);
                
                    
             }catch(DAOException e) {
@@ -137,6 +138,7 @@ public class Menu {
                 // apuntem el treballador a la guardia obtingent-la amb l'id
                 treballador.apuntarseAGuardia(gApuntarse.getId());
                 System.out.println("El treballador s'ha apuntat a la guardia correctament");
+                menuUsuari(treballador);
                 break;
                 
             case 3 :
@@ -154,6 +156,7 @@ public class Menu {
                 // apuntem el treballador a la guardia obtingent-la amb l'id
                 treballador.desapuntarseDeGuardia(gDesapuntarse.getId());
                 System.out.println("El treballador s'ha desapuntat de la guardia correctament");
+                menuUsuari(treballador);
                 break;
                 
                 
@@ -171,11 +174,11 @@ public class Menu {
         System.out.println("1. Crear Guàrdia");
         System.out.println("2. Eliminar Guàrdia");
         System.out.println("3. Afegir Treballador"); // falta codificar
-        System.out.println("Tria una opcio");
+
         
         
         System.out.println("Tria el número de l'acció que vols fer: ");
-        int accio = entrada.nextInt();
+        int accio = Integer.parseInt(entrada.nextLine());
         switch (accio) {
             case 0:
                 break;
@@ -209,8 +212,12 @@ public class Menu {
                     if (resposta.equalsIgnoreCase("s")) {
                         
                          System.out.println("Places de la guàrdia:");
-                         long places = entrada.nextShort();
+                         long places = Long.parseLong(entrada.nextLine());
                          Guardia novaGuardia = new Guardia(dataGuardia , unitat , torn , categoria , places );
+                         JDBCGuardiaDAO  nGuardia = new JDBCGuardiaDAO();
+                         nGuardia.add(novaGuardia);
+                         System.out.println("Guardia creada correctament");
+                         menuAdministracio(treballador);
                     } else {
                         System.out.println("Es definiran les places per defecte");
                         System.out.println("Vols mostrar la plantilla?");
@@ -222,6 +229,9 @@ public class Menu {
                        
                          long places = obtenirPlaces(unitat , categoria , torn);
                          Guardia novaGuardia = new Guardia(dataGuardia , unitat , torn , categoria , places );
+                         JDBCGuardiaDAO  nGuardia = new JDBCGuardiaDAO();
+                         nGuardia.add(novaGuardia);
+                         System.out.println("La guardia s'ha afegit correctament");
                     }
 
                     // si l'entrada es n no es seguira cfreant la guardia
@@ -379,10 +389,7 @@ public class Menu {
                 
                 
             case 4:
-               // eliminar treballador 
-                
-                JDBCTreballadorDAO trebAfegir = new JDBCTreballadorDAO();
-                System.out.println("Entrem el npm");
+        
                 
             default:
                 menuAdministracio(treballador);
@@ -396,7 +403,7 @@ public class Menu {
         System.out.println("Torn de la guàrdia:");
         System.out.println("1. Dia");
         System.out.println("2. Nit");
-        int x = entrada.nextShort();
+        int x = Integer.parseInt(entrada.nextLine());
         switch (x) {
             case 1:
                 torn = jdTorn.getPerNom("Dia");
@@ -422,7 +429,7 @@ public class Menu {
         System.out.println("3. Unitat 3");
         System.out.println("4. Unitat 4");
         System.out.println("5. Urgencies");
-        int x = entrada.nextShort();
+        int x = Integer.parseInt(entrada.nextLine());
         switch (x) {
             case 1:
                 unitat = jdUnitat.getPerNom("Unitat 1");
@@ -455,7 +462,7 @@ public class Menu {
         System.out.println("Categoria de la guàrdia:");
         System.out.println("1. Infermeria");
         System.out.println("2. TCAI");
-        int x = entrada.nextShort();
+        int x = Integer.parseInt(entrada.nextLine());
         switch (x) {
             case 1:
                 categoria = jdCategoria.getPerNom("Infermeria");
@@ -544,7 +551,7 @@ public class Menu {
           
               
         System.out.println("Entra el dia de la guardia");
-        int dia = entrada.nextInt();
+        int dia = Integer.parseInt(entrada.nextLine());
         
         /* si la llista de dies possibles no conte el dia triat 
         fa un bucle fins que el dia es correcte*/
@@ -563,16 +570,16 @@ public class Menu {
         
         /* restem un a l'any ja que el bucle comprova fins al desembre i quan pasa
          a l'any seguent para el bucle*/
-        return LocalDate.of(diumenge.getYear() - 1, diumenge.getMonthValue(), dia);
+        return LocalDate.of(diumenge.getYear() - 1, mes, dia);
         
         
     }
 
     private static LocalDate entrarDataGuardia(Treballador t) throws DAOException {
          System.out.println("Entra l'any de la guardia");
-                int any = entrada.nextShort();
+                int any = Integer.parseInt(entrada.nextLine());
                 System.out.println("Entra l'mes de la guardia");
-                int mes = entrada.nextShort();
+                int mes =Integer.parseInt(entrada.nextLine());
                 
                 /* el metode mostrarDiumengesDelMes() mostra els dies diponibles 
                     i construeix la data de la guardia a crear o a eliminar
