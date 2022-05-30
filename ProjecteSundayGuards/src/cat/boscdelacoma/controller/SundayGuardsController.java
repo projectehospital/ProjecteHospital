@@ -39,6 +39,7 @@ public class SundayGuardsController implements Initializable {
     private Button btnCancelar;
     @FXML
     private PasswordField inputContrasenya;
+    private Menu m = new Menu();
 
     /**
      * Initializes the controller class.
@@ -77,8 +78,6 @@ public class SundayGuardsController implements Initializable {
                     alert.show();
                 } else {
                     //enviar treballador per paràmetre al main//
-
-                    Menu m = new Menu();
                     m.menuInicial(treb);
 
                     stage.hide();
