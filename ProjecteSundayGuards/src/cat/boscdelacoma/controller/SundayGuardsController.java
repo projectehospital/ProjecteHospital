@@ -64,7 +64,7 @@ public class SundayGuardsController implements Initializable {
             String dni = inputDni.getText();
             String contrasenya = inputContrasenya.getText();
             inputDni = limitText(inputDni, 20);
-            /*/contrasenya= SHA512(contrasenya, "Perrito");/*/
+
 
             try {
                 Treballador treb = treballador.getTreballadorLogin(dni, contrasenya);
