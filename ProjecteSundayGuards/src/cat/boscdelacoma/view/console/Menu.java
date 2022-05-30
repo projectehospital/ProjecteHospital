@@ -31,6 +31,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.Email;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.SimpleEmail;
+
 
 /**
  *
@@ -462,8 +467,25 @@ public class Menu {
         return -1;
     }
     
+    private static long notificacio(Unitat unitat, Categoria categoria, Torn torn) throws EmailException{
+        
+        while(true){
+        
+        Email email= new SimpleEmail();
+        email.setHostName("smtf.googlemail.com"); //nom del servidor del correu
+        email.setSmtpPort(465); //port de sortida 
+        email.setAuthenticator(new DefaultAuthenticator("rigobertamartinez12@gmail.com", "rigobert12"));
+        email.setSSLOnConnect(true);//comprova protocol d'enviar i rebre emails
+        email.setFrom("rigobertamartinez12@gmail.com", "Rigo"); // Marc serà el nom d'on es rebrà 
+        email.setSubject("Bon dia");
+        email.setMsg("Hola, has reservat la guàrdia el dia"+g.getGuardia());
+        email.addTo("mgrabulosa071@boscdelacoma.cat");//correu electrònic on s'envia el correu
+        email.send();
+        }
+    }
+    
+    }
     
     
     
-    
-}
+
